@@ -1,0 +1,45 @@
+title: plutus
+
+navbar:
+  type: inverse
+  left:
+    - icon: fa-home
+      href: index.html
+    - text: "Guides"
+      icon: fas fa-book
+      menu:
+      - text: Example for gcamelecinvest
+        href: articles/gcamInvest.html
+      - text: Example for elecInvest
+        href: articles/elecInvest.html
+      - text: Example for hydroInvest
+        href: articles/hydroInvest.html
+    - icon: fas fa-code-branch
+      text: "Reference"
+      href: reference/index.html
+    - icon: fa-newspaper-o
+      text: "News"
+      href: news/index.html
+    - text: Cheatsheet
+      href: https://github.com/JGCRI/elecinvest/blob/main/plutusCheatsheet.pdf
+      
+reference:
+- title: "Functions"
+- contents:
+  - assumptions
+  - elecInvest
+  - gcamInvest
+  - hydroInvest
+  - xmlElecQueries
+- title: "Pre-loaded Data"
+- contents:
+  - starts_with("data_")
+- title: "Example Files"
+- contents:
+  - exampleGCAMproj
+- title: "Package File"
+- contents:
+  - plutus
+
+toc:
+  depth: 2
