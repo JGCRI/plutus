@@ -28,7 +28,7 @@ Imports:
 Suggests: 
 	rmarkdown
 Remotes:
-	github::JGCRI/metis
+	github::JGCRI/metis,
 	github::JGCRI/rgcam
 VignetteBuilder: 
 	knitr
