@@ -8,11 +8,11 @@ navbar:
     - text: "Guides"
       icon: fas fa-book
       menu:
-      - text: Example for gcamInvest
+      - text: gcamInvest
         href: articles/gcamInvest.html
-      - text: Example for elecInvest
+      - text: elecInvest
         href: articles/elecInvest.html
-      - text: Example for hydroInvest
+      - text: hydroInvest
         href: articles/hydroInvest.html
     - icon: fas fa-code-branch
       text: "Reference"

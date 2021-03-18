@@ -3,10 +3,9 @@ title: 'Plutus: An R package to calculate electricity investments and stranded a
 tags:
   - R
   - GCAM
-  - electricity
+  - electricity investments
   - stranded assets
   - premature retirement
-  - investment
 authors:
   - name: Mengqi Zhao
     orcid: 0000-0001-5385-2758
@@ -39,7 +38,7 @@ affiliations:
     index: 4
 date: 13 March 2021
 bibliography: paper.bib
-
+---
 
 # Summary
 Plutus is designed to aid in informed decision-making by exploring economic implications in the power sector under different climate and policy scenarios. Plutus post-processes outputs from the Global Change Analysis Model (GCAM) `Calvin:2019`, and estimates the electricity investments and stranded assets for the energy sector. The concept and methodology for electricity investments and stranded assets was first introduced in `@Binsted:2020`. GCAM tracks electricity generation by technology and vintage over 32 geopolitical regions throughout the lifetime of each technology. This package extends GCAM functionality by (1) estimating the forgone economic value of prematurely retired power plants as a result of natural and profit-induced retirement; and (2) estimating the new generation capacity installation and capital investements driven by interactions among economic, energy, agriculture, and landuse systems in GCAM.
@@ -52,8 +51,14 @@ To harmonzie with many other GCAM related tools, plutus allows users to directly
 
 
 # Design and Implementation
-Plutus creates an algorithm to 
-Plutus utilizes capital cost, capacity factor data and assumptions of lifetime for electricity generating technologies to estimate the 
+Plutus utilizes capital cost, capacity factor data and assumptions of financial lifetime for electricity generating technologies to calculate stranded assets by scenario, period, and technology.
+
+## Assumptions
+- Lifetime
+- Natural retirement for the Baseyear (2015)
+
+
+## Implementation
 
 
 
