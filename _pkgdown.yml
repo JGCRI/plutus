@@ -8,7 +8,7 @@ navbar:
     - text: "Guides"
       icon: fas fa-book
       menu:
-      - text: Example for gcamelecinvest
+      - text: Example for gcamInvest
         href: articles/gcamInvest.html
       - text: Example for elecInvest
         href: articles/elecInvest.html
@@ -20,8 +20,6 @@ navbar:
     - icon: fa-newspaper-o
       text: "News"
       href: news/index.html
-    - text: Cheatsheet
-      href: https://github.com/JGCRI/elecinvest/blob/main/plutusCheatsheet.pdf
       
 reference:
 - title: "Functions"

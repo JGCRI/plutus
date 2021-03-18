@@ -32,7 +32,7 @@ assumptions <- function(name=NULL) {
   #------------------
   # Conversions
   #------------------
-  GCAMbaseYear <- 2010
+  GCAMbaseYear <- 2015
   convEJ2MTOE<-23.8845897  #https://www.iea.org/statistics/resources/unitconverter/
   convEJ2TWh<-277.77777777778
   convEJ2GW<-convEJ2TWh*1000/8760

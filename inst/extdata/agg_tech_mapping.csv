@@ -80,4 +80,5 @@ geothermal (recirculating),Geothermal
 geothermal (dry_hybrid),Geothermal
 wind,Wind
 wind_storage,Wind
+wind_offshore,Wind
 hydro,Hydro

@@ -14,7 +14,7 @@
 #' Use full path to GCAM 'gcamdata' folder that contains costs and capacity data. Data files including:
 #'
 #' A23.globaltech_retirement.csv
-#' L223.GlobalIntTechCapFac_elec.csv
+#' L223.StubTechCapFactor_elec.csv
 #' L223.GlobalTechCapFac_elec.csv
 #' L2233.GlobalIntTechCapital_elec.csv
 #' L2233.GlobalIntTechCapital_elec_cool.csv
@@ -67,7 +67,8 @@ gcamInvest <- function(gcamdatabase = NULL,
   #---------------------
   # Params and Queries
   #---------------------
-
+  paramsSelect <- c("elecNewCapCost", "elecNewCapGW", "elecAnnualRetPrematureCost", "elecAnnualRetPrematureGW",
+                    "elecCumCapCost", "elecCumCapGW", "elecCumRetPrematureCost", "elecCumRetPrematureGW")
   queriesSelectx <- c("elec gen by gen tech and cooling tech and vintage",
                       "Electricity generation by aggregate technology")
 
@@ -377,6 +378,7 @@ gcamInvest <- function(gcamdatabase = NULL,
     end_year_i = max(unique(tbl$year))
     temp_list = list()
     for (scen in scenarios){
+      print(paste('Calculating electricity investment for scenario: ', scen, sep = ''))
       elec_gen_vintage <- tbl %>%
         dplyr::filter(scenario == scen) %>%
         tidyr::spread(year, value) %>%
@@ -743,6 +745,8 @@ gcamInvest <- function(gcamdatabase = NULL,
     }
 
     datax <- dplyr::bind_rows(datax, tbl1,tbl2,tbl3,tbl4,tbl5,tbl6,tbl7,tbl8)
+
+    datax$class1[datax$class1 %in% 'Bioenergy CCS'] <- 'h Bioenergy w/CCS'
   } else {
     # if(queryx %in% queriesSelectx){print(paste("Query '", queryx, "' not found in database", sep = ""))}
   }

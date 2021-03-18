@@ -35,7 +35,7 @@ folder which may have been created from an old run.}
 Use full path to GCAM 'gcamdata' folder that contains costs and capacity data. Data files including:
 
 A23.globaltech_retirement.csv
-L223.GlobalIntTechCapFac_elec.csv
+L223.StubTechCapFactor_elec.csv
 L223.GlobalTechCapFac_elec.csv
 L2233.GlobalIntTechCapital_elec.csv
 L2233.GlobalIntTechCapital_elec_cool.csv

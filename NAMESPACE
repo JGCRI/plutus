@@ -2,6 +2,7 @@
 
 export(assumptions)
 export(elecInvest)
+export(exampleFunction)
 export(gcamInvest)
 export(hydroInvest)
 importFrom(magrittr,"%>%")

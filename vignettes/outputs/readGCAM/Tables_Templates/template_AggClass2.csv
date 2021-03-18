@@ -1,0 +1,17 @@
+"scenario","region","subRegion","sources","param","units","class","x","value"
+"Local Data","Argentina","Argentina","Sources","elecAnnualRetPrematureCost","Premature Elec Retire Cost (billion 2010 USD)","class2",2010,0
+"Local Data","Argentina","Argentina","Sources","elecAnnualRetPrematureGW","Premature Elec Retire (GW)","class2",2010,0
+"Local Data","Argentina","Argentina","Sources","elecCumCapCost","New Elec Cap Cost (billion 2010 USD)","class2",2010,0
+"Local Data","Argentina","Argentina","Sources","elecCumCapGW","New Elec Cap (GW)","class2",2010,0
+"Local Data","Argentina","Argentina","Sources","elecCumRetPrematureCost","Premature Elec Retire Cost (billion 2010 USD)","class2",2010,0
+"Local Data","Argentina","Argentina","Sources","elecCumRetPrematureGW","Premature Elec Retire (GW)","class2",2010,0
+"Local Data","Argentina","Argentina","Sources","elecNewCapCost","New Elec Cap Cost (Billion 2010 USD)","class2",2010,0
+"Local Data","Argentina","Argentina","Sources","elecNewCapGW","New Elec Cap (GW)","class2",2010,0
+"Local Data","Colombia","Colombia","Sources","elecAnnualRetPrematureCost","Premature Elec Retire Cost (billion 2010 USD)","class2",2010,0
+"Local Data","Colombia","Colombia","Sources","elecAnnualRetPrematureGW","Premature Elec Retire (GW)","class2",2010,0
+"Local Data","Colombia","Colombia","Sources","elecCumCapCost","New Elec Cap Cost (billion 2010 USD)","class2",2010,0
+"Local Data","Colombia","Colombia","Sources","elecCumCapGW","New Elec Cap (GW)","class2",2010,0
+"Local Data","Colombia","Colombia","Sources","elecCumRetPrematureCost","Premature Elec Retire Cost (billion 2010 USD)","class2",2010,0
+"Local Data","Colombia","Colombia","Sources","elecCumRetPrematureGW","Premature Elec Retire (GW)","class2",2010,0
+"Local Data","Colombia","Colombia","Sources","elecNewCapCost","New Elec Cap Cost (Billion 2010 USD)","class2",2010,0
+"Local Data","Colombia","Colombia","Sources","elecNewCapGW","New Elec Cap (GW)","class2",2010,0
