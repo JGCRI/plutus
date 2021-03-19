@@ -45,7 +45,7 @@ Plutus is designed to aid in informed decision-making by exploring economic impl
 
 
 # Statement of need
-The development of plutus was encouraged by the increasing interest in stranded assets and electricity investments from a wide range of GCAM users. Recent examples include the assessment of stranded assets and power sector investments in the context of climate mitigation in Latin America and the Caribbean `[@Binsted:2020; @da~Silva:2021]`.**What are other tools comparing with plutus (citations).** A tool with easy access to GCAM output and validated methodology for stranded assets will streamline these otherwise cumbersome analyeses and enhance the GCAM user experience.
+The development of plutus was encouraged by the increasing interest in stranded assets and electricity investments from a wide range of GCAM users. Recent examples include the assessment of stranded assets and power sector investments in the context of climate mitigation in Latin America and the Caribbean `[@Binsted:2020; @daSilva:2021]`.**What are other tools comparing with plutus (citations).** A tool with easy access to GCAM output and validated methodology for stranded assets will streamline these otherwise cumbersome analyeses and enhance the GCAM user experience.
 
 To interact with GCAM as well as many other GCAM related tools, plutus allows users to directly use different types of GCAM outputs and generates a data structure that can be incorperated with rmap `Khan:2021` (in preparation), another R package developed to visualize GCAM output. 
 
