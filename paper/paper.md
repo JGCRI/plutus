@@ -41,13 +41,13 @@ bibliography: paper.bib
 ---
 
 # Summary
-Plutus is designed to aid in informed decision-making by exploring economic implications in the power sector under different climate and policy scenarios. Plutus post-processes outputs from the Global Change Analysis Model (GCAM) `Calvin:2019`, and estimates the electricity investments and stranded assets for the energy sector. The concept and methodology for electricity investments and stranded assets was first introduced in `@Binsted:2020`. GCAM tracks electricity generation by technology and vintage over 32 geopolitical regions throughout the lifetime of each technology. This package extends GCAM functionality by (1) estimating the forgone economic value of prematurely retired power plants as a result of natural and profit-induced retirement; and (2) estimating the new generation capacity installation and capital investements driven by interactions among economic, energy, agriculture, and landuse systems in GCAM.
+Plutus is designed to aid in informed decision-making by exploring economic implications in the power sector under different climate and policy scenarios. Plutus post-processes outputs from the Global Change Analysis Model (GCAM) `@Calvin:2019`, and estimates the electricity investments and stranded assets for the energy sector. The concept and methodology for electricity investments and stranded assets was first introduced in `@Binsted:2020`. GCAM tracks electricity generation by technology and vintage over 32 geopolitical regions throughout the lifetime of each technology. This package extends GCAM functionality by (1) estimating the forgone economic value of prematurely retired power plants as a result of natural and profit-induced retirement; and (2) estimating the new generation capacity installation and capital investements driven by interactions among economic, energy, agriculture, and landuse systems in GCAM.
 
 
 # Statement of need
 The development of plutus was encouraged by the increasing interest in stranded assets and electricity investments from a wide range of GCAM users. Recent examples include the assessment of stranded assets and power sector investments in the context of climate mitigation in Latin America and the Caribbean `[@Binsted:2020; @daSilva:2021]`.**What are other tools comparing with plutus (citations).** A tool with easy access to GCAM output and validated methodology for stranded assets will streamline these otherwise cumbersome analyeses and enhance the GCAM user experience.
 
-To interact with GCAM as well as many other GCAM related tools, plutus allows users to directly use different types of GCAM outputs and generates a data structure that can be incorperated with rmap `Khan:2021` (in preparation), another R package developed to visualize GCAM output. 
+To interact with GCAM as well as many other GCAM related tools, plutus allows users to directly use different types of GCAM outputs and generates a data structure that can be incorperated with rmap `@Khan:2021` (in preparation), another R package developed to visualize GCAM output. 
 
 
 # Design and Implementation
@@ -64,7 +64,7 @@ $$ S \: Curve \: Fraction =  \frac{1}{1+ e^{steepness \times (t-halflife)} } $$
 
 ```plutus::hydroInvest``` provides additional calculation for hydropower investment ingored in the ```plutus::elecInvest```. This function will update capital investment in the hydropowwer sector of the output from ```plutus::elecInvest```.
 
-```plutus::gcamInvest``` is the integrated function that reads CGAM output, excutes ```plutus::elecInvest``` and ```plutus::hydroInvest``` functions, and generates output data structure that can be used by rmap `Khan:2021` (in preparation). This function is developed to connects with GCAM and other tools for post-processesing and  visualization. In addition, ```plutus::gcamInvest``` provides many flexibilities and options depending on users' preference, including the following features.
+```plutus::gcamInvest``` is the integrated function that reads CGAM output, excutes ```plutus::elecInvest``` and ```plutus::hydroInvest``` functions, and generates output data structure that can be used by rmap `@Khan:2021` (in preparation). This function is developed to connects with GCAM and other tools for post-processesing and  visualization. In addition, ```plutus::gcamInvest``` provides many flexibilities and options depending on users' preference, including the following features.
 
 - Access to different GCAM output database. GCAM output database can be in formats such as ".proj" file or a folder of ".basex" files. ```plutus::gcamInvest``` is able to extract GCAM data from both types of GCAM database by integrating the functionality from the R package "rgcam".
 - Use default or user-provided queries and input data. ```plutus::gcamInvest``` includes default "query" file (.xml) that is used to retrieve energy data from GCAM database.Users can also provide queries that includes energy sector. The input data in terms of capital costs, capacity factors, steepness, and lifetime can be provided by users if the data formats are correct.
@@ -84,4 +84,4 @@ To evaluate the economic implications in the energy sector, we use an example da
 # Acknowledgement
 
 
-# Reference
+# References
