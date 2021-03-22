@@ -37,7 +37,7 @@ affiliations:
   - name: Pacific Northwest National Laboratory (PNNL), Richland, WA, USA
     index: 4
 date: 13 March 2021
-bibliography: paper.bibtex
+bibliography: paper.bib
 ---
 
 # Summary
