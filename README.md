@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/JGCRI/plutus/branch/main/graph/badge.svg?token=1PK34KIHKE)](https://codecov.io/gh/JGCRI/plutus)
 
 # plutus
-Plutus is designed for GCAM v5.3 (excluding GCAM-USA and GCAM-India).
+Plutus is designed for GCAM v5.3 (excluding GCAM-USA).
 <br />
 
 <!-------------------------->
@@ -49,8 +49,9 @@ Plutus is designed for GCAM v5.3 (excluding GCAM-USA and GCAM-India).
 <!-------------------------->
 
 1. Download and install:
+
     - R (https://www.r-project.org/)
-    - R studio (https://www.rstudio.com/)  
+    - R studio (https://www.rstudio.com/)
     
     
 2. Open R studio:
