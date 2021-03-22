@@ -45,17 +45,15 @@ Plutus is designed to aid in informed decision-making by exploring economic impl
 
 
 # Statement of need
-The development of plutus was encouraged by the increasing interest in stranded assets and electricity investments from a wide range of GCAM users. Recent examples include the assessment of stranded assets and power sector investments in the context of climate mitigation in Latin America and the Caribbean `[@Binsted:2020; @daSilva:2021]`.**What are other tools comparing with plutus (citations).** A tool with easy access to GCAM output and validated methodology for stranded assets will streamline these otherwise cumbersome analyeses and enhance the GCAM user experience.
-
-To interact with GCAM as well as many other GCAM related tools, plutus allows users to directly use different types of GCAM outputs and generates a data structure that can be incorperated with metis `[@khan:2020]`, another R package developed to visualize GCAM output. 
-
+The development of plutus was encouraged by the increasing interest in stranded assets and electricity investments from a wide range of GCAM users. Recent examples include the assessment of stranded assets and power sector investments in the context of climate mitigation in Latin America and the Caribbean `[@Binsted:2020; @daSilva:2021]`. Similarly, `[@McCollum:2018]` investigated the necessary energy investments to reach international policy goals by comparing output from GCAM and six other integrated assessment model (IAM) frameworks. Currently, there exists no uniform procedure amongst the GCAM community for calculating energy investments inclusive of all technologies present in GCAM 5.3. Plutus addresses this need while providing users with a flexible data structure that can be incorperated with a growing suite of GCAM oriented R packages, such as metis `[@khan:2020]`, to augment the analysis and visualization of GCAM output in the energy sector. A tool with easy access to GCAM output and validated methodology for stranded assets will streamline these otherwise cumbersome analyeses and enhance GCAM functionality.
 
 # Design and implementation
 Plutus utilizes capital cost, capacity factor data and assumptions of financial lifetime for electricity generating technologies to calculate stranded assets by scenario, period, and technology. This package is designed for GCAM version 5.3 and up.
 
-## Assumptions
-- Lifetime
-- Natural retirement for the base year (2015)
+## Workflow
+The mandatory input from users is GCAM output in the format of databse folder or .proj file. Users are able to use different input data and assumptions associated with their GCAM runs (\autoref{fig:1}). Otherwise, plutus uses default data and assumptions to calculate stranded assets and electricity investment. More details of step-by-step instruction on plutus can be accessed via the repository at https://github.com/JGCRI/plutus. 
+
+![**Figure 1.** The workflow for plutus.\label{fig:1}](Figures/Figure1.png)
 
 ## Key functions
 ```plutus::elecInvest``` calculates stranded assets and new installations in terms of value (billion 2010 USD) and energy generation (GW) by scenario, region, period, and technology. The function considers both the electricity generation technology and its associated cooling system in the overnight capital cost. The function adjusts the retirement for the base/calibration year vintage by the 'S Curve Fraction' function to represent natural retirements for power plants built before the base year.
@@ -75,14 +73,12 @@ $$ S \: Curve \: Fraction =  \frac{1}{1+ e^{steepness \times (t-halflife)} } $$
 
 
 ## Implementation
-For demonstration, we use an example dataset from GCAM v5.3 to estimate the stranded assets and new capital investments in the USA power sector (\autoref{fig:2}).
+For demonstration, we use an example dataset from GCAM v5.3 to estimate the stranded assets and new capital investments in the USA power sector (\autoref{fig:2}). Figure 2 was a product by first using plutus to calculate stranded assets and new installations in the USA and then collaborating metis for visualizaitons `[@khan:2020]`. Plutus provides and effective means of disseminating complex ecomonic implications in magnitudes of strandded assets and investments concerning energy policy. Plutus becomes a more convenient tool in discovering outputs by interations with other R packages like metis.  
 
 ![**Figure 2.** Premature retirements and new installations in economic value (billion 2010 USD) and power (GW) terms in the USA power sector.
 \label{fig:2}](Figures/Figure2.png)
 
-The reference scenario, as shown in Figure 2, demonstrates  
 
-Plutus provides and effective means of disseminating complex ecomonic implications concerning energy policy. 
 # Acknowledgement
 
 
