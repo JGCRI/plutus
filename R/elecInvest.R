@@ -19,7 +19,7 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
   #----------------
 
   NULL -> year -> technology -> wtechnology -> sector.name -> subsector.name ->
-    intermittent.technology -> capacity.factor -> capacity.factor.temp -> sector ->
+    intermittent.technology -> capacity.factor -> capacity.factor.region -> sector ->
     Year -> value -> scenario -> region -> subsector -> Units -> temp ->
     prev_year -> retirements -> supplysector -> half.life -> steepness -> lifetime ->
     s_curve_adj -> OG_gen -> gen_expect -> prev_yr_expect -> additions -> add_adj ->
