@@ -255,7 +255,7 @@
 <div id="re-read-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#re-read-data" class="anchor"></a>Re-read Data</h2>
-<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> automatically save a copy of .proj file (default name: dataProj.proj) in the output directory after extracting GCAM output data if provided a GCAM database folder using <code>gcamdatabase</code> argument. Reload the same (subsetted) GCAM dataset can be much faster by using the automatically save dataProj.proj file. Users can choose to turnoff auto save function by specifying argument to <code>reReadData = F</code>.</p>
+<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> automatically save a copy of .proj file (default name: dataProj.proj) in the output directory after extracting GCAM output data if provided a GCAM database folder using <code>gcamdatabase</code> argument. Reload the same (subsetted) GCAM dataset can be much faster by using the automatically saved dataProj.proj file. Users can choose to turnoff auto save function by specifying argument to <code>reReadData = F</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 
@@ -286,12 +286,16 @@
 
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span>,
                              saveData <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># Default is saveData = T</span></code></pre></div>
+<!-------------------------->
+<!-------------------------->
 </div>
 </div>
 <div id="visualization" class="section level1">
 <h1 class="hasAnchor">
 <a href="#visualization" class="anchor"></a>Visualization</h1>
-<p><code>plutus</code> is designed to integrate with metis (Khan et al., 2020) to further improve analysis and visualization. <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> generates a data structure that can be directly used by metis, an R package to harmonize and analyze multi-sectoral data and linkages at variable spatial scales. More details on metis can be accessed via metis repository at <a href="https://github.com/JGCRI/metis" class="uri">https://github.com/JGCRI/metis</a>.</p>
+<!-------------------------->
+<!-------------------------->
+<p><code>plutus</code> is designed to integrate with `<code>metis</code> (Khan et al., 2020), an R package to harmonize and analyze multi-sectoral data and linkages at variable spatial scales. <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> generates a data structure that can be directly used by <code>metis</code>. More details on metis can be accessed via metis repository at <a href="https://github.com/JGCRI/metis" class="uri">https://github.com/JGCRI/metis</a>.</p>
 <div id="charts" class="section level2">
 <h2 class="hasAnchor">
 <a href="#charts" class="anchor"></a>Charts</h2>
@@ -321,13 +325,16 @@
                     xRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2025</span>, <span class="fl">2030</span>, <span class="fl">2035</span>, <span class="fl">2040</span>, <span class="fl">2045</span>, <span class="fl">2050</span><span class="op">)</span>,
                     colOrderName1 <span class="op">=</span> <span class="st">"scenario"</span>,
                     pdfpng <span class="op">=</span> <span class="st">'pdf'</span><span class="op">)</span></code></pre></div>
+<p align="center" style="font-size:18px;">
+<em>New Electricity Capacity Installations for USA and Argentina</em>
+</p>
 <p align="center">
 <img src="vignettesFigs/elecNewCapCost_figBar_USA_Argentina_Reference.png"></p>
 </div>
 <div id="maps" class="section level2">
 <h2 class="hasAnchor">
 <a href="#maps" class="anchor"></a>Maps</h2>
-<p>Users can also use <code>metis.mapsProcess</code> to produce spatial maps by scenario, region, technology, and time period. Here is an example to map wind capacity installations for 32 geopolitical regions globally.</p>
+<p>Users can also use <code>metis.mapsProcess</code> to produce spatial maps by scenario, region, technology, and time period. Here is an example to map wind capacity installations for 32 geopolitical regions.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">metis</span><span class="op">)</span>
@@ -336,6 +343,7 @@
                              scenOrigNames <span class="op">=</span> <span class="st">'Reference'</span>,
                              regionsSelect <span class="op">=</span> <span class="cn">NULL</span>,
                              saveData <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
+
 <span class="va">rTable_i</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">data</span>
 <span class="co"># Filter data to only show new installations for wind</span>
 <span class="va">polygonTable_i</span> <span class="op">&lt;-</span> <span class="va">rTable_i</span> <span class="op">%&gt;%</span> 
@@ -349,6 +357,9 @@
                   subRegType <span class="op">=</span> <span class="st">'subRegion'</span>,
                   folderName <span class="op">=</span> <span class="st">'Maps_Wind_eleNewCapGW'</span>,
                   animateOn <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<p align="center" style="font-size:18px;">
+<em>Spatial Electricity Capacity Installations</em>
+</p>
 <p align="center">
 <img src="vignettesFigs/map_GCAMReg32_elecNewCapGW_Reference_KMEANS.png"></p>
 </div>
