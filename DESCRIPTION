@@ -5,8 +5,7 @@ Authors@R: c(person("Megnqi", "Zhao", email = "mengqiz@umd.edu", role = c("aut",
 		   comment = c(ORCID ="0000-0001-5385-2758")),
 		   person("Zarrar", "Khan", email = "zarrar.khan@pnnl.gov", role = c("aut"),
 		   comment = c(ORCID ="0000-0002-8147-8553")),
-		   person("Tom", "Wild", role = c("aut"), comment = c(ORCID ="0000-0002-6045-7729")),
-		   person("Chris", "Vernon", role = c("aut"), comment = c(ORCID ="0000-0002-3406-6214")))
+		   person("Tom", "Wild", role = c("aut"), comment = c(ORCID ="0000-0002-6045-7729")))
 Description: R package to plot customizable maps from simple dataframes.
 URL: https://github.com/JGCRI/plutus
 BugReports: https://github.com/JGCRI/plutus/issues
@@ -28,7 +27,6 @@ Imports:
 Suggests: 
 	rmarkdown
 Remotes:
-	github::JGCRI/metis,
 	github::JGCRI/rgcam
 VignetteBuilder: 
 	knitr

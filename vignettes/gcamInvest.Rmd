@@ -42,7 +42,7 @@ plutus::gcamInvest(gcamdatabase = NULL,
 
 ## Read Project File
 
-```plutus::gcamInvest``` is able to read .proj file from GCAM output by providing the path to the .proj file. Plutus also includes an example .proj dataset ```plutus::exampleGCAMproj```.
+```plutus::gcamInvest``` is able to read .proj file from GCAM output by providing the path to the rgcam-based .proj file. Plutus also includes an example .proj dataset ```plutus::exampleGCAMproj```.
 
 ```{r eval=F}
 library(plutus)
@@ -105,7 +105,7 @@ dfClass1 <- invest$dataAggClass1; dfClass1
 Plutus provides default data and assumptions from GCAM v5.3, which can be found in Your-GCAM-5.3-Folder/input/gcamdata/. All CSV files associated with different data categories and assumptions are listed in [Table 1](#table1).
 
 <a name="table1"></a>
-**Table 1:** Data and assumption files
+**Table 1:** Data and assumption files.
 
 | Data or Assumption | Technology | Region | Data File |
 |---|---|---|---|
@@ -168,3 +168,69 @@ library(plutus)
 invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
                              saveData = F) # Default is saveData = T
 ```
+
+# Visualization
+
+```plutus``` is designed to integrate with metis (Khan et al., 2020) to further improve analysis and visualization. ```plutus::gcamInvest``` generates a data structure that can be directly used by metis, an R package to harmonize and analyze multi-sectoral data and linkages at variable spatial scales. More details on metis can be accessed via metis repository at https://github.com/JGCRI/metis.
+
+## Charts
+Below is an example of using ```metis.chartsProcess``` to generate charts of stranded assets and electricity investments in the USA and Argentina.
+
+```{r eval=F}
+library(plutus)
+library(metis)
+
+invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
+                             scenOrigNames = c('Reference', 'Impacts', 'Policy'),
+                             scenNewNames = c('Reference', 'Climate Impacts', 'Climate Policy'),
+                             regionsSelect = c('USA', 'Argentina'))
+rTable_i <- invest$data
+
+# Plot charts for each scenario and comparison between scenarios and regions across time series
+metis.chartsProcess(rTable = rTable_i,
+                    paramsSelect = 'All',
+                    regionsSelect = c('USA', 'Argentina'),
+                    xCompare = c("2030", "2040", "2050"),
+                    scenRef = "Reference",
+                    dirOutputs = paste(getwd(), "/outputs", sep = ""),
+                    regionCompare = 1,
+                    scenarioCompareOnly = 1,
+                    multiPlotOn = T,
+                    multiPlotFigsOnly = T,
+                    folderName = "Charts_USA_Argentina",
+                    xRange = c(2025, 2030, 2035, 2040, 2045, 2050),
+                    colOrderName1 = "scenario",
+                    pdfpng = 'pdf')
+```
+
+<p align="center"> <img src="vignettesFigs/elecNewCapCost_figBar_USA_Argentina_Reference.png"></p>
+
+
+## Maps
+
+Users can also use ```metis.mapsProcess``` to produce spatial maps by scenario, region, technology, and time period. Here is an example to map wind capacity installations for 32 geopolitical regions globally.
+
+```{r eval=F}
+library(plutus)
+library(metis)
+
+invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
+                             scenOrigNames = 'Reference',
+                             regionsSelect = NULL,
+                             saveData = F)
+rTable_i <- invest$data
+# Filter data to only show new installations for wind
+polygonTable_i <- rTable_i %>% 
+  dplyr::filter(class1 %in% 'Wind', param %in% 'elecNewCapGW') %>% 
+  dplyr::select(subRegion, value, x, class1, scenario, param) %>% 
+  dplyr::rename(class = class1)
+
+# Plot wind new installation maps for all 32 geopolitical regions across time
+metis.mapsProcess(polygonTable = polygonTable_i,
+                  subRegCol = 'subRegion',
+                  subRegType = 'subRegion',
+                  folderName = 'Maps_Wind_eleNewCapGW',
+                  animateOn = F)
+```
+
+<p align="center"> <img src="vignettesFigs/map_GCAMReg32_elecNewCapGW_Reference_KMEANS.png"></p>
