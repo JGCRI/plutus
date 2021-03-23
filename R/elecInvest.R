@@ -3,6 +3,7 @@
 #' Function that calculates electricity subsector investment requirements from a given GCAM run.
 #'
 #' @param elec_gen_vintage Electricity vintage query result
+#' @param gcamdataFile Default = NULL. Optional. For example, gcamdataFile = "~/gcam-core-gcam-v5.3/input/gcamdata".
 #' @param start_year Start year of time frame of interest for analysis
 #' @param end_year end_year of time frame of interest for analysis
 #' @param world_regions GCAM regions for which to collect data
@@ -24,7 +25,11 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     s_curve_adj -> OG_gen -> gen_expect -> prev_yr_expect -> additions -> add_adj ->
     ret_adj -> ret_adj_OG -> natural_retire -> input.capital -> fixed.charge.rate ->
     add_GW -> capital.overnight -> early_ret -> early_ret_GW -> agg_tech ->
-    cap_invest -> unrec_Cap -> dep_factor -> unrec_cap
+    cap_invest -> unrec_Cap -> dep_factor -> unrec_cap -> stub.technology
+
+  if(is.null(world_regions)){
+    world_regions <- unique(elec_gen_vintage$region)
+  }
 
   # ============================================================================
   # Mapping files
@@ -38,8 +43,8 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
 
   # Read gcam data files from user provided path
   if(!is.null(gcamdataFile)){
-    if(!dir.exists(gcamdataFile) | !dir.exists(paste(gcamdataFile, 'outputs', sep = '/'))){
-      print(paste('WARNING: Required folder ', gcamdataFile, '/', 'outputs/', ' does not exist.', sep = ''))
+    if(!dir.exists(gcamdataFile)){
+      print(gsub('//', '/', paste('WARNING: Folder ', gcamdataFile, ' does not exist.', sep = '')))
       gcamdataFile <- NULL
     }else{
       file_names <- c('A23.globaltech_retirement.csv',
@@ -51,13 +56,14 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
                       'L2233.GlobalTechCapital_elecPassthru.csv')
       data_files <- list.files(path = gcamdataFile, pattern = paste(file_names, collapse = '|'), recursive = TRUE, full.names = TRUE)
       if(any(!file.exists(data_files)) | (length(file_names) != length(data_files))){
-        print('WARNING: One or more required data files are missing.')
+        missing_files <- setdiff(file_names, basename(data_files))
+        print(paste('WARNING: One or more required data files are missing:', missing_files))
         gcamdataFile <- NULL
       }else{
         print('------------------------------------------------------------------')
         print('Reading cost and capacity data from user provided gcamdata folder:')
         print('------------------------------------------------------------------')
-        print(paste(data_files))
+        print(gsub('//', '/', paste(data_files)))
         A23.globaltech_retirement <- data.table::fread(data_files[1], skip=1)
         capac_fac <- data.table::fread(data_files[2], skip=1, stringsAsFactors = FALSE)
         capac_fac_region <- data.table::fread(data_files[3], skip=1, stringsAsFactors = FALSE)
@@ -75,7 +81,6 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     print('Using default cost and capacity data...')
     print('---------------------------------------')
     A23.globaltech_retirement <- plutus::data_A23.globaltech_retirement
-    capac_fac_int <- plutus::data_capac_fac_int
     capac_fac <- plutus::data_capac_fac
     capac_fac_region <- plutus::data_capac_fac_region
     cap_cost_int_tech <- plutus::data_cap_cost_int_tech
@@ -109,69 +114,79 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::select(-wtechnology)
 
   # ============================================================================
-  cap_cost <- dplyr::tibble()
-  for(region_i in unique(world_regions)){
-    # Combine the cooling technology cost sheets, and the electricity generating technology cost dataframes
-    elec_gen_tech_cost <- rbind(cap_cost_tech, cap_cost_int_tech)
-    # Get dispatchable capacity factor column added to elec_gen_tech_cost
-    capac_fac %>% dplyr::select(-sector.name, -subsector.name) -> capac_fac_new
-    elec_gen_tech_cost <- merge(elec_gen_tech_cost, capac_fac_new, by=c("technology", "year"), all=TRUE)
-    # Get intermittent capacity factor column added to elec_gen_tech_cost
-    capac_fac_int_new <- capac_fac_region %>%
-      dplyr::rename(sector.name = supplysector,
-                    subsector.name = subsector,
-                    technology = stub.technology,
-                    capacity.factor.temp = capacity.factor) %>%
-      dplyr::filter(region %in% region_i) %>%
-      dplyr::select(-region, -sector.name, -subsector.name)
-    elec_gen_tech_cost <- merge(elec_gen_tech_cost, capac_fac_int_new, by=c("technology", "year"), all=TRUE)
-    # Choose regional capacity factor values over global values
-    elec_gen_tech_cost <- elec_gen_tech_cost %>%
-      dplyr::mutate(capacity.factor=ifelse(is.na(capacity.factor.temp), capacity.factor, capacity.factor.temp)) %>%
-      dplyr::select(-capacity.factor.temp) %>%
-      dplyr::relocate(sector.name, subsector.name, technology, year, input.capital, capital.overnight, fixed.charge.rate, capacity.factor)
+  # Combine the cooling technology cost sheets, and the electricity generating technology cost dataframes
+  elec_gen_tech_cost <- rbind(cap_cost_tech, cap_cost_int_tech)
+  # Get dispatchable capacity factor column added to elec_gen_tech_cost
+  capac_fac %>% dplyr::select(-sector.name, -subsector.name) -> capac_fac_new
+  elec_gen_tech_cost <- merge(elec_gen_tech_cost, capac_fac_new, by=c("technology", "year"), all=TRUE)
+
+  df_elec_gen <- data.frame(region = rep(x = world_regions, each = nrow(elec_gen_tech_cost)),
+                            technology = rep(x = elec_gen_tech_cost$technology, times = length(world_regions)),
+                            year = rep(x = elec_gen_tech_cost$year, times = length(world_regions)))
+  elec_gen_tech_cost_global <- df_elec_gen %>%
+    dplyr::left_join(elec_gen_tech_cost, by = c('technology', 'year'))
+
+  # Get intermittent capacity factor column added to elec_gen_tech_cost
+  capac_fac_int_new <- capac_fac_region %>%
+    dplyr::rename(sector.name = supplysector,
+                  subsector.name = subsector,
+                  technology = stub.technology,
+                  capacity.factor.region = capacity.factor) %>%
+    dplyr::filter(region %in% world_regions) %>%
+    dplyr::select(-sector.name, -subsector.name)
+
+  elec_gen_tech_cost <- elec_gen_tech_cost_global %>%
+    dplyr::left_join(capac_fac_int_new, by = c('region', 'technology', 'year'))
+
+  elec_gen_tech_cost <- elec_gen_tech_cost %>%
+    dplyr::mutate(capacity.factor=ifelse(is.na(capacity.factor.region), capacity.factor, capacity.factor.region)) %>%
+    dplyr::select(-capacity.factor.region) %>%
+    dplyr::relocate(region, sector.name, subsector.name, technology, year, input.capital, capital.overnight, fixed.charge.rate, capacity.factor)
 
 
-    cool_tech_cost <- rbind(cap_cost_cool, cap_cost_int_cool)
-    cool_tech_cost[,'capacity.factor'] <- NA  # New column for cap fac
-    cool_tech_cost[,'old.technology'] <- NA  # New column for cap fac
-    # Make list of years and technologies (by cooling)
-    elec_tech_names_by_cooling_tech <- unique(cool_tech_cost$technology)  # Elec gen by cool tech to loop through
-    years <- unique(cool_tech_cost$year)  # Years to loop through
-    # Loop to replace costs with addition of capital costs and cooling technology costs.
-    for (tech_name in elec_tech_names_by_cooling_tech){
-      for (yr in years) {
-        old_tech_name <- paste0(cool_tech_cost$subsector.name[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)][1])
-        cool_tech_cost$capital.overnight[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
-          dplyr::filter(
-            elec_gen_tech_cost,
-            year == yr,
-            technology == paste0(cool_tech_cost$subsector.name[(cool_tech_cost$year == yr) &
-                                                                 (cool_tech_cost$technology == tech_name)][1])
-          )$capital.overnight +
-          cool_tech_cost$capital.overnight[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)]
+  cool_tech_cost_temp <- rbind(cap_cost_cool, cap_cost_int_cool)
+  df_cooling <- data.frame(region = rep(x = world_regions, each = nrow(cool_tech_cost_temp)),
+                           technology = rep(x = cool_tech_cost_temp$technology, times = length(world_regions)),
+                           year = rep(x = cool_tech_cost_temp$year, times = length(world_regions)))
+  cool_tech_cost <- df_cooling %>%
+    dplyr::left_join(cool_tech_cost_temp, by = c('technology', 'year'))
+  cool_tech_cost[,'capacity.factor'] <- NA  # New column for cap fac
+  cool_tech_cost[,'old.technology'] <- NA  # New column for cap fac
+  # Make list of years and technologies (by cooling)
+  elec_tech_names_by_cooling_tech <- unique(cool_tech_cost$technology)  # Elec gen by cool tech to loop through
+  years <- unique(cool_tech_cost$year)  # Years to loop through
+  # Loop to replace costs with addition of capital costs and cooling technology costs.
+  for (tech_name in elec_tech_names_by_cooling_tech){
+    for (yr in years) {
+      old_tech_name <- paste0(cool_tech_cost$subsector.name[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)][1])
+      cool_tech_cost$capital.overnight[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
+        dplyr::filter(
+          elec_gen_tech_cost,
+          year == yr,
+          technology == paste0(cool_tech_cost$subsector.name[(cool_tech_cost$year == yr) &
+                                                               (cool_tech_cost$technology == tech_name)][1])
+        )$capital.overnight +
+        cool_tech_cost$capital.overnight[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)]
 
-        cool_tech_cost$subsector.name[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
-          paste0(dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$subsector.name[1])
+      cool_tech_cost$subsector.name[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
+        paste0(dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$subsector.name[1])
 
-        cool_tech_cost$old.technology[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
-          paste0(dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$technology[1])
+      cool_tech_cost$old.technology[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
+        paste0(dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$technology[1])
 
-        cool_tech_cost$capacity.factor[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
-          dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$capacity.factor[1]
+      cool_tech_cost$capacity.factor[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
+        dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$capacity.factor
 
-      }
     }
-    cap_cost_temp <- cool_tech_cost
-    A <- unique(cool_tech_cost$old.technology)
-    B <- unique(elec_gen_tech_cost$technology)
-    C <- setdiff(B,A) # the technolgies being used in elec_gen_tech_cost, but not included in cooling tech
-    D <- dplyr::filter(elec_gen_tech_cost, technology %in% C)
-    D[,'old.technology'] <- NA
-    cap_cost_temp <- rbind(cap_cost_temp, D)
-    cap_cost_temp[, 'region'] <- region_i
-    cap_cost <- rbind(cap_cost, cap_cost_temp)
   }
+
+  cap_cost <- cool_tech_cost
+  A <- unique(cool_tech_cost$old.technology)
+  B <- unique(elec_gen_tech_cost$technology)
+  C <- setdiff(B,A) # the technolgies being used in elec_gen_tech_cost, but not included in cooling tech
+  D <- dplyr::filter(elec_gen_tech_cost, technology %in% C)
+  D[,'old.technology'] <- NA
+  cap_cost <- rbind(cap_cost, D)
 
   tech_mapping <- plutus::data_tech_mapping
 

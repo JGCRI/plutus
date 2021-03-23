@@ -5,7 +5,7 @@
 #'
 #' @param gcamdatabase Default = NULL. Full path to GCAM database folder.
 #' @param queryFile Defualt = NULL. When NULL plutus loads pre-saved xml file plutus::xmlElecQueries
-#' @param reReadData If TRUE will read the GCAM data base and create a queryData.proj file
+#' @param reReadData Default = TRUE. If TRUE will read the GCAM data base and create a queryData.proj file
 #' in the same folder as the GCAM database. If FALSE will load a '.proj' file if a file
 #' with full path is provided otherwise it will search for a dataProj.proj file in the existing
 #' folder which may have been created from an old run.
@@ -61,7 +61,7 @@ gcamInvest <- function(gcamdatabase = NULL,
   NULL -> vintage -> year -> xLabel -> x -> value -> sector -> scenario -> region -> param -> origX -> origValue ->
     origUnits -> origScen -> origQuery -> classPalette2 -> classPalette1 -> classLabel2 -> classLabel1 -> class2 ->
     class1 -> connx -> aggregate -> Units -> sources -> paramx -> technology -> input -> output -> regionsSelectAll ->
-    . -> agg_tech -> subsector -> paramsSelectAll -> dataTemplate -> datax -> group -> basin -> subRegion -> query
+    . -> agg_tech -> subsector -> dataTemplate -> datax -> group -> basin -> subRegion -> query
 
 
   #---------------------

@@ -15,6 +15,8 @@ elecInvest(
 \arguments{
 \item{elec_gen_vintage}{Electricity vintage query result}
 
+\item{gcamdataFile}{Default = NULL. Optional. For example, gcamdataFile = "~/gcam-core-gcam-v5.3/input/gcamdata".}
+
 \item{world_regions}{GCAM regions for which to collect data}
 
 \item{start_year}{Start year of time frame of interest for analysis}

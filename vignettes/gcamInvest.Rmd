@@ -7,29 +7,163 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+<!-------------------------->
+<!-------------------------->
+# Read GCAM Data and Calculate Electricity Investment
+<!-------------------------->
+<!-------------------------->
+
+```plutus::gcamInvest``` integrates the functionality of reading CGAM data and calculating stranded assets and electricity investments in power sector in one place. This function will return a list containing:
+
+- data: a dataframe with the original data
+- dataAggParam: a dataframe with the data aggregated to the parameter
+- dataAggClass1: a dataframe with the data aggregated to class 1
+- dataAggclass2: a dataframe with the data aggregated to class 2
+- scenarios: A list of the scenarios
+- queries: A list of the queries used to extract the data
+
+The details of arguments and their default values in ```plutus::gcamInvest``` can be found in the [gcamInvest reference page](https://jgcri.github.io/plutus/reference/gcamInvest.html). The following sections provide step-by-step instructions on using ```plutus::gcamInvest```.
+
+```{r eval=F}
+# Default argument values
+plutus::gcamInvest(gcamdatabase = NULL,
+                   queryFile = NULL,
+                   reReadData = T,
+                   dataProjFile = paste(getwd(), "/outputs/dataProj.proj", sep = ""),
+                   gcamdataFile = NULL,
+                   scenOrigNames = 'All',
+                   scenNewNames = NULL,
+                   regionsSelect = NULL,
+                   dirOutputs = paste(getwd(), "/outputs", sep = ""),
+                   folderName = NULL,
+                   nameAppend = "",
+                   saveData = T)
 ```
+
+## Read Project File
+
+```plutus::gcamInvest``` is able to read .proj file from GCAM output by providing the path to the .proj file. Plutus also includes an example .proj dataset ```plutus::exampleGCAMproj```.
 
 ```{r eval=F}
 library(plutus)
 
-example_data <- plutus::exampleGCAMproj
-invest <- plutus::gcamInvest(gcamdatabase = NULL,
-                             queryFile = NULL,
-                             reReadData = T,
-                             dataProjFile = example_data,
-                             gcamdataFile = NULL,
-                             scenOrigNames = 'ALL',
-                             scenNewNames = NULL,
-                             regionsSelect = c('Colombia', 'Argentina'),
-                             dirOutputs = paste(getwd(), "/outputs", sep = ""),
-                             folderName = NULL,
-                             nameAppend = "",
-                             saveData = T)
+invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
+                             # dataProjFile = path_to_projfile)
+
+# Explore the list returned from plutus::gcamInvest
+df <- invest$data; df
+dfParam <- invest$dataAggParam; dfParam
+dfClass1 <- invest$dataAggClass1; dfClass1
+dfScenario <- invest$scenarios; dfScenario
+dfQuery <- invest$queries; dfQuery
+
+```
+
+## Read GCAM Database
+
+```plutus::gcamInvest``` can directly read GCAM database. Assign the path to GCAM database to ```gcamdatabase```.
 
 
+```{r eval=F}
+library(plutus)
+
+# provide path to the desired GCAM database folder.
+path_to_gcamdatabase <- 'E:/gcam-core-gcam-v5.3/output/databse_basexdb'
+invest <- plutus::gcamInvest(gcamdatabase = path_to_gcamdatabase)
+
+```
+
+<!-------------------------->
+<!-------------------------->
+# Read and Subset GCAM Data
+<!-------------------------->
+<!-------------------------->
+
+```plutus::gcamInvest``` provides options to subset GCAM data by scenario and region.
+
+
+```{r eval=F}
+library(plutus)
+
+invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
+                             scenOrigNames = c('Reference', 'Impacts', 'Policy'),
+                             scenNewNames = c('Reference', 'Climate Impacts', 'Climate Policy'),
+                             regionsSelect = c('USA', 'Argentina'))
+
+df <- invest$data; df
+dfParam <- invest$dataAggParam; dfParam
+dfClass1 <- invest$dataAggClass1; dfClass1
+
+```
+
+<!-------------------------->
+<!-------------------------->
+# Input Data and Assumptions
+<!-------------------------->
+<!-------------------------->
+
+Plutus provides default data and assumptions from GCAM v5.3, which can be found in Your-GCAM-5.3-Folder/input/gcamdata/. All CSV files associated with different data categories and assumptions are listed in [Table 1](#table1).
+
+<a name="table1"></a>
+**Table 1:** Data and assumption files
+
+| Data or Assumption | Technology | Region | Data File |
+|---|---|---|---|
+| Overnight capital costs | Electricity generation technologies | Global | L2233.GlobalIntTechCapital_elec.csv <br /> L2233.GlobalTechCapital_elecPassthru.csv |
+| Overnight capital costs | Cooling technologies | Global | L2233.GlobalIntTechCapital_elec_cool.csv <br /> L2233.GlobalTechCapital_elec_cool.csv |
+| Capacity factors | Electricity generation technologies | Global | L223.GlobalTechCapFac_elec.csv |
+| Capacity factors | Intermittant technologies | Regional | L223.StubTechCapFactor_elec.csv |
+| Lifetime and steepness| Electricity generation technologies | Global | A23.globaltech_retirement.csv |
+
+```plutus::gcamInvest``` allows users to input their own data associated with their GCAM runs. Users can update values in any CSV data file. Please keep the file name and the format of each updated file unchanged. To input your own data, specify the path to the folder that contains all CSV files listed in [Table 1](#table1) in the ```gcamdataFile``` argument.
+
+```{r eval=F}
+library(plutus)
+
+invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
+                             gcamdataFile = 'E:/gcam-core-gcam-v5.3/input/gcamdata')
+```
+
+<!-------------------------->
+<!-------------------------->
+# Output Options
+<!-------------------------->
+<!-------------------------->
+
+```plutus::gcamInvest``` automatically saves outputs, such as .proj files, queries, and output data tables in default path based on the working directory. This section will introduce arguments in ```plutus::gcamInvest``` that controls different output options.
+
+## Re-read Data
+
+```plutus::gcamInvest``` automatically save a copy of .proj file (dataProj.proj) in the output directory after extracting GCAM output data if provided a GCAM database folder using ```gcamdatabase``` argument. Reload the same (subsetted) GCAM dataset can be much faster if using the automatically save dataProj.proj file if user wants to revisit the same GCAM dataset. You can choose to turnoff auto save function by specifying argument```reReadData = F```.
+
+```{r eval=F}
+library(plutus)
+
+path_to_gcamdatabase <- 'E:/NEXO-UA/GCAM-Workspace/gcam-core_LAC_v02_5Nov2019/output/FinalRuns/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'
+invest <- plutus::gcamInvest(gcamdatabase = path_to_gcamdatabase,
+                             reReadData = F) # Default is reReadData = T
+```
+
+## Output Directory
+
+It is easy to change output folder names and names appended to the output data tables.
+
+  - ```folderName``` creates a folder with the specified name under output directory 
+  - ```nameAppend``` appends the specified string at the end of each output data table file 
+
+```{r eval=F}
+library(plutus)
+
+invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
+                             # dirOutputs = Your-desired-output-path, # Default is paste(getwd(), "/outputs", sep = "")
+                             folderName = 'USA', # Default is NULL
+                             nameAppend = '_Invest') # Default is ''
+```
+
+You can also choose not to save any output by setting argument to ```saveData = F```.
+```{r eval=F}
+library(plutus)
+
+invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
+                             saveData = F)
 ```

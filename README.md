@@ -36,6 +36,7 @@ Plutus is designed for GCAM v5.3 (excluding GCAM-USA).
 <!-------------------------->
 <!-------------------------->
 
+Zhao, M., Binsted, M., Wild, T.B., Khan, Z., Iyer, G., Yarlagadda, B., Santos Da Silva, S.R., Vernon, C., Patel, P., (in preparation). Plutus - An R package to calculate electricity investments and stranded assets from the Global Change Analysis Model. Journal of Open Source Software.
 
 [Back to Contents](#Contents)
 
