@@ -47,8 +47,8 @@ plutus::gcamInvest(gcamdatabase = NULL,
 ```{r eval=F}
 library(plutus)
 
-invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
-                             # dataProjFile = path_to_projfile)
+invest <- plutus::gcamInvest(# dataProjFile = path_to_projfile,
+                             dataProjFile = plutus::exampleGCAMproj)
 
 # Explore the list returned from plutus::gcamInvest
 df <- invest$data; df
@@ -61,7 +61,7 @@ dfQuery <- invest$queries; dfQuery
 
 ## Read GCAM Database
 
-```plutus::gcamInvest``` can directly read GCAM database. Assign the path to GCAM database to ```gcamdatabase```.
+```plutus::gcamInvest``` can directly read GCAM database. Assign the path of GCAM database to ```gcamdatabase``` argument.
 
 
 ```{r eval=F}
@@ -115,7 +115,7 @@ Plutus provides default data and assumptions from GCAM v5.3, which can be found 
 | Capacity factors | Intermittant technologies | Regional | L223.StubTechCapFactor_elec.csv |
 | Lifetime and steepness| Electricity generation technologies | Global | A23.globaltech_retirement.csv |
 
-```plutus::gcamInvest``` allows users to input their own data associated with their GCAM runs. Users can update values in any CSV data file. Please keep the file name and the format of each updated file unchanged. To input your own data, specify the path to the folder that contains all CSV files listed in [Table 1](#table1) in the ```gcamdataFile``` argument.
+```plutus::gcamInvest``` allows users to input their own data associated with their GCAM runs. Users can update values in any CSV file. Please keep the file name and the format of each updated file unchanged. To input your own data, specify the path to the folder that contains all CSV files listed in [Table 1](#table1) in the ```gcamdataFile``` argument.
 
 ```{r eval=F}
 library(plutus)
@@ -134,15 +134,16 @@ invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
 
 ## Re-read Data
 
-```plutus::gcamInvest``` automatically save a copy of .proj file (dataProj.proj) in the output directory after extracting GCAM output data if provided a GCAM database folder using ```gcamdatabase``` argument. Reload the same (subsetted) GCAM dataset can be much faster if using the automatically save dataProj.proj file if user wants to revisit the same GCAM dataset. You can choose to turnoff auto save function by specifying argument```reReadData = F```.
+```plutus::gcamInvest``` automatically save a copy of .proj file (default name: dataProj.proj) in the output directory after extracting GCAM output data if provided a GCAM database folder using ```gcamdatabase``` argument. Reload the same (subsetted) GCAM dataset can be much faster by using the automatically save dataProj.proj file. Users can choose to turnoff auto save function by specifying argument to ```reReadData = F```.
 
 ```{r eval=F}
 library(plutus)
 
-path_to_gcamdatabase <- 'E:/NEXO-UA/GCAM-Workspace/gcam-core_LAC_v02_5Nov2019/output/FinalRuns/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'
+path_to_gcamdatabase <- 'E:/gcam-core-gcam-v5.3/output/databse_basexdb'
 invest <- plutus::gcamInvest(gcamdatabase = path_to_gcamdatabase,
                              reReadData = F) # Default is reReadData = T
 ```
+
 
 ## Output Directory
 
@@ -156,8 +157,8 @@ library(plutus)
 
 invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
                              # dirOutputs = Your-desired-output-path, # Default is paste(getwd(), "/outputs", sep = "")
-                             folderName = 'USA', # Default is NULL
-                             nameAppend = '_Invest') # Default is ''
+                             folderName = 'USA', # Default is fodlerName = NULL
+                             nameAppend = '_Invest') # Default is nameAppend = ''
 ```
 
 You can also choose not to save any output by setting argument to ```saveData = F```.
@@ -165,5 +166,5 @@ You can also choose not to save any output by setting argument to ```saveData = 
 library(plutus)
 
 invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
-                             saveData = F)
+                             saveData = F) # Default is saveData = T
 ```

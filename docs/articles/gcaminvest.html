@@ -137,22 +137,23 @@
 <h2 class="hasAnchor">
 <a href="#read-project-file" class="anchor"></a>Read Project File</h2>
 <p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> is able to read .proj file from GCAM output by providing the path to the .proj file. Plutus also includes an example .proj dataset <code><a href="../reference/exampleGCAMproj.html">plutus::exampleGCAMproj</a></code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">library</span>(plutus)</span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a>invest &lt;-<span class="st"> </span>plutus<span class="op">::</span><span class="kw">gcamInvest</span>(<span class="dt">dataProjFile =</span> plutus<span class="op">::</span>exampleGCAMproj,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>                             <span class="co"># dataProjFile = path_to_projfile)</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># Explore the list returned from plutus::gcamInvest</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>df &lt;-<span class="st"> </span>invest<span class="op">$</span>data; df</span>
-<span id="cb2-8"><a href="#cb2-8"></a>dfParam &lt;-<span class="st"> </span>invest<span class="op">$</span>dataAggParam; dfParam</span>
-<span id="cb2-9"><a href="#cb2-9"></a>dfClass1 &lt;-<span class="st"> </span>invest<span class="op">$</span>dataAggClass1; dfClass1</span>
-<span id="cb2-10"><a href="#cb2-10"></a>dfScenario &lt;-<span class="st"> </span>invest<span class="op">$</span>scenarios; dfScenario</span>
-<span id="cb2-11"><a href="#cb2-11"></a>dfQuery &lt;-<span class="st"> </span>invest<span class="op">$</span>queries; dfQuery</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
+
+<span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span><span class="co"># dataProjFile = path_to_projfile,</span>
+                             dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span><span class="op">)</span>
+
+<span class="co"># Explore the list returned from plutus::gcamInvest</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">data</span>; <span class="va">df</span>
+<span class="va">dfParam</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">dataAggParam</span>; <span class="va">dfParam</span>
+<span class="va">dfClass1</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">dataAggClass1</span>; <span class="va">dfClass1</span>
+<span class="va">dfScenario</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">scenarios</span>; <span class="va">dfScenario</span>
+<span class="va">dfQuery</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">queries</span>; <span class="va">dfQuery</span></code></pre></div>
 </div>
 <div id="read-gcam-database" class="section level2">
 <h2 class="hasAnchor">
 <a href="#read-gcam-database" class="anchor"></a>Read GCAM Database</h2>
-<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> can directly read GCAM database. Assign the path to GCAM database to <code>gcamdatabase</code>.</p>
+<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> can directly read GCAM database. Assign the path of GCAM database to <code>gcamdatabase</code> argument.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 
@@ -236,7 +237,7 @@
 </tr>
 </tbody>
 </table>
-<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> allows users to input their own data associated with their GCAM runs. Users can update values in any CSV data file. Please keep the file name and the format of each updated file unchanged. To input your own data, specify the path to the folder that contains all CSV files listed in <a href="#table1">Table 1</a> in the <code>gcamdataFile</code> argument.</p>
+<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> allows users to input their own data associated with their GCAM runs. Users can update values in any CSV file. Please keep the file name and the format of each updated file unchanged. To input your own data, specify the path to the folder that contains all CSV files listed in <a href="#table1">Table 1</a> in the <code>gcamdataFile</code> argument.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 
@@ -254,11 +255,11 @@
 <div id="re-read-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#re-read-data" class="anchor"></a>Re-read Data</h2>
-<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> automatically save a copy of .proj file (dataProj.proj) in the output directory after extracting GCAM output data if provided a GCAM database folder using <code>gcamdatabase</code> argument. Reload the same (subsetted) GCAM dataset can be much faster if using the automatically save dataProj.proj file if user wants to revisit the same GCAM dataset. You can choose to turnoff auto save function by specifying argument<code>reReadData = F</code>.</p>
+<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> automatically save a copy of .proj file (default name: dataProj.proj) in the output directory after extracting GCAM output data if provided a GCAM database folder using <code>gcamdatabase</code> argument. Reload the same (subsetted) GCAM dataset can be much faster by using the automatically save dataProj.proj file. Users can choose to turnoff auto save function by specifying argument to <code>reReadData = F</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 
-<span class="va">path_to_gcamdatabase</span> <span class="op">&lt;-</span> <span class="st">'E:/NEXO-UA/GCAM-Workspace/gcam-core_LAC_v02_5Nov2019/output/FinalRuns/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'</span>
+<span class="va">path_to_gcamdatabase</span> <span class="op">&lt;-</span> <span class="st">'E:/gcam-core-gcam-v5.3/output/databse_basexdb'</span>
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>gcamdatabase <span class="op">=</span> <span class="va">path_to_gcamdatabase</span>,
                              reReadData <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># Default is reReadData = T</span></code></pre></div>
 </div>
@@ -277,14 +278,14 @@
 
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span>,
                              <span class="co"># dirOutputs = Your-desired-output-path, # Default is paste(getwd(), "/outputs", sep = "")</span>
-                             folderName <span class="op">=</span> <span class="st">'USA'</span>, <span class="co"># Default is NULL</span>
-                             nameAppend <span class="op">=</span> <span class="st">'_Invest'</span><span class="op">)</span> <span class="co"># Default is ''</span></code></pre></div>
+                             folderName <span class="op">=</span> <span class="st">'USA'</span>, <span class="co"># Default is fodlerName = NULL</span>
+                             nameAppend <span class="op">=</span> <span class="st">'_Invest'</span><span class="op">)</span> <span class="co"># Default is nameAppend = ''</span></code></pre></div>
 <p>You can also choose not to save any output by setting argument to <code>saveData = F</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span>,
-                             saveData <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+                             saveData <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># Default is saveData = T</span></code></pre></div>
 </div>
 </div>
   </div>

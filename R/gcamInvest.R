@@ -9,32 +9,32 @@
 #' in the same folder as the GCAM database. If FALSE will load a '.proj' file if a file
 #' with full path is provided otherwise it will search for a dataProj.proj file in the existing
 #' folder which may have been created from an old run.
-#' @param dataProjFile Default = NULL. Optional. A default 'dataProj.proj' is produced if no .Proj file is specified.
+#' @param dataProjFile Default = paste(getwd(), "/outputs/dataProj.proj", sep = ""). Optional. A default 'dataProj.proj' is produced if no .Proj file is specified.
 #' @param gcamdataFile Default = NULL. Optional. For example, gcamdataFile = "~/gcam-core-gcam-v5.3/input/gcamdata".
 #' Use full path to GCAM 'gcamdata' folder that contains costs and capacity data. Data files including:
 #'
-#' A23.globaltech_retirement.csv
-#' L223.StubTechCapFactor_elec.csv
-#' L223.GlobalTechCapFac_elec.csv
-#' L2233.GlobalIntTechCapital_elec.csv
-#' L2233.GlobalIntTechCapital_elec_cool.csv
-#' L2233.GlobalTechCapital_elec_cool.csv
-#' L2233.GlobalTechCapital_elecPassthru.csv
+#' (1) A23.globaltech_retirement.csv;
+#' (2) L223.StubTechCapFactor_elec.csv;
+#' (3) L223.GlobalTechCapFac_elec.csv;
+#' (4) L2233.GlobalIntTechCapital_elec.csv;
+#' (5) L2233.GlobalIntTechCapital_elec_cool.csv;
+#' (6) L2233.GlobalTechCapital_elec_cool.csv;
+#' (7) L2233.GlobalTechCapital_elecPassthru.csv
 #' @param scenOrigNames Default = "All". Original Scenarios names in GCAM database in a string vector.
 #' For example c('scenario1','scenario2).
-#' @param scenNewNames New Names which may be shorter and more useful for figures etc.
+#' @param scenNewNames Default = NULL. New Names which may be shorter and more useful for figures etc.
 #' Default will use Original Names. For example c('scenario1','scenario2)
-#' @param regionsSelect The regions to analyze in a vector. Example c('Colombia','Argentina'). Full list:
+#' @param regionsSelect Default = NULL. The regions to analyze in a vector. Example c('Colombia','Argentina'). Full list:
 #'
 #' USA, Africa_Eastern, Africa_Northern, Africa_Southern, Africa_Western, Australia_NZ, Brazil, Canada
 #' Central America and Caribbean, Central Asia, China, EU-12, EU-15, Europe_Eastern, Europe_Non_EU,
 #' European Free Trade Association, India, Indonesia, Japan, Mexico, Middle East, Pakistan, Russia,
 #' South Africa, South America_Northern, South America_Southern, South Asia, South Korea, Southeast Asia,
 #' Taiwan, Argentina, Colombia, Uruguay
-#' @param dirOutputs Full path to directory for outputs
+#' @param dirOutputs Default = paste(getwd(), "/outputs", sep = ""). Full path to directory for outputs
 #' @param folderName Default = NULL
 #' @param nameAppend  Default = "". Name to append to saved files.
-#' @param saveData Default = "T". Set to F if do not want to save any data to file.
+#' @param saveData Default = TRUE. Set to F if do not want to save any data to file.
 #' @keywords gcam, gcam database, query
 #' @return Returns (1) annual and cumulative costs and power generation of
 #' premature retired electricity infrustructure (including hydropower);
