@@ -10,32 +10,36 @@ authors:
   - name: Mengqi Zhao
     orcid: 0000-0001-5385-2758
     affiliation: 1
-  - name: Brinda Yarlagadda
-    affiliation: 3
+  - name: Matthew Binsted
+    affiliation: 2
   - name: Tom Wild
     orcid: 0000-0002-6045-7729
-    affiliation: "1, 2"
+    affiliation: "1, 3"
   - name: Zarrar Khan
     orcid: 0000-0002-8147-8553
+    affiliation: 3
+  - name: Gokul Lyer
     affiliation: 2
+  - name: Brinda Yarlagadda
+    affiliation: 4
+  - name: Silvia Regina Santos Da Silva
+    affiliation: 5
   - name: Chris Vernon
     orcid: 0000-0002-3406-6214
-    affiliation: 4
+    affiliation: 2
   - name: Pralit Patel
-    affiliation: 4
-  - name: Matthew Binsted
-    affiliation: 4
-  - name: Gokul Lyer
-    affiliation: 4
+    affiliation: 2
 affiliations:
   - name: Earth System Science Interdisciplinary Center (ESSIC), University of Maryland, College Park, MD, USA
     index: 1
-  - name: Joint Global Change Research Institute, Pacific Northwest National Laboratory (PNNL), College Park, MD, USA
-    index: 2
-  - name: School of Public Policy, University of Maryland, College Park, MD, USA
-    index: 3
   - name: Pacific Northwest National Laboratory (PNNL), Richland, WA, USA
+    index: 2
+  - name: Joint Global Change Research Institute (JGCRI), Pacific Northwest National Laboratory (PNNL), College Park, MD, USA
+    index: 3
+  - name: School of Public Policy, University of Maryland, College Park, MD, USA
     index: 4
+  - name: Department of Atmospheric and Oceanic Science, University of Maryland, College Park, MD, USA
+    index: 5
 date: 13 March 2021
 bibliography: paper.bib
 ---
@@ -62,7 +66,7 @@ $$ S \: Curve \: Fraction =  \frac{1}{1+ e^{steepness \times (t-halflife)} } $$
 
 ```plutus::hydroInvest``` updates the ```plutus::elecInvest``` output with corrected capital investment in the hydropowwer sector.
 
-```plutus::gcamInvest``` is the integrated function that reads CGAM output, excutes ```plutus::elecInvest``` and ```plutus::hydroInvest``` functions, and generates output in a data structure that can be used by metis `[@khan:2020]`. This function is developed to connect with GCAM and other tools for post-processesing and  visualization. ```plutus::gcamInvest``` provides flexibility to users with features such as:
+```plutus::gcamInvest``` is the integrated function that reads CGAM output, excutes ```plutus::elecInvest``` and ```plutus::hydroInvest``` functions, and generates output in a data structure that can be used by metis `[@khan:2020]`. This function is developed to connect with GCAM and other tools for post-processesing and visualization. ```plutus::gcamInvest``` provides flexibility to users with features such as:
 
 - Access to different GCAM output database formats. GCAM output databases can be in formats such as ".proj" files or a folder of ".basex" files. ```plutus::gcamInvest``` is able to extract GCAM data from both types of GCAM database by integrating functions from the R package "rgcam".
 - Use default or user-provided input data. The function will take the capital cost, capacity factor data and assumptions of steepness and financial lifetime if provided by the user following the format of each data file, otherwise it will use the default dataset collected from GCAM 5.3.
@@ -75,8 +79,7 @@ $$ S \: Curve \: Fraction =  \frac{1}{1+ e^{steepness \times (t-halflife)} } $$
 ## Implementation
 For demonstration, we use an example dataset from GCAM v5.3 to estimate the stranded assets and new capital investments in the USA power sector (\autoref{fig:2}). Figure 2 was a product by first using plutus to calculate stranded assets and new installations in the USA and then collaborating metis for visualizaitons `[@khan:2020]`. Plutus provides and effective means of disseminating complex ecomonic implications in magnitudes of strandded assets and investments concerning energy policy. Plutus becomes a more convenient tool in discovering outputs by interations with other R packages like metis.  
 
-![**Figure 2.** Premature retirements and new installations in economic value (billion 2010 USD) and power (GW) terms in the USA power sector.
-\label{fig:2}](Figures/Figure2.png)
+![**Figure 2.** Premature retirements and new installations in economic value (billion 2010 USD) and power (GW) terms in the USA power sector.\label{fig:2}](Figures/Figure2.png)
 
 
 # Acknowledgement
