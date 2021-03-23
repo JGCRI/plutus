@@ -30,4 +30,3 @@ Remotes:
 	github::JGCRI/rgcam
 VignetteBuilder: 
 	knitr
-Config/testthat/edition: 3
