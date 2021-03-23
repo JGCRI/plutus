@@ -3,6 +3,7 @@
 #' Function that calculates electricity subsector investment requirements from a given GCAM run.
 #'
 #' @param elec_gen_vintage Electricity vintage query result
+#' @param gcamdataFile Default = NULL. Optional. For example, gcamdataFile = "~/gcam-core-gcam-v5.3/input/gcamdata".
 #' @param start_year Start year of time frame of interest for analysis
 #' @param end_year end_year of time frame of interest for analysis
 #' @param world_regions GCAM regions for which to collect data
@@ -24,13 +25,17 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     s_curve_adj -> OG_gen -> gen_expect -> prev_yr_expect -> additions -> add_adj ->
     ret_adj -> ret_adj_OG -> natural_retire -> input.capital -> fixed.charge.rate ->
     add_GW -> capital.overnight -> early_ret -> early_ret_GW -> agg_tech ->
-    cap_invest -> unrec_Cap -> dep_factor -> unrec_cap
+    cap_invest -> unrec_Cap -> dep_factor -> unrec_cap -> stub.technology
+
+  if(is.null(world_regions)){
+    world_regions <- unique(elec_gen_vintage$region)
+  }
 
   # ============================================================================
   # Mapping files
 
   years_mapping <- data.frame(year = c(rep("final-calibration-year", 1),
-                                       rep("initial-future-year", 18)),
+                                       rep("initial-future-year", length(seq(plutus::assumptions("GCAMbaseYear") + 5, 2100, by = 5)))),
                               vintage = c(plutus::assumptions("GCAMbaseYear"),
                                           seq(plutus::assumptions("GCAMbaseYear") + 5, 2100, by = 5)))%>%
     dplyr::mutate(year=as.character(year));years_mapping
@@ -38,34 +43,35 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
 
   # Read gcam data files from user provided path
   if(!is.null(gcamdataFile)){
-    if(!dir.exists(gcamdataFile) | !dir.exists(paste(gcamdataFile, 'outputs', sep = '/'))){
-      print(paste('WARNING: Required folder ', gcamdataFile, '/', 'outputs/', ' does not exist.', sep = ''))
+    if(!dir.exists(gcamdataFile)){
+      print(gsub('//', '/', paste('WARNING: Folder ', gcamdataFile, ' does not exist.', sep = '')))
       gcamdataFile <- NULL
     }else{
       file_names <- c('A23.globaltech_retirement.csv',
-                      'L223.GlobalIntTechCapFac_elec.csv',
                       'L223.GlobalTechCapFac_elec.csv',
+                      'L223.StubTechCapFactor_elec.csv',
                       'L2233.GlobalIntTechCapital_elec.csv',
                       'L2233.GlobalIntTechCapital_elec_cool.csv',
                       'L2233.GlobalTechCapital_elec_cool.csv',
                       'L2233.GlobalTechCapital_elecPassthru.csv')
-      data_files <- c(paste(gcamdataFile, 'inst/extdata/energy', file_names[1], sep='/'),
-                      paste(gcamdataFile, 'outputs', file_names[2:7], sep='/'))
-      if(any(!file.exists(data_files))){
-        print('WARNING: One or more required seven data files is missing.')
+      data_files <- list.files(path = gcamdataFile, pattern = paste(file_names, collapse = '|'), recursive = TRUE, full.names = TRUE)
+      if(any(!file.exists(data_files)) | (length(file_names) != length(data_files))){
+        missing_files <- setdiff(file_names, basename(data_files))
+        print(paste('WARNING: One or more required data files are missing:', missing_files))
         gcamdataFile <- NULL
       }else{
         print('------------------------------------------------------------------')
         print('Reading cost and capacity data from user provided gcamdata folder:')
         print('------------------------------------------------------------------')
-        print(paste(data_files))
-        cap_cost_tech <- data.table::fread(paste(gcamdataFile, 'outputs', 'L2233.GlobalTechCapital_elecPassthru.csv', sep='/'), skip=1, stringsAsFactors = FALSE)
-        cap_cost_cool <- data.table::fread(paste(gcamdataFile, 'outputs', 'L2233.GlobalTechCapital_elec_cool.csv', sep='/'), skip=1, stringsAsFactors = FALSE)
-        cap_cost_int_tech <- data.table::fread(paste(gcamdataFile, 'outputs', 'L2233.GlobalIntTechCapital_elec.csv', sep='/'), skip=1, stringsAsFactors = FALSE)
-        cap_cost_int_cool <- data.table::fread(paste(gcamdataFile, 'outputs', 'L2233.GlobalIntTechCapital_elec_cool.csv', sep='/'), skip=1, stringsAsFactors = FALSE)
-        capac_fac <- data.table::fread(paste(gcamdataFile, 'outputs', 'L223.GlobalTechCapFac_elec.csv', sep='/'), skip=1, stringsAsFactors = FALSE)
-        capac_fac_int <- data.table::fread(paste(gcamdataFile, 'outputs', 'L223.GlobalIntTechCapFac_elec.csv', sep='/'), skip=1, stringsAsFactors = FALSE)
-        A23.globaltech_retirement <- data.table::fread(paste(gcamdataFile, 'inst/extdata/energy', 'A23.globaltech_retirement.csv',sep='/'), skip=1)
+        print(gsub('//', '/', paste(data_files)))
+        A23.globaltech_retirement <- data.table::fread(data_files[1], skip=1)
+        capac_fac <- data.table::fread(data_files[2], skip=1, stringsAsFactors = FALSE)
+        capac_fac_region <- data.table::fread(data_files[3], skip=1, stringsAsFactors = FALSE)
+        cap_cost_int_tech <- data.table::fread(data_files[4], skip=1, stringsAsFactors = FALSE)
+        cap_cost_int_cool <- data.table::fread(data_files[5], skip=1, stringsAsFactors = FALSE)
+        cap_cost_cool <- data.table::fread(data_files[6], skip=1, stringsAsFactors = FALSE)
+        cap_cost_tech <- data.table::fread(data_files[7], skip=1, stringsAsFactors = FALSE)
+
       }
     }
   }
@@ -74,13 +80,14 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     print('---------------------------------------')
     print('Using default cost and capacity data...')
     print('---------------------------------------')
-    cap_cost_tech <- plutus::data_cap_cost_tech
-    cap_cost_cool <- plutus::data_cap_cost_cool
+    A23.globaltech_retirement <- plutus::data_A23.globaltech_retirement
+    capac_fac <- plutus::data_capac_fac
+    capac_fac_region <- plutus::data_capac_fac_region
     cap_cost_int_tech <- plutus::data_cap_cost_int_tech
     cap_cost_int_cool <- plutus::data_cap_cost_int_cool
-    capac_fac <- plutus::data_capac_fac
-    capac_fac_int <- plutus::data_capac_fac_int
-    A23.globaltech_retirement <- plutus::data_A23.globaltech_retirement
+    cap_cost_cool <- plutus::data_cap_cost_cool
+    cap_cost_tech <- plutus::data_cap_cost_tech
+
   }
 
 
@@ -95,30 +102,54 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     waterTechsCooling <- waterTechs %>% dplyr::mutate(wtechnology=paste(technology," (dry cooling)",sep="")) %>%
       dplyr::bind_rows(waterTechs %>% dplyr::mutate(wtechnology=paste(technology," (once through)",sep=""))) %>%
       dplyr::bind_rows(waterTechs %>% dplyr::mutate(wtechnology=paste(technology," (recirculating)",sep=""))) %>%
-      dplyr::bind_rows(waterTechs %>% dplyr::mutate(wtechnology=paste(technology," (seawater)",sep="")))
+      dplyr::bind_rows(waterTechs %>% dplyr::mutate(wtechnology=paste(technology," (seawater)",sep=""))) %>%
+      dplyr::bind_rows(waterTechs %>% dplyr::mutate(wtechnology=paste(technology," (cooling pond)",sep=""))) %>%
+      dplyr::bind_rows(waterTechs %>% dplyr::mutate(wtechnology=paste(technology," (dry_hybrid)",sep=""))) %>%
+      dplyr::bind_rows(waterTechs %>% dplyr::mutate(wtechnology=paste(technology,"",sep="")))
   }else{waterTechsCooling <- waterTechs %>% dplyr::mutate(wtechnology=technology)}
 
   s_curve_shutdown <- s_curve_shutdown %>%
-    dplyr::left_join(waterTechsCooling,by="technology")%>%
-    dplyr::mutate(technology=wtechnology)%>%
+    dplyr::left_join(waterTechsCooling, by = "technology") %>%
+    dplyr::mutate(technology = wtechnology) %>%
     dplyr::select(-wtechnology)
 
+  # ============================================================================
   # Combine the cooling technology cost sheets, and the electricity generating technology cost dataframes
   elec_gen_tech_cost <- rbind(cap_cost_tech, cap_cost_int_tech)
   # Get dispatchable capacity factor column added to elec_gen_tech_cost
   capac_fac %>% dplyr::select(-sector.name, -subsector.name) -> capac_fac_new
   elec_gen_tech_cost <- merge(elec_gen_tech_cost, capac_fac_new, by=c("technology", "year"), all=TRUE)
-  elec_gen_tech_cost <- elec_gen_tech_cost[, c(3,4,1,2,5,6,7,8)]  # Redplyr::arrange columns
-  # Get intermittent capacity factor column added to elec_gen_tech_cost
-  capac_fac_int %>% dplyr::select(-sector.name, -subsector.name) %>%
-    dplyr::rename(technology=intermittent.technology) %>% dplyr::rename(capacity.factor.temp=capacity.factor) -> capac_fac_int_new
-  elec_gen_tech_cost <- merge(elec_gen_tech_cost, capac_fac_int_new, by=c("technology", "year"), all=TRUE)
-  elec_gen_tech_cost <- elec_gen_tech_cost[, c(3,4,1,2,5,6,7,8,9)]  # Redplyr::arrange columns
-  elec_gen_tech_cost[is.na(elec_gen_tech_cost)] <- 0
-  elec_gen_tech_cost %>% dplyr::mutate(capacity.factor=capacity.factor + capacity.factor.temp) %>%
-    dplyr::select(-capacity.factor.temp) ->elec_gen_tech_cost
 
-  cool_tech_cost <- rbind(cap_cost_cool, cap_cost_int_cool)
+  df_elec_gen <- data.frame(region = rep(x = world_regions, each = nrow(elec_gen_tech_cost)),
+                            technology = rep(x = elec_gen_tech_cost$technology, times = length(world_regions)),
+                            year = rep(x = elec_gen_tech_cost$year, times = length(world_regions)))
+  elec_gen_tech_cost_global <- df_elec_gen %>%
+    dplyr::left_join(elec_gen_tech_cost, by = c('technology', 'year'))
+
+  # Get intermittent capacity factor column added to elec_gen_tech_cost
+  capac_fac_int_new <- capac_fac_region %>%
+    dplyr::rename(sector.name = supplysector,
+                  subsector.name = subsector,
+                  technology = stub.technology,
+                  capacity.factor.region = capacity.factor) %>%
+    dplyr::filter(region %in% world_regions) %>%
+    dplyr::select(-sector.name, -subsector.name)
+
+  elec_gen_tech_cost <- elec_gen_tech_cost_global %>%
+    dplyr::left_join(capac_fac_int_new, by = c('region', 'technology', 'year'))
+
+  elec_gen_tech_cost <- elec_gen_tech_cost %>%
+    dplyr::mutate(capacity.factor=ifelse(is.na(capacity.factor.region), capacity.factor, capacity.factor.region)) %>%
+    dplyr::select(-capacity.factor.region) %>%
+    dplyr::relocate(region, sector.name, subsector.name, technology, year, input.capital, capital.overnight, fixed.charge.rate, capacity.factor)
+
+
+  cool_tech_cost_temp <- rbind(cap_cost_cool, cap_cost_int_cool)
+  df_cooling <- data.frame(region = rep(x = world_regions, each = nrow(cool_tech_cost_temp)),
+                           technology = rep(x = cool_tech_cost_temp$technology, times = length(world_regions)),
+                           year = rep(x = cool_tech_cost_temp$year, times = length(world_regions)))
+  cool_tech_cost <- df_cooling %>%
+    dplyr::left_join(cool_tech_cost_temp, by = c('technology', 'year'))
   cool_tech_cost[,'capacity.factor'] <- NA  # New column for cap fac
   cool_tech_cost[,'old.technology'] <- NA  # New column for cap fac
   # Make list of years and technologies (by cooling)
@@ -144,30 +175,23 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
         paste0(dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$technology[1])
 
       cool_tech_cost$capacity.factor[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
-        dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$capacity.factor[1]
+        dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$capacity.factor
 
     }
   }
+
   cap_cost <- cool_tech_cost
   A <- unique(cool_tech_cost$old.technology)
   B <- unique(elec_gen_tech_cost$technology)
-  C <- setdiff(B,A)
+  C <- setdiff(B,A) # the technolgies being used in elec_gen_tech_cost, but not included in cooling tech
   D <- dplyr::filter(elec_gen_tech_cost, technology %in% C)
   D[,'old.technology'] <- NA
   cap_cost <- rbind(cap_cost, D)
 
   tech_mapping <- plutus::data_tech_mapping
 
-  # ============================================================================
-  # Some constants and conversion factors
-
-  # Constants
-  tech_order <- c("Coal", "Coal CCS", "Gas", "Gas CCS", "Oil", "Oil CCS", "Biomass", "Biomass CCS", "Nuclear",
-                  "Geothermal", "Hydro", "Wind", "Solar", "CHP", "Battery", "energy reduction")
-
 
   # ============================================================================
-
   # dplyr::filter scenarios that meet the cumulative emissions budgets
 
   elec_gen_vintage %>%
@@ -182,22 +206,10 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::mutate(vintage = as.numeric(vintage)) %>%
     dplyr::filter(region %in% world_regions, Year <= end_year, vintage >= plutus::assumptions("GCAMbaseYear"), vintage <= end_year, Year >= vintage) -> elec_vintage
 
-  # Calculate additions by vintage
-  elec_vintage %>%
-    dplyr::mutate(additions = dplyr::if_else(vintage == Year, value, 0)) -> elec_vintage_add
-
-  # Calculate retirements by vintage
-  elec_vintage %>%
-    dplyr::group_by(scenario, region, subsector, technology, Units, vintage) %>%
-    dplyr::mutate(prev_year = dplyr::lag(value, n = 1L)) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(prev_year = dplyr::if_else(is.na(prev_year), 0, prev_year),
-                  retirements = prev_year - value,
-                  retirements = dplyr::if_else(retirements < 0, 0, retirements)) %>%
-    dplyr::arrange(vintage, technology, region) -> elec_vintage_ret
-
+  # ============================================================================
   # Calculate s-curve output fraction
   # Hydro assumed to never retire, lifetime set to 110 years (hitting error, for now hydro is NA)
+  # Wind and Solar are assumed never retire as well (MZ)
   elec_vintage %>%
     dplyr::left_join(years_mapping, by = c("vintage")) %>%
     dplyr::left_join(s_curve_shutdown %>% dplyr::select(-supplysector),
@@ -237,6 +249,22 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::ungroup() -> elec_retire_expect
 
 
+  # ============================================================================
+  # Calculate additions by vintage
+  elec_vintage %>%
+    dplyr::mutate(additions = dplyr::if_else(vintage == Year, value, 0)) -> elec_vintage_add
+
+  # Calculate retirements by vintage
+  elec_vintage %>%
+    dplyr::group_by(scenario, region, subsector, technology, Units, vintage) %>%
+    dplyr::mutate(prev_year = dplyr::lag(value, n = 1L)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(prev_year = dplyr::if_else(is.na(prev_year), 0, prev_year),
+                  retirements = prev_year - value,
+                  retirements = dplyr::if_else(retirements < 0, 0, retirements)) %>%
+    dplyr::arrange(vintage, technology, region) -> elec_vintage_ret
+
+
   # Total additions per region/ technology/ year (in EJ)
   elec_vintage_add %>%
     dplyr::group_by(scenario, region, subsector, technology, Units, Year) %>%
@@ -249,13 +277,14 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::summarise(retirements = sum(retirements)) %>%
     dplyr::ungroup() -> elec_total_ret
 
-  # Adjusted additions and retirements
+  # Adjusted (Net) additions and retirements
   # Merge total additions and retirements data tables
   elec_total_add %>%
     dplyr::left_join(elec_total_ret, by = c("scenario", "region", "subsector", "technology", "Units", "Year")) %>%
     dplyr::mutate(add_adj = dplyr::if_else(additions > retirements, additions - retirements, 0),
                   ret_adj = dplyr::if_else(retirements > additions, retirements - additions, 0)) -> elec_add_ret
 
+  # ============================================================================
   # Assign adjusted retirements to vintages, assuming older vintages retire first
   # Merge retirement by vintage and retirement by year data tables
   elec_vintage_ret %>%
@@ -283,6 +312,8 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
   for (v in vintage) {
 
     # Assign adjusted retirements to vintages, assuming older vintages retire first
+    # retirements will be adjusted to the smaller value between ret_adj and retirements (MZ)
+    # ret_adj will be adjusted to the difference between ret_adj and retirements if the difference >0 (MZ)
     elec_ret_adj %>%
       dplyr::filter(vintage == v) %>%
       dplyr::select(-ret_adj) %>%
@@ -313,6 +344,7 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::filter(Year >= vintage) -> elec_ret_vintage
 
 
+  # ============================================================================
   # Subtract expected retirements to calculate premature retirements
   elec_ret_vintage %>%
     dplyr::left_join(elec_retire_expect %>%
@@ -321,12 +353,12 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::mutate(early_ret = dplyr::if_else(retirements > natural_retire, retirements - natural_retire, 0)) -> elec_ret_premature
 
 
-  # Calculate final (adjusted) additions in GW
+  # Calculate final (adjusted) additions in GW /year (8760 hours/yr = 365 days/yr * 24 hours/day)
   elec_add_ret %>%
     dplyr::select(-ret_adj) %>%
     dplyr::left_join(cap_cost %>%
                        dplyr::select(-sector.name, -input.capital, -fixed.charge.rate),
-                     by = c("subsector" = "subsector.name", "technology", "Year" = "year")) %>%
+                     by = c("region", "subsector" = "subsector.name", "technology", "Year" = "year")) %>%
     dplyr::mutate(add_GW = (add_adj * plutus::assumptions("convEJ2GWh")) / (8760 * capacity.factor),
                   Units = "GW") -> elec_add_GW
 
@@ -341,7 +373,7 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::select(-retirements, -natural_retire) %>%
     dplyr::left_join(cap_cost %>%
                        dplyr::select(-sector.name, -input.capital, -fixed.charge.rate),
-                     by = c("subsector" = "subsector.name", "technology", "vintage" = "year")) %>%
+                     by = c("region", "subsector" = "subsector.name", "technology", "vintage" = "year")) %>%
     dplyr::mutate(capital.overnight = dplyr::if_else(vintage == 2010, capital.overnight * .5, capital.overnight * 1),
                   early_ret_GW = (early_ret * plutus::assumptions("convEJ2GWh")) / (8760 * capacity.factor),
                   Units = "GW") -> elec_ret_GW
@@ -357,7 +389,11 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
                   unrec_cap = (early_ret_GW * plutus::assumptions("convGW_kW") * capital.overnight * dep_factor * plutus::assumptions("convUSD_1975_2010")) / 1e9,
                   Units = "billion 2010 USD") -> elec_ret_cap_cost
 
+
   # ============================================================================
+  # Constants
+  tech_order <- c("Coal", "Coal CCS", "Gas", "Gas CCS", "Oil", "Oil CCS", "Biomass", "Biomass CCS", "Nuclear",
+                  "Geothermal", "Hydro", "Wind", "Solar", "CHP", "Battery", "energy reduction")
 
   # New Cap Costs
   elec_add_cap_invest %>%

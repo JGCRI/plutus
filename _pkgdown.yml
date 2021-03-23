@@ -8,20 +8,14 @@ navbar:
     - text: "Guides"
       icon: fas fa-book
       menu:
-      - text: Example for gcamelecinvest
+      - text: gcamInvest
         href: articles/gcamInvest.html
-      - text: Example for elecInvest
-        href: articles/elecInvest.html
-      - text: Example for hydroInvest
-        href: articles/hydroInvest.html
     - icon: fas fa-code-branch
       text: "Reference"
       href: reference/index.html
     - icon: fa-newspaper-o
       text: "News"
       href: news/index.html
-    - text: Cheatsheet
-      href: https://github.com/JGCRI/elecinvest/blob/main/plutusCheatsheet.pdf
       
 reference:
 - title: "Functions"

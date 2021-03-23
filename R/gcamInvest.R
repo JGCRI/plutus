@@ -5,7 +5,7 @@
 #'
 #' @param gcamdatabase Default = NULL. Full path to GCAM database folder.
 #' @param queryFile Defualt = NULL. When NULL plutus loads pre-saved xml file plutus::xmlElecQueries
-#' @param reReadData If TRUE will read the GCAM data base and create a queryData.proj file
+#' @param reReadData Default = TRUE. If TRUE will read the GCAM data base and create a queryData.proj file
 #' in the same folder as the GCAM database. If FALSE will load a '.proj' file if a file
 #' with full path is provided otherwise it will search for a dataProj.proj file in the existing
 #' folder which may have been created from an old run.
@@ -14,7 +14,7 @@
 #' Use full path to GCAM 'gcamdata' folder that contains costs and capacity data. Data files including:
 #'
 #' A23.globaltech_retirement.csv
-#' L223.GlobalIntTechCapFac_elec.csv
+#' L223.StubTechCapFactor_elec.csv
 #' L223.GlobalTechCapFac_elec.csv
 #' L2233.GlobalIntTechCapital_elec.csv
 #' L2233.GlobalIntTechCapital_elec_cool.csv
@@ -61,13 +61,14 @@ gcamInvest <- function(gcamdatabase = NULL,
   NULL -> vintage -> year -> xLabel -> x -> value -> sector -> scenario -> region -> param -> origX -> origValue ->
     origUnits -> origScen -> origQuery -> classPalette2 -> classPalette1 -> classLabel2 -> classLabel1 -> class2 ->
     class1 -> connx -> aggregate -> Units -> sources -> paramx -> technology -> input -> output -> regionsSelectAll ->
-    . -> agg_tech -> subsector -> paramsSelectAll -> dataTemplate -> datax -> group -> basin -> subRegion -> query
+    . -> agg_tech -> subsector -> dataTemplate -> datax -> group -> basin -> subRegion -> query
 
 
   #---------------------
   # Params and Queries
   #---------------------
-
+  paramsSelect <- c("elecNewCapCost", "elecNewCapGW", "elecAnnualRetPrematureCost", "elecAnnualRetPrematureGW",
+                    "elecCumCapCost", "elecCumCapGW", "elecCumRetPrematureCost", "elecCumRetPrematureGW")
   queriesSelectx <- c("elec gen by gen tech and cooling tech and vintage",
                       "Electricity generation by aggregate technology")
 
@@ -377,6 +378,7 @@ gcamInvest <- function(gcamdatabase = NULL,
     end_year_i = max(unique(tbl$year))
     temp_list = list()
     for (scen in scenarios){
+      print(paste('Calculating electricity investment for scenario: ', scen, sep = ''))
       elec_gen_vintage <- tbl %>%
         dplyr::filter(scenario == scen) %>%
         tidyr::spread(year, value) %>%
@@ -743,6 +745,8 @@ gcamInvest <- function(gcamdatabase = NULL,
     }
 
     datax <- dplyr::bind_rows(datax, tbl1,tbl2,tbl3,tbl4,tbl5,tbl6,tbl7,tbl8)
+
+    datax$class1[datax$class1 %in% 'Bioenergy CCS'] <- 'h Bioenergy w/CCS'
   } else {
     # if(queryx %in% queriesSelectx){print(paste("Query '", queryx, "' not found in database", sep = ""))}
   }

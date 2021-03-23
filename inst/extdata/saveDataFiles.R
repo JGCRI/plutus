@@ -5,20 +5,6 @@ library(XML)
 
 rawDataFolder = "E:/NEXO-UA/Github/plutus/inst/extdata/"
 
-# # exampleDataCSV
-# exampleDataCSV = data.table::fread(paste0(rawDataFolder,"exampleData.csv"),header=T)
-# exampleDataCSV
-# use_data(exampleDataCSV, overwrite=T)
-#
-#
-# # exampleDataR
-# exampleDataR = data.frame(sector=c("a","b",'c'),
-#                           coefficients=c(1,2,3))
-# exampleDataR
-# use_data(exampleDataR, overwrite=T)
-
-
-
 #-------------------
 # Data
 #-------------------
@@ -42,7 +28,7 @@ data_cap_cost_int_tech <- data.table::fread(paste(rawDataFolder,"L2233.GlobalInt
 data_cap_cost_int_cool <- data.table::fread(paste(rawDataFolder,"L2233.GlobalIntTechCapital_elec_cool.csv", sep=""), skip=1, stringsAsFactors = FALSE)
 data_A23.globaltech_retirement <- data.table::fread(paste(rawDataFolder,"A23.globaltech_retirement.csv",sep=""), skip=1)
 data_capac_fac <- data.table::fread(paste(rawDataFolder,"L223.GlobalTechCapFac_elec.csv", sep=""), skip=1, stringsAsFactors = FALSE)
-data_capac_fac_int <- data.table::fread(paste(rawDataFolder,"L223.GlobalIntTechCapFac_elec.csv", sep=""), skip=1, stringsAsFactors = FALSE)
+data_capac_fac_region <- data.table::fread(paste(rawDataFolder,"L223.StubTechCapFactor_elec.csv", sep=""), skip=1, stringsAsFactors = FALSE)
 data_tech_mapping <- data.table::fread(paste(rawDataFolder,"agg_tech_mapping.csv", sep=""), skip=1)
 use_data(data_capfactors, overwrite=T)
 use_data(data_cap_cost_tech, overwrite=T)
@@ -51,7 +37,7 @@ use_data(data_cap_cost_int_tech, overwrite=T)
 use_data(data_cap_cost_int_cool, overwrite=T)
 use_data(data_A23.globaltech_retirement, overwrite=T)
 use_data(data_capac_fac, overwrite=T)
-use_data(data_capac_fac_int, overwrite=T)
+use_data(data_capac_fac_region, overwrite=T)
 use_data(data_tech_mapping, overwrite=T)
 
 #-------------------

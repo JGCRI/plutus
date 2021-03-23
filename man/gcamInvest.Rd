@@ -24,7 +24,7 @@ gcamInvest(
 
 \item{queryFile}{Defualt = NULL. When NULL plutus loads pre-saved xml file plutus::xmlElecQueries}
 
-\item{reReadData}{If TRUE will read the GCAM data base and create a queryData.proj file
+\item{reReadData}{Default = TRUE. If TRUE will read the GCAM data base and create a queryData.proj file
 in the same folder as the GCAM database. If FALSE will load a '.proj' file if a file
 with full path is provided otherwise it will search for a dataProj.proj file in the existing
 folder which may have been created from an old run.}
@@ -35,7 +35,7 @@ folder which may have been created from an old run.}
 Use full path to GCAM 'gcamdata' folder that contains costs and capacity data. Data files including:
 
 A23.globaltech_retirement.csv
-L223.GlobalIntTechCapFac_elec.csv
+L223.StubTechCapFactor_elec.csv
 L223.GlobalTechCapFac_elec.csv
 L2233.GlobalIntTechCapital_elec.csv
 L2233.GlobalIntTechCapital_elec_cool.csv

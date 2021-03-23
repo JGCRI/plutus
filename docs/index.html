@@ -53,13 +53,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/gcamInvest.html">Example for gcamelecinvest</a>
-    </li>
-    <li>
-      <a href="articles/elecInvest.html">Example for elecInvest</a>
-    </li>
-    <li>
-      <a href="articles/hydroInvest.html">Example for hydroInvest</a>
+      <a href="articles/gcamInvest.html">gcamInvest</a>
     </li>
   </ul>
 </li>
@@ -76,9 +70,6 @@
      
     News
   </a>
-</li>
-<li>
-  <a href="https://github.com/JGCRI/elecinvest/blob/main/plutusCheatsheet.pdf">Cheatsheet</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -100,10 +91,82 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
+
 <div id="plutus" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#plutus" class="anchor"></a>plutus</h1></div>
+<p>Plutus is designed for GCAM v5.3 (excluding GCAM-USA). <br></p>
+<!-------------------------->
+<!-------------------------->
 </div>
+<div id="contents" class="section level1">
+<h1 class="hasAnchor">
+<a href="#contents" class="anchor"></a><a name="Contents"></a>Contents</h1>
+<!-------------------------->
+<!-------------------------->
+<ul>
+<li><a href="#Introduction">Introduction</a></li>
+<li><a href="#Citation">Citation</a></li>
+<li><a href="#InstallGuides">Installation Guide</a></li>
+<li><a href="#How-toGuides">How-to Guides</a></li>
+</ul>
+<!--------------------------><!-------------------------->
+</div>
+<div id="introduction" class="section level1">
+<h1 class="hasAnchor">
+<a href="#introduction" class="anchor"></a><a name="Introduction"></a>Introduction</h1>
+<!-------------------------->
+<!-------------------------->
+<p><a href="#Contents">Back to Contents</a></p>
+<p><br></p>
+<!-------------------------->
+<!-------------------------->
+</div>
+<div id="citation" class="section level1">
+<h1 class="hasAnchor">
+<a href="#citation" class="anchor"></a><a name="Citation"></a>Citation</h1>
+<!-------------------------->
+<!-------------------------->
+<p>Zhao, M., Binsted, M., Wild, T.B., Khan, Z., Iyer, G., Yarlagadda, B., Santos Da Silva, S.R., Vernon, C., Patel, P., (in preparation). Plutus - An R package to calculate electricity investments and stranded assets from the Global Change Analysis Model. Journal of Open Source Software.</p>
+<p><a href="#Contents">Back to Contents</a></p>
+<p><br></p>
+<!-------------------------->
+<!-------------------------->
+</div>
+<div id="installation-guides" class="section level1">
+<h1 class="hasAnchor">
+<a href="#installation-guides" class="anchor"></a><a name="InstallationGuides"></a>Installation Guides</h1>
+<!-------------------------->
+<!-------------------------->
+<ol>
+<li>
+<p>Download and install:</p>
+<ul>
+<li>R (<a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>)</li>
+<li>R studio (<a href="https://www.rstudio.com/" class="uri">https://www.rstudio.com/</a>)</li>
+</ul>
+</li>
+<li><p>Open R studio:</p></li>
+</ol>
+<pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages('devtools')
+devtools::install_github('JGCRI/rgcam')
+devtools::install_github('JGCRI/plutus')</a></code></pre>
+<p><a href="#Contents">Back to Contents</a></p>
+<p><br></p>
+<!-------------------------->
+<!-------------------------->
+</div>
+<div id="how-to-guides" class="section level1">
+<h1 class="hasAnchor">
+<a href="#how-to-guides" class="anchor"></a><a name="How-toGuides"></a>How-to Guides</h1>
+<!-------------------------->
+<!-------------------------->
+<p><code><a href="reference/gcamInvest.html">plutus::gcamInvest</a></code> provides all-in-one workflow that reads gcamdata, processes queries, and estimates stranded assets and capital investments. Please visit <a href="https://jgcri.github.io/plutus/articles/gcamInvest.html">guides for <code>plutus::gcamInvest</code></a>.</p>
+<p><a href="#Contents">Back to Contents</a></p>
+<p><br></p>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -134,7 +197,15 @@
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/JGCRI/plutus/actions/workflows/pkgdown.yaml"><img src="https://github.com/JGCRI/plutus/actions/workflows/pkgdown.yaml/badge.svg" alt="docs"></a></li>
+<li><a href="https://github.com/JGCRI/plutus/actions/workflows/rcmd.yml"><img src="https://github.com/JGCRI/plutus/actions/workflows/rcmd.yml/badge.svg" alt="build"></a></li>
+<li><a href="https://codecov.io/gh/JGCRI/plutus"><img src="https://codecov.io/gh/JGCRI/plutus/branch/main/graph/badge.svg?token=1PK34KIHKE" alt="codecov"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 

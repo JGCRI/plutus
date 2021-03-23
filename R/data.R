@@ -15,19 +15,6 @@
 #' }
 "xmlElecQueries"
 
-# gcamInvest internal files
-
-#' data_capac_fac
-#'
-#' @source paste(rawDataFolder,"L223.GlobalTechCapFac_elec.csv", sep="")
-#' @format .csv
-#' @examples
-#' \dontrun{
-#'  library(plutus);
-#'  plutus::data_capac_fac
-#' }
-"data_capac_fac"
-
 # elecInvest internal files
 
 #' data_tech_mapping
@@ -41,16 +28,29 @@
 #' }
 "data_tech_mapping"
 
-#' data_capac_fac_int
+
+#' data_capac_fac
 #'
-#' @source paste(rawDataFolder,"L223.GlobalIntTechCapFac_elec.csv", sep="")
+#' @source paste(rawDataFolder,"L223.GlobalTechCapFac_elec.csv", sep="")
 #' @format .csv
 #' @examples
 #' \dontrun{
 #'  library(plutus);
-#'  plutus::data_capac_fac_int
+#'  plutus::data_capac_fac
 #' }
-"data_capac_fac_int"
+"data_capac_fac"
+
+
+#' data_capac_fac_region
+#'
+#' @source paste(rawDataFolder,"L223.StubTechCapFactor_elec.csv", sep="")
+#' @format .csv
+#' @examples
+#' \dontrun{
+#'  library(plutus);
+#'  plutus::data_capac_fac_region
+#' }
+"data_capac_fac_region"
 
 #' data_A23.globaltech_retirement
 #'
