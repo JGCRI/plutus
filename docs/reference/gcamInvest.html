@@ -179,19 +179,19 @@ folder which may have been created from an old run.</p></td>
     </tr>
     <tr>
       <th>dataProjFile</th>
-      <td><p>Default = NULL. Optional. A default 'dataProj.proj' is produced if no .Proj file is specified.</p></td>
+      <td><p>Default = paste(getwd(), "/outputs/dataProj.proj", sep = ""). Optional. A default 'dataProj.proj' is produced if no .Proj file is specified.</p></td>
     </tr>
     <tr>
       <th>gcamdataFile</th>
       <td><p>Default = NULL. Optional. For example, gcamdataFile = "~/gcam-core-gcam-v5.3/input/gcamdata".
 Use full path to GCAM 'gcamdata' folder that contains costs and capacity data. Data files including:</p>
-<p>A23.globaltech_retirement.csv
-L223.StubTechCapFactor_elec.csv
-L223.GlobalTechCapFac_elec.csv
-L2233.GlobalIntTechCapital_elec.csv
-L2233.GlobalIntTechCapital_elec_cool.csv
-L2233.GlobalTechCapital_elec_cool.csv
-L2233.GlobalTechCapital_elecPassthru.csv</p></td>
+<p>(1) A23.globaltech_retirement.csv;
+(2) L223.StubTechCapFactor_elec.csv;
+(3) L223.GlobalTechCapFac_elec.csv;
+(4) L2233.GlobalIntTechCapital_elec.csv;
+(5) L2233.GlobalIntTechCapital_elec_cool.csv;
+(6) L2233.GlobalTechCapital_elec_cool.csv;
+(7) L2233.GlobalTechCapital_elecPassthru.csv</p></td>
     </tr>
     <tr>
       <th>scenOrigNames</th>
@@ -200,12 +200,12 @@ For example c('scenario1','scenario2).</p></td>
     </tr>
     <tr>
       <th>scenNewNames</th>
-      <td><p>New Names which may be shorter and more useful for figures etc.
+      <td><p>Default = NULL. New Names which may be shorter and more useful for figures etc.
 Default will use Original Names. For example c('scenario1','scenario2)</p></td>
     </tr>
     <tr>
       <th>regionsSelect</th>
-      <td><p>The regions to analyze in a vector. Example c('Colombia','Argentina'). Full list:</p>
+      <td><p>Default = NULL. The regions to analyze in a vector. Example c('Colombia','Argentina'). Full list:</p>
 <p>USA, Africa_Eastern, Africa_Northern, Africa_Southern, Africa_Western, Australia_NZ, Brazil, Canada
 Central America and Caribbean, Central Asia, China, EU-12, EU-15, Europe_Eastern, Europe_Non_EU,
 European Free Trade Association, India, Indonesia, Japan, Mexico, Middle East, Pakistan, Russia,
@@ -214,7 +214,7 @@ Taiwan, Argentina, Colombia, Uruguay</p></td>
     </tr>
     <tr>
       <th>dirOutputs</th>
-      <td><p>Full path to directory for outputs</p></td>
+      <td><p>Default = paste(getwd(), "/outputs", sep = ""). Full path to directory for outputs</p></td>
     </tr>
     <tr>
       <th>folderName</th>
@@ -226,7 +226,7 @@ Taiwan, Argentina, Colombia, Uruguay</p></td>
     </tr>
     <tr>
       <th>saveData</th>
-      <td><p>Default = "T". Set to F if do not want to save any data to file.</p></td>
+      <td><p>Default = TRUE. Set to F if do not want to save any data to file.</p></td>
     </tr>
     </table>
 
