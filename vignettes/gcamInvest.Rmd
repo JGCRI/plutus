@@ -9,18 +9,37 @@ vignette: >
 
 <!-------------------------->
 <!-------------------------->
-# Read GCAM Data and Calculate Electricity Investment
+# Structure
 <!-------------------------->
 <!-------------------------->
 
-```plutus::gcamInvest``` integrates the functionality of reading CGAM data and calculating stranded assets and electricity investments in power sector in one place. This function will return a list containing:
+<p align="center"> <img src="vignettesFigs/divider.png"></p>
 
-- data: a dataframe with the original data
+```plutus::gcamInvest``` integrates the functionality of reading CGAM database and calculating stranded assets and electricity investments in the power sector. This function will return a list containing:
+
+- data: a dataframe with the post-processed GCAM output showing stranded assets and electricity investment (see [Table 1](#table1)) by scenario, region, technology, and time period 
 - dataAggParam: a dataframe with the data aggregated to the parameter
 - dataAggClass1: a dataframe with the data aggregated to class 1
 - dataAggclass2: a dataframe with the data aggregated to class 2
 - scenarios: A list of the scenarios
 - queries: A list of the queries used to extract the data
+
+<br />
+
+<a name="table1"></a>
+**Table 1:** Descriptions of output parameters for stranded assets and electricity investments.
+
+| Parameter | Description | Unit |
+|---|---|---|
+| elecNewCapCost | Annual electricity capacity installations | Billion 2010 USD |
+| elecNewCapGW | Annual electricity capacity installations | Gigawatts |
+| elecAnnualRetPrematureCost | Annual premature retirements | Billion 2010 USD |
+| elecAnnualRetPrematureGW | Annual premature retirements | Gigawatts |
+| elecCumCapCost | Cumulative electricity capacity installations | Billion 2010 USD |
+| elecCumCapGW | Cumulative electricity capacity installations | Gigawatts |
+| elecCumRetPrematureCost | cumulative premature retirements | Billion 2010 USD |
+| elecCumRetPrematureGW | cumulative premature retirements | Gigawatts |
+
 
 The details of arguments and their default values in ```plutus::gcamInvest``` can be found in the [gcamInvest reference page](https://jgcri.github.io/plutus/reference/gcamInvest.html). The following sections provide step-by-step instructions on using ```plutus::gcamInvest```.
 
@@ -39,6 +58,15 @@ plutus::gcamInvest(gcamdatabase = NULL,
                    nameAppend = "",
                    saveData = T)
 ```
+
+<br />
+
+<!-------------------------->
+<!-------------------------->
+# Read GCAM Data
+<!-------------------------->
+<!-------------------------->
+<p align="center"> <img src="vignettesFigs/divider.png"></p>
 
 ## Read Project File
 
@@ -73,11 +101,14 @@ invest <- plutus::gcamInvest(gcamdatabase = path_to_gcamdatabase)
 
 ```
 
+<br />
+
 <!-------------------------->
 <!-------------------------->
 # Read and Subset GCAM Data
 <!-------------------------->
 <!-------------------------->
+<p align="center"> <img src="vignettesFigs/divider.png"></p>
 
 ```plutus::gcamInvest``` provides options to subset GCAM data by scenario and region.
 
@@ -96,16 +127,19 @@ dfClass1 <- invest$dataAggClass1; dfClass1
 
 ```
 
+<br />
+
 <!-------------------------->
 <!-------------------------->
 # Input Data and Assumptions
 <!-------------------------->
 <!-------------------------->
+<p align="center"> <img src="vignettesFigs/divider.png"></p>
 
-Plutus provides default data and assumptions from GCAM v5.3, which can be found in Your-GCAM-5.3-Folder/input/gcamdata/. All CSV files associated with different data categories and assumptions are listed in [Table 1](#table1).
+Plutus provides default data and assumptions from GCAM v5.3, which can be found in Your-GCAM-5.3-Folder/input/gcamdata/. All CSV files associated with different data categories and assumptions are listed in [Table 2](#table2).
 
-<a name="table1"></a>
-**Table 1:** Data and assumption files.
+<a name="table2"></a>
+**Table 2:** Data and assumption files.
 
 | Data or Assumption | Technology | Region | Data File |
 |---|---|---|---|
@@ -124,11 +158,14 @@ invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
                              gcamdataFile = 'E:/gcam-core-gcam-v5.3/input/gcamdata')
 ```
 
+<br />
+
 <!-------------------------->
 <!-------------------------->
 # Output Options
 <!-------------------------->
 <!-------------------------->
+<p align="center"> <img src="vignettesFigs/divider.png"></p>
 
 ```plutus::gcamInvest``` automatically saves outputs, such as .proj files, queries, and output data tables in default path based on the working directory. This section will introduce arguments in ```plutus::gcamInvest``` that controls different output options.
 
@@ -169,12 +206,14 @@ invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
                              saveData = F) # Default is saveData = T
 ```
 
+<br />
 
 <!-------------------------->
 <!-------------------------->
 # Visualization
 <!-------------------------->
 <!-------------------------->
+<p align="center"> <img src="vignettesFigs/divider.png"></p>
 
 ```plutus``` is designed to integrate with ````metis``` (Khan et al., 2020), an R package to harmonize and analyze multi-sectoral data and linkages at variable spatial scales. ```plutus::gcamInvest``` generates a data structure that can be directly used by ```metis```. More details on metis can be accessed via metis repository at https://github.com/JGCRI/metis.
 
@@ -241,5 +280,5 @@ metis.mapsProcess(polygonTable = polygonTable_i,
                   animateOn = F)
 ```
 
-<p align="center" style="font-size:18px;"> *Spatial Electricity Capacity Installations* </p>
+<p align="center" style="font-size:18px;"> *Spatial Electricity Capacity Installations for Wind Technology* </p>
 <p align="center"> <img src="vignettesFigs/map_GCAMReg32_elecNewCapGW_Reference_KMEANS.png"></p>
