@@ -11,7 +11,7 @@ authors:
     orcid: 0000-0001-5385-2758
     affiliation: 1
   - name: Matthew Binsted
-    affiliation: 4
+    affiliation: 2
   - name: Thomas Wild
     orcid: 0000-0002-6045-7729
     affiliation: "1, 2"
@@ -21,12 +21,12 @@ authors:
   - name: Brinda Yarlagadda
     affiliation: 3
   - name: Gokul Iyer
-    affiliation: 4
+    affiliation: 2
   - name: Chris R. Vernon
     orcid: 0000-0002-3406-6214
-    affiliation: 4
+    affiliation: 2
   - name: Pralit Patel
-    affiliation: 4
+    affiliation: 2
   - name: Silvia Da Silva
     affiliation: "1, 2"
 affiliations:
@@ -36,8 +36,6 @@ affiliations:
     index: 2
   - name: School of Public Policy, University of Maryland, College Park, MD, USA
     index: 3
-  - name: Pacific Northwest National Laboratory (PNNL), Richland, WA, USA
-    index: 4
 date: 23 March 2021
 bibliography: paper.bib
 ---
