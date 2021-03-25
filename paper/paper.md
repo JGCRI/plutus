@@ -53,9 +53,9 @@ The development of ```plutus``` was encouraged by the increasing interest in str
 Numerous data sets and assumptions affect GCAM's power sector energy projections. However, ```plutus``` only requires that users provide the subet of these assumptions that are directly relevant to calculating new power sector installations and premature retirements by scenario, region, model time period, and technology. Calculating new installation installed capacity and cost requires assumptions for capital (i.e., overnight) costs ($/KWh) and capacity factor. Additionally, calculating stranded assets requires information regarding financial lifetime for electricity-generating technologies. The ```plutus``` package is designed for GCAM version 5.3 and up. It does not yet work with GCAM-USA.
 
 ## Workflow
-The mandatory input from users is GCAM output in the format of a GCAM databse folder or an rgcam-based (https://github.com/JGCRI/rgcam) .proj file. Users may specify the input data and assumptions associated with their GCAM runs (\autoref{fig:1}). Otherwise, ```plutus``` will use default data and assumptions for GCAM v5.3 to calculate stranded assets and electricity investments. Detailed, step-by-step instructions for how to use ```plutus``` can be accessed via the repository at https://github.com/JGCRI/plutus. 
+The mandatory input from users is GCAM output in the format of a GCAM databse folder or an rgcam-based (https://github.com/JGCRI/rgcam) .proj file. Users may specify the input data and assumptions associated with their GCAM runs (Figure 1). Otherwise, ```plutus``` will use default data and assumptions for GCAM v5.3 to calculate stranded assets and electricity investments. Detailed, step-by-step instructions for how to use ```plutus``` can be accessed via the repository at https://github.com/JGCRI/plutus. 
 
-![The workflow for plutus. \label{fig:1}](Figure1.png)
+![The workflow for plutus.](Figure1.png)
 
 ## Key functions
 ```plutus::elecInvest``` calculates stranded assets and new installations in terms of investment cost (billion 2010 USD) and installed capacity (GW) by scenario, region, model time period, and technology. The function considers both the electricity generation technology and its associated cooling technology in the overnight capital cost. The function adjusts the retirement for the base/calibration year vintage using the 'S Curve Fraction' function (shown below) to represent natural retirements for power plants built before the model base year (i.e., 2015 for GCAM v5.3). More details on S-curve function are available in the GCAM online documentation (https://jgcri.github.io/gcam-doc/en_technologies.html), as well as in `@Binsted:2020`.
@@ -74,9 +74,9 @@ $$ S \: Curve \: Fraction =  \frac{1}{1+ e^{steepness \times (t-halflife)} } $$
 - Reload data faster. It can take some time to connect and read data from the GCAM database in the form of '.basex' database. The funtion creates a ".proj" file after the data has been extracted from the GCAM database. Reloading the same data using the ".proj" file will reduce processing time.
 
 ## Implementation
-For demonstration purposes, we used Plutus to post-process outputs from GCAM v5.3 for a standard Reference scenario to estimate power sector stranded assets and new capital investments in the U.S. (\autoref{fig:2}). To produce \autoref{fig:2}, we used ```Metis``` `[@khan:2020]` to process and visualize the ```plutus``` outputs. This interaction with ```Metis``` is facilitated by the standard organization of ```plutus``` outputs in the requried ```Metis``` input format.
+For demonstration purposes, we used Plutus to post-process outputs from GCAM v5.3 for a standard Reference scenario to estimate power sector stranded assets and new capital investments in the U.S. (Figure 2). To produce Figure 2, we used ```Metis``` `[@khan:2020]` to process and visualize the ```plutus``` outputs. This interaction with ```Metis``` is facilitated by the standard organization of ```plutus``` outputs in the requried ```Metis``` input format.
 
-![Premature power sector retirements and new installations in the U.S. for a standard GCAM v5.3 Reference scenario, expressed in both economic cost (billion 2010 USD) and installed capacity (GW) terms. \label{fig:2}](Figure2.png)
+![Premature power sector retirements and new installations in the U.S. for a standard GCAM v5.3 Reference scenario, expressed in both economic cost (billion 2010 USD) and installed capacity (GW) terms.](Figure2.png)
 
 
 # Acknowledgement
