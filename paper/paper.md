@@ -29,6 +29,8 @@ authors:
     affiliation: 2
   - name: Silvia Da Silva
     affiliation: "1, 2"
+  - name: Katherine V. Calvin
+    affiliation: 2
 affiliations:
   - name: Earth System Science Interdisciplinary Center (ESSIC), University of Maryland, College Park, MD, USA
     index: 1
