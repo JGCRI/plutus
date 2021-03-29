@@ -55,6 +55,9 @@
 <li>
       <a href="../articles/gcamInvest.html">gcamInvest</a>
     </li>
+    <li>
+      <a href="../articles/CaseTutorial.html">Case Tutorial</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -113,7 +116,7 @@
 <img src="vignettesFigs/divider.png"></p>
 <p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> integrates the functionality of reading CGAM database and calculating stranded assets and electricity investments in the power sector. This function will return a list containing:</p>
 <ul>
-<li>data: a dataframe with the post-processed GCAM output showing stranded assets and electricity investment by scenario, region, technology, and time period (see <a href="#table1">Table 1</a>)</li>
+<li>data: a dataframe with the post-processed GCAM output showing stranded assets and electricity investment (see <a href="#table1">Table 1</a>) by scenario, region, technology, and time period</li>
 <li>dataAggParam: a dataframe with the data aggregated to the parameter</li>
 <li>dataAggClass1: a dataframe with the data aggregated to class 1</li>
 <li>dataAggclass2: a dataframe with the data aggregated to class 2</li>
@@ -166,12 +169,12 @@
 </tr>
 <tr class="odd">
 <td>elecCumRetPrematureCost</td>
-<td>cumulative premature retirements</td>
+<td>Cumulative premature retirements</td>
 <td>Billion 2010 USD</td>
 </tr>
 <tr class="even">
 <td>elecCumRetPrematureGW</td>
-<td>cumulative premature retirements</td>
+<td>Cumulative premature retirements</td>
 <td>Gigawatts</td>
 </tr>
 </tbody>
@@ -202,10 +205,10 @@
 <!-------------------------->
 <p align="center">
 <img src="vignettesFigs/divider.png"></p>
-<div id="read-project-file" class="section level2">
+<div id="read--proj-file" class="section level2">
 <h2 class="hasAnchor">
-<a href="#read-project-file" class="anchor"></a>Read Project File</h2>
-<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> is able to read .proj file from GCAM output by providing the path to the rgcam-based .proj file. Plutus also includes an example .proj dataset <code><a href="../reference/exampleGCAMproj.html">plutus::exampleGCAMproj</a></code>.</p>
+<a href="#read--proj-file" class="anchor"></a>Read .proj File</h2>
+<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> is able to read rgcam-based .proj file from GCAM output by providing the path to the .proj file. <code>plutus</code> also includes an example .proj dataset <code><a href="../reference/exampleGCAMproj.html">plutus::exampleGCAMproj</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 
@@ -218,11 +221,12 @@
 <span class="va">dfClass1</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">dataAggClass1</span>; <span class="va">dfClass1</span>
 <span class="va">dfScenario</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">scenarios</span>; <span class="va">dfScenario</span>
 <span class="va">dfQuery</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">queries</span>; <span class="va">dfQuery</span></code></pre></div>
+<p><br></p>
 </div>
-<div id="read-gcam-database" class="section level2">
+<div id="read-gcam-xml-database" class="section level2">
 <h2 class="hasAnchor">
-<a href="#read-gcam-database" class="anchor"></a>Read GCAM Database</h2>
-<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> can directly read GCAM database. Assign the path of GCAM database to <code>gcamdatabase</code> argument.</p>
+<a href="#read-gcam-xml-database" class="anchor"></a>Read GCAM XML Database</h2>
+<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> can directly read GCAM output XML database. Assign the path of GCAM database to <code>gcamdatabase</code> argument.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 
@@ -233,14 +237,11 @@
 <!-------------------------->
 <!-------------------------->
 </div>
-</div>
-<div id="read-and-subset-gcam-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#read-and-subset-gcam-data" class="anchor"></a>Read and Subset GCAM Data</h1>
+<div id="subset-gcam-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#subset-gcam-data" class="anchor"></a>Subset GCAM Data</h2>
 <!-------------------------->
 <!-------------------------->
-<p align="center">
-<img src="vignettesFigs/divider.png"></p>
 <p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> provides options to subset GCAM data by scenario and region.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
@@ -257,6 +258,7 @@
 <!-------------------------->
 <!-------------------------->
 </div>
+</div>
 <div id="input-data-and-assumptions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#input-data-and-assumptions" class="anchor"></a>Input Data and Assumptions</h1>
@@ -264,7 +266,7 @@
 <!-------------------------->
 <p align="center">
 <img src="vignettesFigs/divider.png"></p>
-<p>Plutus provides default data and assumptions from GCAM v5.3, which can be found in Your-GCAM-5.3-Folder/input/gcamdata/. All CSV files associated with different data categories and assumptions are listed in <a href="#table2">Table 2</a>.</p>
+<p><code>plutus</code> provides default data and assumptions files from GCAM v5.3 that are collected from Default-GCAM-5.3-Folder/input/gcamdata/. All data files (CSV) associated with different data categories and assumptions are listed in <a href="#table2">Table 2</a>.</p>
 <p><a name="table2"></a> <strong>Table 2:</strong> Data and assumption files.</p>
 <table class="table">
 <colgroup>
@@ -312,7 +314,12 @@
 </tr>
 </tbody>
 </table>
-<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> allows users to input their own data associated with their GCAM runs. Users can update values in any CSV file. Please keep the file name and the format of each updated file unchanged. To input your own data, specify the path to the folder that contains all CSV files listed in <a href="#table1">Table 1</a> in the <code>gcamdataFile</code> argument.</p>
+<p>However, users may run GCAM v5.3 with updated/customized values associated with capital costs, capacity factors, and lifetime by technology and region. In this case, <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> allows users to input their own data associated with their GCAM runs. All you need to do is to provide the path that includes <strong>ALL</strong> CSV files listed in <a href="#table2">Table 2</a>. Here are two options:</p>
+<ul>
+<li>Users can update CSV files listed in <a href="#table2">Table 2</a> directly in Your-GCAM-5.3-Folder/input/gcamdata. Then, specify argument to <code>gcamdataFile = Your-GCAM-5.3-Folder/input/gcamdata</code>.</li>
+<li>Users can copy and paste all CSV files listed in <a href="#table2">Table 2</a> from Your-GCAM-5.3-Folder/input/gcamdata to a new folder and update the values according to your GCAM run. Then, specify argument to <code>gcamdataFile = Path-to-Your-New-Folder</code>.</li>
+</ul>
+<p>While updating the values in those CSV files, please keep the file name and the format of each updated file unchanged.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 
@@ -329,7 +336,7 @@
 <!-------------------------->
 <p align="center">
 <img src="vignettesFigs/divider.png"></p>
-<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> automatically saves outputs, such as .proj files, queries, and output data tables in default path based on the working directory. This section will introduce arguments in <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> that controls different output options.</p>
+<p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> automatically saves outputs, such as .proj files, queries, and output data tables in default path based on the working directory. This section will introduce arguments in <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> that control different output options.</p>
 <div id="re-read-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#re-read-data" class="anchor"></a>Re-read Data</h2>
@@ -340,6 +347,7 @@
 <span class="va">path_to_gcamdatabase</span> <span class="op">&lt;-</span> <span class="st">'E:/gcam-core-gcam-v5.3/output/databse_basexdb'</span>
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>gcamdatabase <span class="op">=</span> <span class="va">path_to_gcamdatabase</span>,
                              reReadData <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># Default is reReadData = T</span></code></pre></div>
+<p><br></p>
 </div>
 <div id="output-directory" class="section level2">
 <h2 class="hasAnchor">
@@ -376,7 +384,7 @@
 <!-------------------------->
 <p align="center">
 <img src="vignettesFigs/divider.png"></p>
-<p><code>plutus</code> is designed to integrate with `<code>metis</code> (Khan et al., 2020), an R package to harmonize and analyze multi-sectoral data and linkages at variable spatial scales. <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> generates a data structure that can be directly used by <code>metis</code>. More details on metis can be accessed via metis repository at <a href="https://github.com/JGCRI/metis" class="uri">https://github.com/JGCRI/metis</a>.</p>
+<p><code>plutus</code> is designed to integrate with <code>metis</code> (Khan et al., 2020), an R package to harmonize and analyze multi-sectoral data and linkages at variable spatial scales. <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> generates a data structure that can be directly used by <code>metis</code>. More details on metis can be accessed via metis repository at <a href="https://github.com/JGCRI/metis" class="uri">https://github.com/JGCRI/metis</a>.</p>
 <div id="charts" class="section level2">
 <h2 class="hasAnchor">
 <a href="#charts" class="anchor"></a>Charts</h2>
@@ -411,6 +419,7 @@
 </p>
 <p align="center">
 <img src="vignettesFigs/elecNewCapCost_figBar_USA_Argentina_Reference.png"></p>
+<p><br></p>
 </div>
 <div id="maps" class="section level2">
 <h2 class="hasAnchor">
@@ -437,9 +446,10 @@
                   subRegCol <span class="op">=</span> <span class="st">'subRegion'</span>,
                   subRegType <span class="op">=</span> <span class="st">'subRegion'</span>,
                   folderName <span class="op">=</span> <span class="st">'Maps_Wind_eleNewCapGW'</span>,
+                  facetCols <span class="op">=</span> <span class="fl">2</span>,
                   animateOn <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
 <p align="center" style="font-size:18px;">
-<em>Spatial Electricity Capacity Installations for Wind Technology</em>
+<em>Regional Electricity Capacity Installations for Wind Technology</em>
 </p>
 <p align="center">
 <img src="vignettesFigs/map_GCAMReg32_elecNewCapGW_Reference_KMEANS.png"></p>

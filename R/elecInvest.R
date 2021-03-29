@@ -61,7 +61,7 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
         gcamdataFile <- NULL
       }else{
         print('------------------------------------------------------------------')
-        print('Reading cost and capacity data from user provided gcamdata folder:')
+        print('Reading data and assumptions from user provided gcamdata folder:')
         print('------------------------------------------------------------------')
         print(gsub('//', '/', paste(data_files)))
         A23.globaltech_retirement <- data.table::fread(data_files[1], skip=1)
@@ -78,7 +78,7 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
 
   if(is.null(gcamdataFile)){
     print('---------------------------------------')
-    print('Using default cost and capacity data...')
+    print('Using default data and assumptions ...')
     print('---------------------------------------')
     A23.globaltech_retirement <- plutus::data_A23.globaltech_retirement
     capac_fac <- plutus::data_capac_fac
@@ -312,8 +312,8 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
   for (v in vintage) {
 
     # Assign adjusted retirements to vintages, assuming older vintages retire first
-    # retirements will be adjusted to the smaller value between ret_adj and retirements (MZ)
-    # ret_adj will be adjusted to the difference between ret_adj and retirements if the difference >0 (MZ)
+    # retirements will be adjusted to the smaller value between ret_adj and retirements
+    # ret_adj will be adjusted to the difference between ret_adj and retirements if the difference >0
     elec_ret_adj %>%
       dplyr::filter(vintage == v) %>%
       dplyr::select(-ret_adj) %>%
