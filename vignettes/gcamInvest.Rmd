@@ -15,7 +15,7 @@ vignette: >
 
 <p align="center"> <img src="vignettesFigs/divider.png"></p>
 
-```plutus::gcamInvest``` integrates the functionality of reading CGAM database and calculating stranded assets and electricity investments in the power sector. This function will return a list containing:
+`plutus::gcamInvest` integrates the functionality of reading CGAM database and calculating stranded assets and electricity investments in the power sector. This function will return a list containing:
 
 - data: a dataframe with the post-processed GCAM output showing stranded assets and electricity investment (see [Table 1](#table1)) by scenario, region, technology, and time period 
 - dataAggParam: a dataframe with the data aggregated to the parameter
@@ -37,11 +37,11 @@ vignette: >
 | elecAnnualRetPrematureGW | Annual premature retirements | Gigawatts |
 | elecCumCapCost | Cumulative electricity capacity installations | Billion 2010 USD |
 | elecCumCapGW | Cumulative electricity capacity installations | Gigawatts |
-| elecCumRetPrematureCost | cumulative premature retirements | Billion 2010 USD |
-| elecCumRetPrematureGW | cumulative premature retirements | Gigawatts |
+| elecCumRetPrematureCost | Cumulative premature retirements | Billion 2010 USD |
+| elecCumRetPrematureGW | Cumulative premature retirements | Gigawatts |
 
 
-The details of arguments and their default values in ```plutus::gcamInvest``` can be found in the [gcamInvest reference page](https://jgcri.github.io/plutus/reference/gcamInvest.html). The following sections provide step-by-step instructions on using ```plutus::gcamInvest```.
+The details of arguments and their default values in `plutus::gcamInvest` can be found in the [gcamInvest reference page](https://jgcri.github.io/plutus/reference/gcamInvest.html). The following sections provide step-by-step instructions on using `plutus::gcamInvest`.
 
 ```{r eval=F}
 # Default argument values
@@ -68,9 +68,9 @@ plutus::gcamInvest(gcamdatabase = NULL,
 <!-------------------------->
 <p align="center"> <img src="vignettesFigs/divider.png"></p>
 
-## Read Project File
+## Read .proj File
 
-```plutus::gcamInvest``` is able to read .proj file from GCAM output by providing the path to the rgcam-based .proj file. Plutus also includes an example .proj dataset ```plutus::exampleGCAMproj```.
+`plutus::gcamInvest` is able to read rgcam-based .proj file from GCAM output by providing the path to the .proj file. `plutus` also includes an example .proj dataset `plutus::exampleGCAMproj`.
 
 ```{r eval=F}
 library(plutus)
@@ -87,9 +87,11 @@ dfQuery <- invest$queries; dfQuery
 
 ```
 
-## Read GCAM Database
+<br />
 
-```plutus::gcamInvest``` can directly read GCAM database. Assign the path of GCAM database to ```gcamdatabase``` argument.
+## Read GCAM XML Database
+
+`plutus::gcamInvest` can directly read GCAM output XML database. Assign the path of GCAM database to `gcamdatabase` argument.
 
 
 ```{r eval=F}
@@ -105,12 +107,11 @@ invest <- plutus::gcamInvest(gcamdatabase = path_to_gcamdatabase)
 
 <!-------------------------->
 <!-------------------------->
-# Read and Subset GCAM Data
+## Subset GCAM Data
 <!-------------------------->
 <!-------------------------->
-<p align="center"> <img src="vignettesFigs/divider.png"></p>
 
-```plutus::gcamInvest``` provides options to subset GCAM data by scenario and region.
+`plutus::gcamInvest` provides options to subset GCAM data by scenario and region.
 
 
 ```{r eval=F}
@@ -136,7 +137,7 @@ dfClass1 <- invest$dataAggClass1; dfClass1
 <!-------------------------->
 <p align="center"> <img src="vignettesFigs/divider.png"></p>
 
-Plutus provides default data and assumptions from GCAM v5.3, which can be found in Your-GCAM-5.3-Folder/input/gcamdata/. All CSV files associated with different data categories and assumptions are listed in [Table 2](#table2).
+`plutus` provides default data and assumptions files from GCAM v5.3 that are collected from Default-GCAM-5.3-Folder/input/gcamdata/. All data files (CSV) associated with different data categories and assumptions are listed in [Table 2](#table2).
 
 <a name="table2"></a>
 **Table 2:** Data and assumption files.
@@ -149,7 +150,12 @@ Plutus provides default data and assumptions from GCAM v5.3, which can be found 
 | Capacity factors | Intermittant technologies | Regional | L223.StubTechCapFactor_elec.csv |
 | Lifetime and steepness| Electricity generation technologies | Global | A23.globaltech_retirement.csv |
 
-```plutus::gcamInvest``` allows users to input their own data associated with their GCAM runs. Users can update values in any CSV file. Please keep the file name and the format of each updated file unchanged. To input your own data, specify the path to the folder that contains all CSV files listed in [Table 1](#table1) in the ```gcamdataFile``` argument.
+However, users may run GCAM v5.3 with updated/customized values associated with capital costs, capacity factors, and lifetime by technology and region. In this case,  `plutus::gcamInvest` allows users to input their own data associated with their GCAM runs. All you need to do is to provide the path that includes **ALL** CSV files listed in [Table 2](#table2). Here are two options:
+
+- Users can update CSV files listed in [Table 2](#table2) directly in Your-GCAM-5.3-Folder/input/gcamdata. Then, specify argument to `gcamdataFile = Your-GCAM-5.3-Folder/input/gcamdata`.
+- Users can copy and paste all CSV files listed in  [Table 2](#table2) from Your-GCAM-5.3-Folder/input/gcamdata to a new folder and update the values according to your GCAM run. Then, specify argument to `gcamdataFile = Path-to-Your-New-Folder`.
+
+While updating the values in those CSV files, please keep the file name and the format of each updated file unchanged.
 
 ```{r eval=F}
 library(plutus)
@@ -167,11 +173,11 @@ invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
 <!-------------------------->
 <p align="center"> <img src="vignettesFigs/divider.png"></p>
 
-```plutus::gcamInvest``` automatically saves outputs, such as .proj files, queries, and output data tables in default path based on the working directory. This section will introduce arguments in ```plutus::gcamInvest``` that controls different output options.
+`plutus::gcamInvest` automatically saves outputs, such as .proj files, queries, and output data tables in default path based on the working directory. This section will introduce arguments in `plutus::gcamInvest` that control different output options.
 
 ## Re-read Data
 
-```plutus::gcamInvest``` automatically save a copy of .proj file (default name: dataProj.proj) in the output directory after extracting GCAM output data if provided a GCAM database folder using ```gcamdatabase``` argument. Reload the same (subsetted) GCAM dataset can be much faster by using the automatically saved dataProj.proj file. Users can choose to turnoff auto save function by specifying argument to ```reReadData = F```.
+`plutus::gcamInvest` automatically save a copy of .proj file (default name: dataProj.proj) in the output directory after extracting GCAM output data if provided a GCAM database folder using `gcamdatabase` argument. Reload the same (subsetted) GCAM dataset can be much faster by using the automatically saved dataProj.proj file. Users can choose to turnoff auto save function by specifying argument to `reReadData = F`.
 
 ```{r eval=F}
 library(plutus)
@@ -181,13 +187,14 @@ invest <- plutus::gcamInvest(gcamdatabase = path_to_gcamdatabase,
                              reReadData = F) # Default is reReadData = T
 ```
 
+<br />
 
 ## Output Directory
 
 It is easy to change output folder names and names appended to the output data tables.
 
-  - ```folderName``` creates a folder with the specified name under output directory 
-  - ```nameAppend``` appends the specified string at the end of each output data table file 
+  - `folderName` creates a folder with the specified name under output directory 
+  - `nameAppend` appends the specified string at the end of each output data table file 
 
 ```{r eval=F}
 library(plutus)
@@ -198,7 +205,7 @@ invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
                              nameAppend = '_Invest') # Default is nameAppend = ''
 ```
 
-You can also choose not to save any output by setting argument to ```saveData = F```.
+You can also choose not to save any output by setting argument to `saveData = F`.
 ```{r eval=F}
 library(plutus)
 
@@ -215,11 +222,11 @@ invest <- plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
 <!-------------------------->
 <p align="center"> <img src="vignettesFigs/divider.png"></p>
 
-```plutus``` is designed to integrate with ````metis``` (Khan et al., 2020), an R package to harmonize and analyze multi-sectoral data and linkages at variable spatial scales. ```plutus::gcamInvest``` generates a data structure that can be directly used by ```metis```. More details on metis can be accessed via metis repository at https://github.com/JGCRI/metis.
+`plutus` is designed to integrate with `metis` (Khan et al., 2020), an R package to harmonize and analyze multi-sectoral data and linkages at variable spatial scales. `plutus::gcamInvest` generates a data structure that can be directly used by `metis`. More details on metis can be accessed via metis repository at https://github.com/JGCRI/metis.
 
 ## Charts
 
-Below is an example of using ```metis.chartsProcess``` to generate charts of stranded assets and electricity investments in the USA and Argentina.
+Below is an example of using `metis.chartsProcess` to generate charts of stranded assets and electricity investments in the USA and Argentina.
 
 ```{r eval=F}
 library(plutus)
@@ -251,10 +258,11 @@ metis.chartsProcess(rTable = rTable_i,
 <p align="center" style="font-size:18px;"> *New Electricity Capacity Installations for USA and Argentina* </p>
 <p align="center"> <img src="vignettesFigs/elecNewCapCost_figBar_USA_Argentina_Reference.png"></p>
 
+<br />
 
 ## Maps
 
-Users can also use ```metis.mapsProcess``` to produce spatial maps by scenario, region, technology, and time period. Here is an example to map wind capacity installations for 32 geopolitical regions.
+Users can also use `metis.mapsProcess` to produce spatial maps by scenario, region, technology, and time period. Here is an example to map wind capacity installations for 32 geopolitical regions.
 
 ```{r eval=F}
 library(plutus)
@@ -277,8 +285,9 @@ metis.mapsProcess(polygonTable = polygonTable_i,
                   subRegCol = 'subRegion',
                   subRegType = 'subRegion',
                   folderName = 'Maps_Wind_eleNewCapGW',
+                  facetCols = 2,
                   animateOn = F)
 ```
 
-<p align="center" style="font-size:18px;"> *Spatial Electricity Capacity Installations for Wind Technology* </p>
+<p align="center" style="font-size:18px;"> *Regional Electricity Capacity Installations for Wind Technology* </p>
 <p align="center"> <img src="vignettesFigs/map_GCAMReg32_elecNewCapGW_Reference_KMEANS.png"></p>
