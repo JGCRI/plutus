@@ -19,6 +19,7 @@ authors:
     orcid: 0000-0002-8147-8553
     affiliation: 2
   - name: Brinda Yarlagadda
+    orcid: 0000-0003-2944-3449
     affiliation: 3
   - name: Gokul Iyer
     affiliation: 2
@@ -87,7 +88,7 @@ For demonstration purposes, we used `plutus` to post-process outputs from GCAM v
 
 
 # Acknowledgement
-Matthew Binsted, Zarrar Khan, Gokul Iyer, Chris R. Vernon, Pralit Patel, and Katherine V. Calvin were supported by the U.S. Department of Energy, Office of Science. This research was part of the research in MultiSector Dynamics, Earth and Environmental System Modeling Program. The Pacific Northwest National Laboratory is operated for DOE by Battelle Memorial Institute under contract DE-AC05-76RL01830. Additionally, Mengqi Zhao, Thomas Wild, Brinda Yarlaggada, and Silvia R. Santos da Silva were supported by the U.S. National Science Foundation under Grant No. 1855982. The views and opinions expressed in this paper are those of the authors alone.
+Matthew Binsted, Zarrar Khan, Gokul Iyer, Chris R. Vernon, Pralit Patel, and Katherine V. Calvin were supported by the U.S. Department of Energy, Office of Science. This research was part of the research in MultiSector Dynamics, Earth and Environmental System Modeling Program. The Pacific Northwest National Laboratory is operated for DOE by Battelle Memorial Institute under contract DE-AC05-76RL01830. Additionally, Mengqi Zhao, Thomas Wild, Brinda Yarlagadda, and Silvia R. Santos da Silva were supported by the U.S. National Science Foundation under Grant No. 1855982. The views and opinions expressed in this paper are those of the authors alone.
 
 
 # References
