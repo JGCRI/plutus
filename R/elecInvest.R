@@ -44,7 +44,7 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
   # Read gcam data files from user provided path
   if(!is.null(gcamdataFile)){
     if(!dir.exists(gcamdataFile)){
-      print(gsub('//', '/', paste('WARNING: Folder ', gcamdataFile, ' does not exist.', sep = '')))
+      warning(gsub('//', '/', paste('WARNING: Folder ', gcamdataFile, ' does not exist.', sep = '')))
       gcamdataFile <- NULL
     }else{
       file_names <- c('A23.globaltech_retirement.csv',
@@ -57,7 +57,7 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
       data_files <- list.files(path = gcamdataFile, pattern = paste(file_names, collapse = '|'), recursive = TRUE, full.names = TRUE)
       if(any(!file.exists(data_files)) | (length(file_names) != length(data_files))){
         missing_files <- setdiff(file_names, basename(data_files))
-        print(paste('WARNING: One or more required data files are missing:', missing_files))
+        warning(paste('WARNING: One or more required data files are missing:', missing_files))
         gcamdataFile <- NULL
       }else{
         print('------------------------------------------------------------------')
