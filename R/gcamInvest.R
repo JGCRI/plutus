@@ -99,7 +99,7 @@ gcamInvest <- function(gcamdatabase = NULL,
         gcamdatabasePath <- gsub("/$","",gsub("[^/]+$","",gcamdatabase)); gcamdatabasePath
         gcamdatabaseName <- basename(gcamdatabase); gcamdatabaseName
         print(paste("Connecting to GCAM database provided ",gcamdatabase,"...",sep=""))
-      }else{stop(paste("The GCAM database path provided dos not exist: ", gcamdatabase, sep=""))}
+      }else{stop(paste("The GCAM database path provided does not exist: ", gcamdatabase, sep=""))}
     }else{
       print(paste("gcamdatabase provided is not a character string to the GCAM database path. Please check your entry."))
     }

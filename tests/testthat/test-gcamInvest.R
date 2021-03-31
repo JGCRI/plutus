@@ -45,23 +45,22 @@ test_that("region is selected", {
 #===============================================================================
 # Test errors and warnings
 
+test_path <- system.file('data', package = 'plutus')
+
 test_that("throw error message if the path to gcamdatabase doesn't exist", {
-  testthat::expect_error(plutus::gcamInvest(gcamdatabase = 'E:/'),
-                         'doesn\'t exist')
+  testthat::expect_error(plutus::gcamInvest(gcamdatabase = test_path))
 })
 
 test_that("throw error message if the path to .proj file doesn't exist", {
-  testthat::expect_error(plutus::gcamInvest(dataProjFile = 'E:/test.proj',
-                                            reReadData = F),
-                         'doesn\'t exist')
+  testthat::expect_error(plutus::gcamInvest(dataProjFile = paste0(test_path, '/test.proj'),
+                                            reReadData = F))
 })
 
 test_that("throw error message if the path to gcamdataFile doesn't exist", {
   testthat::expect_warning(plutus::gcamInvest(dataProjFile = plutus::exampleGCAMproj,
                                               reReadData = F,
-                                              gcamdataFile = 'E:/',
+                                              gcamdataFile = test_path,
                                               scenOrigNames = 'Reference',
                                               regionsSelect = 'Uruguay',
-                                              saveData = F),
-                         'missing')
+                                              saveData = F))
 })
