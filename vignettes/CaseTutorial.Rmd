@@ -59,6 +59,7 @@ The default data and assumptions used in `plutus` can be found in GCAM v5.3 (See
 | Overnight capital costs | Electricity generation technologies | Global | ~\\input\\gcamdata\\outputs\\L2233.GlobalIntTechCapital_elec.csv <br /> ~\\input\\gcamdata\\outputs\\L2233.GlobalTechCapital_elecPassthru.csv |
 | Overnight capital costs | Cooling technologies | Global | ~\\input\\gcamdata\\outputs\\L2233.GlobalIntTechCapital_elec_cool.csv <br /> ~\\input\\gcamdata\\outputs\\L2233.GlobalTechCapital_elec_cool.csv |
 | Capacity factors | Electricity generation technologies | Global | ~\\input\\gcamdata\\outputs\\L223.GlobalTechCapFac_elec.csv |
+| Capacity factors | Intermittant technologies | Global | ~\\input\\gcamdata\\outputs\\L223.GlobalIntTechCapFac_elec.csv |
 | Capacity factors | Intermittant technologies | Regional | ~\\input\\gcamdata\\outputs\\L223.StubTechCapFactor_elec.csv |
 | Lifetime and steepness| Electricity generation technologies | Global | ~\\input\\gcamdata\\inst\\extdata\\energy\\A23.globaltech_retirement.csv |
 

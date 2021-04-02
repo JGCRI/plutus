@@ -40,6 +40,17 @@
 #' }
 "data_capac_fac"
 
+#' data_capac_fac_int
+#'
+#' @source paste(rawDataFolder,"L223.GlobalIntTechCapFac_elec.csv", sep="")
+#' @format .csv
+#' @examples
+#' \dontrun{
+#'  library(plutus);
+#'  plutus::data_capac_fac_int
+#' }
+"data_capac_fac_int"
+
 
 #' data_capac_fac_region
 #'
@@ -107,16 +118,6 @@
 #' }
 "data_cap_cost_tech"
 
-#' data_capfactors
-#'
-#' @source paste(rawDataFolder,"capacity_factor_by_elec_gen_subsector.csv",sep="")
-#' @format .csv
-#' @examples
-#' \dontrun{
-#'  library(plutus);
-#'  plutus::data_capfactors
-#' }
-"data_capfactors"
 
 
 #-----------------
