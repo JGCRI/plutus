@@ -72,13 +72,12 @@ $$ S \: Curve \: Fraction =  \frac{1}{1+ e^{steepness \times (t-halflife)} } $$
 
 `plutus::hydroInvest` updates the `plutus::elecInvest` output with capital investment costs in the hydropower sector. In GCAM v5.3, hydropower generation is exogenously specified and does not compete with other technologies for market share based on economics. To assess investment needs, this function uses an assumed capacity factor and generation cost (both specified in the `assumptions.R` file) to back-calculate implied hydropower investment costs. Stranded assets are not calculated for hydropower, given hydropower cannot retire early in GCAM.
 
-`plutus::gcamInvest` is the integrated function that reads GCAM output, executes the `plutus::elecInvest` and `plutus::hydroInvest` functions, and generates output in a data frame structure that can be used by `metis`. This function was designed to connect with GCAM and other tools for post-processing and visualization. `plutus::gcamInvest` provides flexibility to users with features such as:
+`plutus::gcamInvest` is the integrated function that reads GCAM output, executes the `plutus::elecInvest` and `plutus::hydroInvest` functions, and generates output in a data frame structure that can be used by [`metis`](https://github.com/JGCRI/metis). This function was designed to connect with GCAM and other tools for post-processing and visualization. `plutus::gcamInvest` provides flexibility to users with features such as:
 
 - Access to different GCAM output formats. GCAM output accessed from an `rgcam` project files or directly from an XML database. `plutus::gcamInvest` is able to extract GCAM data from both types of databases by integrating functions from the R package `rgcam`.
 - Use default or user-provided input data. The function will take the capital cost, capacity factor data and assumptions of steepness and financial lifetime if provided by the user following the format of each data file, otherwise it will use the default dataset collected from GCAM v5.3.
-- Filter GCAM data by scenario and region. Users can optionally select scenarios and regions of interest.
+- Filter GCAM data by scenario and region, and rename scenario names.
 - Quick start with example dataset. Users can use an example GCAM database by calling `plutus::exampleGCAMproj` to get started.
-- Rename scenarios.
 - Reload data faster. It can take some time to connect and read data from the GCAM database in the form of an XML database. The function creates a `.proj` file after the data has been extracted from the GCAM database. Reloading the same data using the `.proj` file will reduce processing time.
 
 
