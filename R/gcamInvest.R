@@ -748,7 +748,7 @@ gcamInvest <- function(gcamdatabase = NULL,
 
     datax <- dplyr::bind_rows(datax, tbl1,tbl2,tbl3,tbl4,tbl5,tbl6,tbl7,tbl8)
 
-    datax$class1[datax$class1 %in% 'Bioenergy CCS'] <- 'h Bioenergy w/CCS'
+    # datax$class1[datax$class1 %in% 'Bioenergy CCS'] <- 'h Bioenergy w/CCS'
   } else {
     # if(queryx %in% queriesSelectx){print(paste("Query '", queryx, "' not found in database", sep = ""))}
   }
