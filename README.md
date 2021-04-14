@@ -12,8 +12,8 @@ Plutus is designed for GCAM v5.3 (excluding GCAM-USA).
 <!-------------------------->
 <!-------------------------->
 
-- [Introduction](#Introduction)
 - [Key Links](#KeyLinks)
+- [Introduction](#Introduction)
 - [Citation](#Citation)
 - [Installation Guide](#InstallGuides)
 - [How-to Guides](#How-toGuides) 
@@ -32,6 +32,7 @@ Plutus is designed for GCAM v5.3 (excluding GCAM-USA).
 [Back to Contents](#Contents)
 
 <br />
+
 <!-------------------------->
 <!-------------------------->
 # <a name="Introduction"></a>Introduction
@@ -51,7 +52,7 @@ Plutus is designed for GCAM v5.3 (excluding GCAM-USA).
 <!-------------------------->
 <!-------------------------->
 
-Zhao, M., Binsted, M., Wild, T.B., Khan, Z., Yarlagadda, B., Iyer, G., Vernon, C., Patel, P., Da Silva, S.R., Calvin, K.V., (in preparation). plutus - An R package to calculate electricity investments and stranded assets from the Global Change Analysis Model. Journal of Open Source Software.
+Zhao, M., Binsted, M., Wild, T.B., Khan, Z., Yarlagadda, B., Iyer, G., Vernon, C., Patel, P., Santos da Silva, S.R., Calvin, K.V., (in preparation). plutus - An R package to calculate electricity investments and stranded assets from the Global Change Analysis Model. Journal of Open Source Software.
 
 [Back to Contents](#Contents)
 
@@ -88,7 +89,10 @@ devtools::install_github('JGCRI/plutus')
 # <a name="How-toGuides"></a>How-to Guides
 <!-------------------------->
 <!-------------------------->
-```plutus::gcamInvest``` provides all-in-one workflow that reads gcamdata, processes queries, and estimates stranded assets and capital investments. Please visit [guides for ```plutus::gcamInvest```](https://jgcri.github.io/plutus/articles/gcamInvest.html).
+`plutus::gcamInvest` provides all-in-one workflow that reads gcamdata, processes queries, and estimates stranded assets and capital investments. Please visit the followings for detailed instructions.
+
+- [Instruction on `plutus::gcamInvest`](https://jgcri.github.io/plutus/articles/gcamInvest.html)
+- [Case tutorial](https://jgcri.github.io/plutus/articles/CaseTutorial.html)
 
 [Back to Contents](#Contents)
 

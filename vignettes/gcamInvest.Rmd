@@ -147,6 +147,7 @@ dfClass1 <- invest$dataAggClass1; dfClass1
 | Overnight capital costs | Electricity generation technologies | Global | L2233.GlobalIntTechCapital_elec.csv <br /> L2233.GlobalTechCapital_elecPassthru.csv |
 | Overnight capital costs | Cooling technologies | Global | L2233.GlobalIntTechCapital_elec_cool.csv <br /> L2233.GlobalTechCapital_elec_cool.csv |
 | Capacity factors | Electricity generation technologies | Global | L223.GlobalTechCapFac_elec.csv |
+| Capacity factors | Intermittant technologies | Global | L223.GlobalIntTechCapFac_elec.csv |
 | Capacity factors | Intermittant technologies | Regional | L223.StubTechCapFactor_elec.csv |
 | Lifetime and steepness| Electricity generation technologies | Global | A23.globaltech_retirement.csv |
 
