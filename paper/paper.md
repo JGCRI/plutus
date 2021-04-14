@@ -11,6 +11,7 @@ authors:
     orcid: 0000-0001-5385-2758
     affiliation: 1
   - name: Matthew Binsted
+    orcid: 0000-0002-5177-7253
     affiliation: 2
   - name: Thomas Wild
     orcid: 0000-0002-6045-7729
@@ -49,7 +50,7 @@ bibliography: paper.bib
 ---
 
 # Summary
-`plutus` is an R package that post-processes outputs from the Global Change Analysis Model [GCAM; @Calvin:2019] to calculate the power sector capital investment costs and stranded asset costs associated with GCAM projections of electricity generation by technology. GCAM is a market equilibrium model used to examine the dynamics of the coupled human-Earth system and the response of this system to global change, including socioeconomics, technology, climate, and policy. GCAM tracks electricity generation by technology and vintage over 32 geopolitical regions throughout the lifetime of each generating technology. `plutus` extends GCAM functionality by (1) estimating the foregone economic value of prematurely retired power plants as a result of economic-induced retirements compared to scheduled lifetimes; and (2) estimating the new installations and capital investments driven by future changes in economic, energy, agriculture, and land-use systems in GCAM. The concept and methodology for calculating electricity investments and stranded assets is detailed in [@Binsted:2020; @Iyer:2017].
+`plutus` is an R package that post-processes outputs from the Global Change Analysis Model [GCAM; @Calvin:2019] to calculate the power sector capital investment costs and stranded asset costs associated with GCAM projections of electricity generation by technology. GCAM is a market equilibrium model used to examine the dynamics of the coupled human-Earth system and the response of this system to global change, including socioeconomics, technology, climate, and policy. GCAM tracks electricity generation by technology and vintage over 32 geopolitical regions throughout the lifetime of each generating technology. `plutus` extends GCAM functionality by (1) estimating the foregone economic value of prematurely retired power plants as a result of economic-induced retirements compared to scheduled lifetimes; and (2) estimating the new installations and capital investments driven by future changes in economic, energy, agriculture, and land-use systems in GCAM. The concept and methodology for calculating electricity investments and stranded assets is detailed in @Binsted:2020 and @Iyer:2017.
 
 
 # Statement of need
@@ -75,7 +76,7 @@ $$ S \: Curve \: Fraction =  \frac{1}{1+ e^{steepness \times (t-halflife)} } $$
 `plutus::gcamInvest` is the integrated function that reads GCAM output, executes the `plutus::elecInvest` and `plutus::hydroInvest` functions, and generates output in a data frame structure that can be used by [`metis`](https://github.com/JGCRI/metis). This function was designed to connect with GCAM and other tools for post-processing and visualization. `plutus::gcamInvest` provides flexibility to users with features such as:
 
 - Access to different GCAM output formats. GCAM output accessed from an `rgcam` project files or directly from an XML database. `plutus::gcamInvest` is able to extract GCAM data from both types of databases by integrating functions from the R package `rgcam`.
-- Use default or user-provided input data. The function will take the capital cost, capacity factor data and assumptions of steepness and financial lifetime if provided by the user following the format of each data file, otherwise it will use the default dataset collected from GCAM v5.3.
+- Use default or user-provided input data. The function will take the capital cost, capacity factor data and assumptions of steepness and financial lifetime if provided by the user following the format of each data file, otherwise it will use the default dataset collected from GCAM v5.3. The data and assumptions will be applied to all loaded scenarios from GCAM output.
 - Filter GCAM data by scenario and region, and rename scenario names.
 - Quick start with example dataset. Users can use an example GCAM database by calling `plutus::exampleGCAMproj` to get started.
 - Reload data faster. It can take some time to connect and read data from the GCAM database in the form of an XML database. The function creates a `.proj` file after the data has been extracted from the GCAM database. Reloading the same data using the `.proj` file will reduce processing time.
@@ -84,7 +85,7 @@ $$ S \: Curve \: Fraction =  \frac{1}{1+ e^{steepness \times (t-halflife)} } $$
 ## Implementation
 For demonstration purposes, we used `plutus` to post-process outputs from GCAM v5.3 for a standard reference scenario to estimate power sector stranded assets and new capital investments in the U.S. (\autoref{fig:2}). To produce \autoref{fig:2}, we used `metis` to process and visualize the `plutus` outputs. This interaction with `metis` is facilitated by the standard organization of `plutus` outputs in the required `metis` input format.
 
-![Power sector premature retirements and new installations in the U.S. for a standard GCAM v5.3 reference scenario, expressed in both monetary cost (billion 2010 USD) and installed capacity (GW) terms.\label{fig:2}](Figure2.png)
+![Power sector premature retirements and new installations in the U.S. for a standard GCAM v5.3 reference scenario, expressed in both cumulative monetary cost (billion 2010 USD) and cumulative installed capacity (GW) terms over a 5-year model period.\label{fig:2}](Figure2.png)
 
 
 # Acknowledgement
