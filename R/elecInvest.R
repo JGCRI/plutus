@@ -25,7 +25,8 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     s_curve_adj -> OG_gen -> gen_expect -> prev_yr_expect -> additions -> add_adj ->
     ret_adj -> ret_adj_OG -> natural_retire -> input.capital -> fixed.charge.rate ->
     add_GW -> capital.overnight -> early_ret -> early_ret_GW -> agg_tech ->
-    cap_invest -> unrec_Cap -> dep_factor -> unrec_cap -> stub.technology
+    cap_invest -> unrec_Cap -> dep_factor -> unrec_cap -> stub.technology ->
+    capacity.factor.global -> capacity.factor.global_int
 
   if(is.null(world_regions)){
     world_regions <- unique(elec_gen_vintage$region)
@@ -44,11 +45,12 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
   # Read gcam data files from user provided path
   if(!is.null(gcamdataFile)){
     if(!dir.exists(gcamdataFile)){
-      print(gsub('//', '/', paste('WARNING: Folder ', gcamdataFile, ' does not exist.', sep = '')))
+      warning(gsub('//', '/', paste('WARNING: Folder ', gcamdataFile, ' does not exist.', sep = '')))
       gcamdataFile <- NULL
     }else{
       file_names <- c('A23.globaltech_retirement.csv',
                       'L223.GlobalTechCapFac_elec.csv',
+                      'L223.GlobalIntTechCapFac_elec.csv',
                       'L223.StubTechCapFactor_elec.csv',
                       'L2233.GlobalIntTechCapital_elec.csv',
                       'L2233.GlobalIntTechCapital_elec_cool.csv',
@@ -57,7 +59,7 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
       data_files <- list.files(path = gcamdataFile, pattern = paste(file_names, collapse = '|'), recursive = TRUE, full.names = TRUE)
       if(any(!file.exists(data_files)) | (length(file_names) != length(data_files))){
         missing_files <- setdiff(file_names, basename(data_files))
-        print(paste('WARNING: One or more required data files are missing:', missing_files))
+        warning(paste('WARNING: One or more required data files are missing:', missing_files))
         gcamdataFile <- NULL
       }else{
         print('------------------------------------------------------------------')
@@ -66,11 +68,12 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
         print(gsub('//', '/', paste(data_files)))
         A23.globaltech_retirement <- data.table::fread(data_files[1], skip=1)
         capac_fac <- data.table::fread(data_files[2], skip=1, stringsAsFactors = FALSE)
-        capac_fac_region <- data.table::fread(data_files[3], skip=1, stringsAsFactors = FALSE)
-        cap_cost_int_tech <- data.table::fread(data_files[4], skip=1, stringsAsFactors = FALSE)
-        cap_cost_int_cool <- data.table::fread(data_files[5], skip=1, stringsAsFactors = FALSE)
-        cap_cost_cool <- data.table::fread(data_files[6], skip=1, stringsAsFactors = FALSE)
-        cap_cost_tech <- data.table::fread(data_files[7], skip=1, stringsAsFactors = FALSE)
+        capaC_fac_int <- data.table::fread(data_files[3], skip=1, stringsAsFactors = FALSE)
+        capac_fac_region <- data.table::fread(data_files[4], skip=1, stringsAsFactors = FALSE)
+        cap_cost_int_tech <- data.table::fread(data_files[5], skip=1, stringsAsFactors = FALSE)
+        cap_cost_int_cool <- data.table::fread(data_files[6], skip=1, stringsAsFactors = FALSE)
+        cap_cost_cool <- data.table::fread(data_files[7], skip=1, stringsAsFactors = FALSE)
+        cap_cost_tech <- data.table::fread(data_files[8], skip=1, stringsAsFactors = FALSE)
 
       }
     }
@@ -82,6 +85,7 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     print('---------------------------------------')
     A23.globaltech_retirement <- plutus::data_A23.globaltech_retirement
     capac_fac <- plutus::data_capac_fac
+    capac_fac_int <- plutus::data_capac_fac_int
     capac_fac_region <- plutus::data_capac_fac_region
     cap_cost_int_tech <- plutus::data_cap_cost_int_tech
     cap_cost_int_cool <- plutus::data_cap_cost_int_cool
@@ -124,7 +128,14 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
                             technology = rep(x = elec_gen_tech_cost$technology, times = length(world_regions)),
                             year = rep(x = elec_gen_tech_cost$year, times = length(world_regions)))
   elec_gen_tech_cost_global <- df_elec_gen %>%
-    dplyr::left_join(elec_gen_tech_cost, by = c('technology', 'year'))
+    dplyr::left_join(elec_gen_tech_cost, by = c('technology', 'year')) %>%
+    dplyr::left_join(capac_fac_int,
+                     by = c('sector.name', 'subsector.name', 'technology' = 'intermittent.technology', 'year'),
+                     suffix = c('.global', '.global_int')) %>%
+    dplyr::mutate(capacity.factor = ifelse(!is.na(capacity.factor.global), capacity.factor.global, capacity.factor.global_int)) %>%
+    dplyr::mutate(capacity.factor = ifelse(technology == 'wind_offshore' & is.na(capacity.factor),
+                                           plutus::assumptions('wind_offshore_cap_fact'), capacity.factor)) %>%
+    dplyr::select(-capacity.factor.global, -capacity.factor.global_int)
 
   # Get intermittent capacity factor column added to elec_gen_tech_cost
   capac_fac_int_new <- capac_fac_region %>%
@@ -142,6 +153,8 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::mutate(capacity.factor=ifelse(is.na(capacity.factor.region), capacity.factor, capacity.factor.region)) %>%
     dplyr::select(-capacity.factor.region) %>%
     dplyr::relocate(region, sector.name, subsector.name, technology, year, input.capital, capital.overnight, fixed.charge.rate, capacity.factor)
+
+
 
 
   cool_tech_cost_temp <- rbind(cap_cost_cool, cap_cost_int_cool)

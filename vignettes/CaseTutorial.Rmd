@@ -30,7 +30,6 @@ devtools::install_github('JGCRI/rgcam')
 devtools::install_github('JGCRI/plutus')
 ```
 
-[Back to Contents](#Contents)
 
 <br />
 
@@ -43,7 +42,7 @@ devtools::install_github('JGCRI/plutus')
 
 This example will give you a step-by-step instruction on using the core functionality of `plutus`.
 
-#### 1. Download Example Dataset
+#### 1. Download example dataset
 
   - Download GCAM sample XML database at http://doi.org/10.5281/zenodo.4641500
   - Unzip dataset to your desired location. In this example, the path to the dataset is: E:/plutus_example/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5
@@ -53,13 +52,14 @@ This example will give you a step-by-step instruction on using the core function
 The default data and assumptions used in `plutus` can be found in GCAM v5.3 (See [Table 1](#table1)). However, if any of those files listed in [Table 1](#table1) have been updated in your GCAM run, it is necessary to use the updated values in `plutus` as well. `plutus` uses argument `gcamdataFile` to specify the path to ALL of the updated files.
 
 <a name="table1"></a>
-**Table 1:** Data and assumption files. ~\\ represent the path to your GCAM v5.3 home folder.
+**Table 1:** Data and assumption files. "~\\" represents the path to your GCAM v5.3 home folder.
 
 | Data or Assumption | Technology | Region | Data File in GCAM v5.3|
 |---|---|---|---|
 | Overnight capital costs | Electricity generation technologies | Global | ~\\input\\gcamdata\\outputs\\L2233.GlobalIntTechCapital_elec.csv <br /> ~\\input\\gcamdata\\outputs\\L2233.GlobalTechCapital_elecPassthru.csv |
 | Overnight capital costs | Cooling technologies | Global | ~\\input\\gcamdata\\outputs\\L2233.GlobalIntTechCapital_elec_cool.csv <br /> ~\\input\\gcamdata\\outputs\\L2233.GlobalTechCapital_elec_cool.csv |
 | Capacity factors | Electricity generation technologies | Global | ~\\input\\gcamdata\\outputs\\L223.GlobalTechCapFac_elec.csv |
+| Capacity factors | Intermittant technologies | Global | ~\\input\\gcamdata\\outputs\\L223.GlobalIntTechCapFac_elec.csv |
 | Capacity factors | Intermittant technologies | Regional | ~\\input\\gcamdata\\outputs\\L223.StubTechCapFactor_elec.csv |
 | Lifetime and steepness| Electricity generation technologies | Global | ~\\input\\gcamdata\\inst\\extdata\\energy\\A23.globaltech_retirement.csv |
 
@@ -77,6 +77,7 @@ Here are the core arguments we used in this example:
 
 
 ```{r eval=F, results='hide'}
+# Load required packages
 library(plutus)
 library(dplyr)
 
@@ -114,14 +115,14 @@ invest <- plutus::gcamInvest(gcamdatabase = NULL,
 
 `plutus::gcamInvest` returns a list containing:
 
-- `data`: a dataframe with the post-processed GCAM output showing stranded assets and electricity investments (see [Table 1](#table1)) by scenario, region, technology, and time period 
+- `data`: a dataframe with the post-processed GCAM output showing stranded assets and electricity investments (see [Table 2](#table2)) by scenario, region, technology, and time period 
 - `dataAggParam`: a dataframe with the data aggregated to the parameter
 - `dataAggClass1`: a dataframe with the data aggregated to class 1
 - `dataAggclass2`: a dataframe with the data aggregated to class 2
 - `scenarios`: A list of the scenarios
 - `queries`: A list of the queries used to extract the data
 
-`data` contains the the most detailed information. Check the structure and content of `data` and select the most relevant columns including scenario, region, param, class1 (= fuel types), x (= year), units, and value.
+`data` contains the most detailed information. Check the structure and content of `data` and select the most relevant columns including scenario, region, param, class1 (= fuel types), x (= year), units, and value.
 
 ```{r eval=T}
 # Get dataframe with post-processed outputs for stranded assets and electricity investment
@@ -142,7 +143,7 @@ unique(df_invest$param)
 ```
 
 
-There are 8 different parameters in the output showing stranded assets or electricity investments in terms of monetary value (Billion 2010 USD) or installed capacity (GW). The detailed descriptions are in [Table 2](#table2). GCAM v5.3 is operated in five-years time step with 2015 as the final calibration year (base year). Annual value is the value calculated at each time step. Cumulative value represents the cumulative total over five-year time step.
+There are **eight** different parameters in the output showing stranded assets or electricity investments in terms of monetary value (Billion 2010 USD) or installed capacity (GW). The detailed descriptions are in [Table 2](#table2). GCAM v5.3 is operated in five-years time step with 2015 as the final calibration year (base year). Annual value is the value calculated at each time step. Cumulative value represents the cumulative total over five-year time step.
 
 <a name="table2"></a>
 **Table 2:** Descriptions of output parameters for stranded assets and electricity investments.
@@ -158,4 +159,4 @@ There are 8 different parameters in the output showing stranded assets or electr
 | elecCumRetPrematureCost | Cumulative premature retirements | Billion 2010 USD |
 | elecCumRetPrematureGW | Cumulative premature retirements | Gigawatts |
 
-[Back to Contents](#Contents)
+[Back to Top](#installation)
