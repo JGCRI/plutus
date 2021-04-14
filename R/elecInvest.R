@@ -25,7 +25,8 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     s_curve_adj -> OG_gen -> gen_expect -> prev_yr_expect -> additions -> add_adj ->
     ret_adj -> ret_adj_OG -> natural_retire -> input.capital -> fixed.charge.rate ->
     add_GW -> capital.overnight -> early_ret -> early_ret_GW -> agg_tech ->
-    cap_invest -> unrec_Cap -> dep_factor -> unrec_cap -> stub.technology
+    cap_invest -> unrec_Cap -> dep_factor -> unrec_cap -> stub.technology ->
+    capacity.factor.global -> capacity.factor.global_int
 
   if(is.null(world_regions)){
     world_regions <- unique(elec_gen_vintage$region)
