@@ -32,7 +32,7 @@ assumptions <- function(name=NULL) {
   #------------------
   # Conversions
   #------------------
-  GCAMbaseYear <- 2010
+  GCAMbaseYear <- 2015
   convEJ2MTOE<-23.8845897  #https://www.iea.org/statistics/resources/unitconverter/
   convEJ2TWh<-277.77777777778
   convEJ2GW<-convEJ2TWh*1000/8760
@@ -55,6 +55,7 @@ assumptions <- function(name=NULL) {
 
   hydro_cap_fact <- 0.38
   hydro_cost_GW <- 1.5
+  wind_offshore_cap_fact <- 0.37
 
 
   #--------------------------------------------------------------------------------------------------
@@ -72,6 +73,7 @@ assumptions <- function(name=NULL) {
     conv_MT_GT=conv_MT_GT,
     hydro_cap_fact=hydro_cap_fact,
     hydro_cost_GW=hydro_cost_GW,
+    wind_offshore_cap_fact=wind_offshore_cap_fact,
     convUSD_1975_2010=convUSD_1975_2010,
     convUSD_1975_2015=convUSD_1975_2015,
     conv1975USDperGJ22017USDperMWh=conv1975USDperGJ22017USDperMWh,

@@ -1,0 +1,162 @@
+---
+title: "Case Tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Case Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+<!-------------------------->
+<!-------------------------->
+## Installation
+<!-------------------------->
+<!-------------------------->
+<p align="center"> <img src="vignettesFigs/divider.png"></p>
+
+1. Download and install:
+
+    - R (https://www.r-project.org/)
+    
+    - R studio (https://www.rstudio.com/)
+
+    
+2. Open R studio:
+
+```
+install.packages('devtools')
+devtools::install_github('JGCRI/rgcam')
+devtools::install_github('JGCRI/plutus')
+```
+
+
+<br />
+
+<!-------------------------->
+<!-------------------------->
+## Example
+<!-------------------------->
+<!-------------------------->
+<p align="center"> <img src="vignettesFigs/divider.png"></p>
+
+This example will give you a step-by-step instruction on using the core functionality of `plutus`.
+
+#### 1. Download example dataset
+
+  - Download GCAM sample XML database at http://doi.org/10.5281/zenodo.4641500
+  - Unzip dataset to your desired location. In this example, the path to the dataset is: E:/plutus_example/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5
+
+#### 2. Prepare your own input data and assumptions
+
+The default data and assumptions used in `plutus` can be found in GCAM v5.3 (See [Table 1](#table1)). However, if any of those files listed in [Table 1](#table1) have been updated in your GCAM run, it is necessary to use the updated values in `plutus` as well. `plutus` uses argument `gcamdataFile` to specify the path to ALL of the updated files.
+
+<a name="table1"></a>
+**Table 1:** Data and assumption files. "~\\" represents the path to your GCAM v5.3 home folder.
+
+| Data or Assumption | Technology | Region | Data File in GCAM v5.3|
+|---|---|---|---|
+| Overnight capital costs | Electricity generation technologies | Global | ~\\input\\gcamdata\\outputs\\L2233.GlobalIntTechCapital_elec.csv <br /> ~\\input\\gcamdata\\outputs\\L2233.GlobalTechCapital_elecPassthru.csv |
+| Overnight capital costs | Cooling technologies | Global | ~\\input\\gcamdata\\outputs\\L2233.GlobalIntTechCapital_elec_cool.csv <br /> ~\\input\\gcamdata\\outputs\\L2233.GlobalTechCapital_elec_cool.csv |
+| Capacity factors | Electricity generation technologies | Global | ~\\input\\gcamdata\\outputs\\L223.GlobalTechCapFac_elec.csv |
+| Capacity factors | Intermittant technologies | Global | ~\\input\\gcamdata\\outputs\\L223.GlobalIntTechCapFac_elec.csv |
+| Capacity factors | Intermittant technologies | Regional | ~\\input\\gcamdata\\outputs\\L223.StubTechCapFactor_elec.csv |
+| Lifetime and steepness| Electricity generation technologies | Global | ~\\input\\gcamdata\\inst\\extdata\\energy\\A23.globaltech_retirement.csv |
+
+*Note*: In this example, our GCAM sample dataset is based on the default data and assumptions, so we do not need to update those files in `plutus`.
+
+#### 3.  Use `plutus::gcamInvest` to estimate stranded assets and electricity investments
+
+Here are the core arguments we used in this example:
+
+  - `gcamdatabase`: FULL path to the GCAM output XML database folder.
+  - `reReadData`: If TRUE, `plutus` will read the GCAM database and create a queryData.proj file under the output directory.
+  - `scenOrigNames`: Choose scenarios to read in. Default = 'All' will read all the scenarios.
+  - `regionsSelect`: Choose regions to read in. Defaul = NULL will read all the regions.
+  - `saveData`: If TRUE, `plutus` will save data by different aggregated classes.
+
+
+```{r eval=F, results='hide'}
+# Load required packages
+library(plutus)
+library(dplyr)
+
+# Set your working directory based on the example dataset location
+workdir <- setwd('E:/plutus_example/')
+
+# provide path to the desired GCAM database folder.
+path_to_gcamdatabase <- 'E:/plutus_example/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'
+# Specify the path to data file folder if any data files has been updated
+# path_to_gcamdataFile <- 'E:/plutus_example/gcamdataFile'
+
+# Use plutus::gcamInvest to calculate stranded assets and electricity investments
+invest <- plutus::gcamInvest(gcamdatabase = path_to_gcamdatabase,
+                             reReadData = T,
+                             # gcamdataFile = path_to_gcamdataFile, # Use this argument if any data files has been updated
+                             scenOrigNames = c('Reference'),
+                             regionsSelect = c('USA', 'China'),
+                             saveData = T)
+```
+
+```{r eval=T, echo=F, results='hide', include=FALSE}
+library(plutus)
+library(dplyr)
+
+invest <- plutus::gcamInvest(gcamdatabase = NULL,
+                             dataProjFile = plutus::exampleGCAMproj,
+                             scenOrigNames = 'Reference',
+                             regionsSelect = c('USA', 'China'),
+                             saveData = F)
+```
+
+<br />
+
+#### 4. Check outputs
+
+`plutus::gcamInvest` returns a list containing:
+
+- `data`: a dataframe with the post-processed GCAM output showing stranded assets and electricity investments (see [Table 2](#table2)) by scenario, region, technology, and time period 
+- `dataAggParam`: a dataframe with the data aggregated to the parameter
+- `dataAggClass1`: a dataframe with the data aggregated to class 1
+- `dataAggclass2`: a dataframe with the data aggregated to class 2
+- `scenarios`: A list of the scenarios
+- `queries`: A list of the queries used to extract the data
+
+`data` contains the most detailed information. Check the structure and content of `data` and select the most relevant columns including scenario, region, param, class1 (= fuel types), x (= year), units, and value.
+
+```{r eval=T}
+# Get dataframe with post-processed outputs for stranded assets and electricity investment
+df_invest <- invest$data
+# Check dataframe structure
+str(df_invest)
+
+# Select key variables
+df_invest_sub <- df_invest %>% 
+  dplyr::select(scenario, region, param, class1, x, units, value) %>% 
+  dplyr::rename(fuel = class1,
+                year = x)
+head(df_invest_sub)
+
+# Check out 8 parameters
+unique(df_invest$param)
+
+```
+
+
+There are **eight** different parameters in the output showing stranded assets or electricity investments in terms of monetary value (Billion 2010 USD) or installed capacity (GW). The detailed descriptions are in [Table 2](#table2). GCAM v5.3 is operated in five-years time step with 2015 as the final calibration year (base year). Annual value is the value calculated at each time step. Cumulative value represents the cumulative total over five-year time step.
+
+<a name="table2"></a>
+**Table 2:** Descriptions of output parameters for stranded assets and electricity investments.
+
+| Parameter | Description | Unit |
+|---|---|---|
+| elecNewCapCost | Annual electricity capacity installations | Billion 2010 USD |
+| elecNewCapGW | Annual electricity capacity installations | Gigawatts |
+| elecAnnualRetPrematureCost | Annual premature retirements | Billion 2010 USD |
+| elecAnnualRetPrematureGW | Annual premature retirements | Gigawatts |
+| elecCumCapCost | Cumulative electricity capacity installations | Billion 2010 USD |
+| elecCumCapGW | Cumulative electricity capacity installations | Gigawatts |
+| elecCumRetPrematureCost | Cumulative premature retirements | Billion 2010 USD |
+| elecCumRetPrematureGW | Cumulative premature retirements | Gigawatts |
+
+[Back to Top](#installation)

@@ -5,36 +5,36 @@
 #'
 #' @param gcamdatabase Default = NULL. Full path to GCAM database folder.
 #' @param queryFile Defualt = NULL. When NULL plutus loads pre-saved xml file plutus::xmlElecQueries
-#' @param reReadData If TRUE will read the GCAM data base and create a queryData.proj file
-#' in the same folder as the GCAM database. If FALSE will load a '.proj' file if a file
+#' @param reReadData Default = TRUE. If TRUE will read the GCAM data base and create a queryData.proj file
+#' under the output directory. If FALSE will load a '.proj' file if a file
 #' with full path is provided otherwise it will search for a dataProj.proj file in the existing
 #' folder which may have been created from an old run.
-#' @param dataProjFile Default = NULL. Optional. A default 'dataProj.proj' is produced if no .Proj file is specified.
+#' @param dataProjFile Default = paste(getwd(), "/outputs/dataProj.proj", sep = ""). Optional. A default 'dataProj.proj' is produced if no .Proj file is specified.
 #' @param gcamdataFile Default = NULL. Optional. For example, gcamdataFile = "~/gcam-core-gcam-v5.3/input/gcamdata".
 #' Use full path to GCAM 'gcamdata' folder that contains costs and capacity data. Data files including:
 #'
-#' A23.globaltech_retirement.csv
-#' L223.GlobalIntTechCapFac_elec.csv
-#' L223.GlobalTechCapFac_elec.csv
-#' L2233.GlobalIntTechCapital_elec.csv
-#' L2233.GlobalIntTechCapital_elec_cool.csv
-#' L2233.GlobalTechCapital_elec_cool.csv
-#' L2233.GlobalTechCapital_elecPassthru.csv
+#' (1) A23.globaltech_retirement.csv;
+#' (2) L223.StubTechCapFactor_elec.csv;
+#' (3) L223.GlobalTechCapFac_elec.csv;
+#' (4) L2233.GlobalIntTechCapital_elec.csv;
+#' (5) L2233.GlobalIntTechCapital_elec_cool.csv;
+#' (6) L2233.GlobalTechCapital_elec_cool.csv;
+#' (7) L2233.GlobalTechCapital_elecPassthru.csv
 #' @param scenOrigNames Default = "All". Original Scenarios names in GCAM database in a string vector.
 #' For example c('scenario1','scenario2).
-#' @param scenNewNames New Names which may be shorter and more useful for figures etc.
+#' @param scenNewNames Default = NULL. New Names which may be shorter and more useful for figures etc.
 #' Default will use Original Names. For example c('scenario1','scenario2)
-#' @param regionsSelect The regions to analyze in a vector. Example c('Colombia','Argentina'). Full list:
+#' @param regionsSelect Default = NULL. The regions to analyze in a vector. Example c('Colombia','Argentina'). Full list:
 #'
 #' USA, Africa_Eastern, Africa_Northern, Africa_Southern, Africa_Western, Australia_NZ, Brazil, Canada
 #' Central America and Caribbean, Central Asia, China, EU-12, EU-15, Europe_Eastern, Europe_Non_EU,
 #' European Free Trade Association, India, Indonesia, Japan, Mexico, Middle East, Pakistan, Russia,
 #' South Africa, South America_Northern, South America_Southern, South Asia, South Korea, Southeast Asia,
 #' Taiwan, Argentina, Colombia, Uruguay
-#' @param dirOutputs Full path to directory for outputs
+#' @param dirOutputs Default = paste(getwd(), "/outputs", sep = ""). Full path to directory for outputs
 #' @param folderName Default = NULL
 #' @param nameAppend  Default = "". Name to append to saved files.
-#' @param saveData Default = "T". Set to F if do not want to save any data to file.
+#' @param saveData Default = TRUE. Set to F if do not want to save any data to file.
 #' @keywords gcam, gcam database, query
 #' @return Returns (1) annual and cumulative costs and power generation of
 #' premature retired electricity infrustructure (including hydropower);
@@ -61,13 +61,14 @@ gcamInvest <- function(gcamdatabase = NULL,
   NULL -> vintage -> year -> xLabel -> x -> value -> sector -> scenario -> region -> param -> origX -> origValue ->
     origUnits -> origScen -> origQuery -> classPalette2 -> classPalette1 -> classLabel2 -> classLabel1 -> class2 ->
     class1 -> connx -> aggregate -> Units -> sources -> paramx -> technology -> input -> output -> regionsSelectAll ->
-    . -> agg_tech -> subsector -> paramsSelectAll -> dataTemplate -> datax -> group -> basin -> subRegion -> query
+    . -> agg_tech -> subsector -> dataTemplate -> datax -> group -> basin -> subRegion -> query
 
 
   #---------------------
   # Params and Queries
   #---------------------
-
+  paramsSelect <- c("elecNewCapCost", "elecNewCapGW", "elecAnnualRetPrematureCost", "elecAnnualRetPrematureGW",
+                    "elecCumCapCost", "elecCumCapGW", "elecCumRetPrematureCost", "elecCumRetPrematureGW")
   queriesSelectx <- c("elec gen by gen tech and cooling tech and vintage",
                       "Electricity generation by aggregate technology")
 
@@ -98,7 +99,7 @@ gcamInvest <- function(gcamdatabase = NULL,
         gcamdatabasePath <- gsub("/$","",gsub("[^/]+$","",gcamdatabase)); gcamdatabasePath
         gcamdatabaseName <- basename(gcamdatabase); gcamdatabaseName
         print(paste("Connecting to GCAM database provided ",gcamdatabase,"...",sep=""))
-      }else{print(paste("The GCAM database path provided dos not exist: ", gcamdatabase, sep=""))}
+      }else{stop(paste("The GCAM database path provided does not exist: ", gcamdatabase, sep=""))}
     }else{
       print(paste("gcamdatabase provided is not a character string to the GCAM database path. Please check your entry."))
     }
@@ -107,6 +108,7 @@ gcamInvest <- function(gcamdatabase = NULL,
   if(is.null(queryFile)){
     XML::saveXML(plutus::xmlElecQueries, file=paste(dirOutputs, "/", folderName,"/readGCAM/ElecQueries.xml", sep = ""))
     queryFile <- paste(dirOutputs, "/", folderName,"/readGCAM/ElecQueries.xml", sep = "")
+    xfun::gsub_file(queryFile,"&apos;","'")
     queryPath <- gsub("[^/]+$","",queryFile)
     queryxml <- basename(queryFile)
   }else{
@@ -258,6 +260,7 @@ gcamInvest <- function(gcamdatabase = NULL,
 
     if(!file.exists(gsub("//","/",paste(queryPath, "/subSetQueries.xml", sep = "")))){
       stop(gsub("//","/",paste("query file: ", queryPath,"/subSetQueries.xml is incorrect or doesn't exist.",sep="")))}else{
+        xfun::gsub_file(paste(queryPath, "/subSetQueries.xml", sep = ""),"&apos;","'")
         print(gsub("//","/",paste("Reading queries from queryFile created: ", queryPath,"/subSetQueries.xml.",sep="")))
       }
 
@@ -377,6 +380,7 @@ gcamInvest <- function(gcamdatabase = NULL,
     end_year_i = max(unique(tbl$year))
     temp_list = list()
     for (scen in scenarios){
+      print(paste('Calculating electricity investment for scenario: ', scen, sep = ''))
       elec_gen_vintage <- tbl %>%
         dplyr::filter(scenario == scen) %>%
         tidyr::spread(year, value) %>%
@@ -743,6 +747,8 @@ gcamInvest <- function(gcamdatabase = NULL,
     }
 
     datax <- dplyr::bind_rows(datax, tbl1,tbl2,tbl3,tbl4,tbl5,tbl6,tbl7,tbl8)
+
+    # datax$class1[datax$class1 %in% 'Bioenergy CCS'] <- 'h Bioenergy w/CCS'
   } else {
     # if(queryx %in% queriesSelectx){print(paste("Query '", queryx, "' not found in database", sep = ""))}
   }
