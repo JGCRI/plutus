@@ -127,7 +127,6 @@
 <pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages('devtools')
 devtools::install_github('JGCRI/rgcam')
 devtools::install_github('JGCRI/plutus')</a></code></pre>
-<p><a href="#Contents">Back to Contents</a></p>
 <p><br></p>
 <!-------------------------->
 <!-------------------------->
@@ -142,7 +141,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 <p>This example will give you a step-by-step instruction on using the core functionality of <code>plutus</code>.</p>
 <div id="download-example-dataset" class="section level4">
 <h4 class="hasAnchor">
-<a href="#download-example-dataset" class="anchor"></a>1. Download Example Dataset</h4>
+<a href="#download-example-dataset" class="anchor"></a>1. Download example dataset</h4>
 <ul>
 <li>Download GCAM sample XML database at <a href="http://doi.org/10.5281/zenodo.4641500" class="uri">http://doi.org/10.5281/zenodo.4641500</a>
 </li>
@@ -153,7 +152,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 <h4 class="hasAnchor">
 <a href="#prepare-your-own-input-data-and-assumptions" class="anchor"></a>2. Prepare your own input data and assumptions</h4>
 <p>The default data and assumptions used in <code>plutus</code> can be found in GCAM v5.3 (See <a href="#table1">Table 1</a>). However, if any of those files listed in <a href="#table1">Table 1</a> have been updated in your GCAM run, it is necessary to use the updated values in <code>plutus</code> as well. <code>plutus</code> uses argument <code>gcamdataFile</code> to specify the path to ALL of the updated files.</p>
-<p><a name="table1"></a> <strong>Table 1:</strong> Data and assumption files. ~\ represent the path to your GCAM v5.3 home folder.</p>
+<p><a name="table1"></a> <strong>Table 1:</strong> Data and assumption files. “~\” represents the path to your GCAM v5.3 home folder.</p>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -189,10 +188,16 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 <tr class="even">
 <td>Capacity factors</td>
 <td>Intermittant technologies</td>
+<td>Global</td>
+<td>~\input\gcamdata\outputs\L223.GlobalIntTechCapFac_elec.csv</td>
+</tr>
+<tr class="odd">
+<td>Capacity factors</td>
+<td>Intermittant technologies</td>
 <td>Regional</td>
 <td>~\input\gcamdata\outputs\L223.StubTechCapFactor_elec.csv</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Lifetime and steepness</td>
 <td>Electricity generation technologies</td>
 <td>Global</td>
@@ -219,7 +224,8 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 <code>saveData</code>: If TRUE, <code>plutus</code> will save data by different aggregated classes.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># Load required packages</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
 <span class="co"># Set your working directory based on the example dataset location</span>
@@ -245,7 +251,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 <p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> returns a list containing:</p>
 <ul>
 <li>
-<code>data</code>: a dataframe with the post-processed GCAM output showing stranded assets and electricity investments (see <a href="#table1">Table 1</a>) by scenario, region, technology, and time period</li>
+<code>data</code>: a dataframe with the post-processed GCAM output showing stranded assets and electricity investments (see <a href="#table2">Table 2</a>) by scenario, region, technology, and time period</li>
 <li>
 <code>dataAggParam</code>: a dataframe with the data aggregated to the parameter</li>
 <li>
@@ -257,7 +263,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 <li>
 <code>queries</code>: A list of the queries used to extract the data</li>
 </ul>
-<p><code>data</code> contains the the most detailed information. Check the structure and content of <code>data</code> and select the most relevant columns including scenario, region, param, class1 (= fuel types), x (= year), units, and value.</p>
+<p><code>data</code> contains the most detailed information. Check the structure and content of <code>data</code> and select the most relevant columns including scenario, region, param, class1 (= fuel types), x (= year), units, and value.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get dataframe with post-processed outputs for stranded assets and electricity investment</span>
 <span class="va">df_invest</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">data</span>
@@ -309,7 +315,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 ## [3] "elecAnnualRetPrematureCost" "elecAnnualRetPrematureGW"  
 ## [5] "elecCumCapCost"             "elecCumCapGW"              
 ## [7] "elecCumRetPrematureCost"    "elecCumRetPrematureGW"</code></pre>
-<p>There are 8 different parameters in the output showing stranded assets or electricity investments in terms of monetary value (Billion 2010 USD) or installed capacity (GW). The detailed descriptions are in <a href="#table2">Table 2</a>. GCAM v5.3 is operated in five-years time step with 2015 as the final calibration year (base year). Annual value is the value calculated at each time step. Cumulative value represents the cumulative total over five-year time step.</p>
+<p>There are <strong>eight</strong> different parameters in the output showing stranded assets or electricity investments in terms of monetary value (Billion 2010 USD) or installed capacity (GW). The detailed descriptions are in <a href="#table2">Table 2</a>. GCAM v5.3 is operated in five-years time step with 2015 as the final calibration year (base year). Annual value is the value calculated at each time step. Cumulative value represents the cumulative total over five-year time step.</p>
 <p><a name="table2"></a> <strong>Table 2:</strong> Descriptions of output parameters for stranded assets and electricity investments.</p>
 <table class="table">
 <colgroup>
@@ -365,7 +371,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 </tr>
 </tbody>
 </table>
-<p><a href="#Contents">Back to Contents</a></p>
+<p><a href="#installation">Back to Top</a></p>
 </div>
 </div>
   </div>
@@ -381,7 +387,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 
 
       <footer><div class="copyright">
-  <p>Developed by Megnqi Zhao, Zarrar Khan, Tom Wild.</p>
+  <p>Developed by Mengqi Zhao, Zarrar Khan, Tom Wild.</p>
 </div>
 
 <div class="pkgdown">
