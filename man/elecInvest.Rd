@@ -8,7 +8,7 @@ elecInvest(
   elec_gen_vintage,
   gcamdataFile,
   world_regions,
-  start_year = 2010,
+  start_year = 2015,
   end_year = 2050
 )
 }
