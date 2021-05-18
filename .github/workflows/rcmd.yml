@@ -20,15 +20,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-r@master
-      
-      - name: Brew and macOS config
-        if: runner.os == 'macOS'
-        run: |
-          brew install pkg-config \
-            imagemagick@6 \
-            gdal
-
+      - uses: r-lib/actions/setup-r@master       
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"), repos = "https://cloud.r-project.org")

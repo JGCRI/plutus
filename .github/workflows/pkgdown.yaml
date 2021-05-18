@@ -31,13 +31,7 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-
-      - name: Brew and macOS config
-        if: runner.os == 'macOS'
-        run: |
-          brew install pkg-config \
-            imagemagick@6 \
-            gdal
+        
         
       - name: Install dependencies
         run: |

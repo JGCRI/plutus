@@ -11,7 +11,7 @@
 #' @return Returns data in a form required by plutus::gcamInvest.R
 #' @export
 
-elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year=2010, end_year=2050) {
+elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year=2015, end_year=2050) {
 
 
   #----------------
@@ -375,10 +375,10 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::mutate(add_GW = (add_adj * plutus::assumptions("convEJ2GWh")) / (8760 * capacity.factor),
                   Units = "GW") -> elec_add_GW
 
-  # Calculate final capital investments in billion 2010 USD
+  # Calculate final capital investments in billion 2015 USD
   elec_add_GW %>%
-    dplyr::mutate(cap_invest = (add_GW * plutus::assumptions("convGW_kW") * capital.overnight * plutus::assumptions("convUSD_1975_2010")) / 1e9,
-                  Units = "billion 2010 USD") -> elec_add_cap_invest
+    dplyr::mutate(cap_invest = (add_GW * plutus::assumptions("convGW_kW") * capital.overnight * plutus::assumptions("convUSD_1975_2015")) / 1e9,
+                  Units = "billion 2015 USD") -> elec_add_cap_invest
 
   # Calculate final premature retirements in GW
   # NOTE:  dividing capital costs for 2010 vintages in half
@@ -399,8 +399,8 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
                        dplyr::select(technology, year, lifetime),
                      by = c("technology", "year")) %>%
     dplyr::mutate(dep_factor = 1 - ((Year - vintage) / lifetime),
-                  unrec_cap = (early_ret_GW * plutus::assumptions("convGW_kW") * capital.overnight * dep_factor * plutus::assumptions("convUSD_1975_2010")) / 1e9,
-                  Units = "billion 2010 USD") -> elec_ret_cap_cost
+                  unrec_cap = (early_ret_GW * plutus::assumptions("convGW_kW") * capital.overnight * dep_factor * plutus::assumptions("convUSD_1975_2015")) / 1e9,
+                  Units = "billion 2015 USD") -> elec_ret_cap_cost
 
 
   # ============================================================================
