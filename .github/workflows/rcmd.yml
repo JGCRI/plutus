@@ -20,12 +20,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-r@master  
+      
+      - name: Overwrite gcc
+        run: brew link --overwrite gcc
       
       - name: Brew and macOS config
         if: runner.os == 'macOS'
         run: |
-          brew link --overwrite gcc
           brew install pkg-config \
             imagemagick@6 \
             gdal
