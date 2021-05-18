@@ -18,6 +18,7 @@ jobs:
       - name: Brew and macOS config
         if: runner.os == 'macOS'
         run: |
+          brew link --overwrite gcc
           brew install pkg-config \
             imagemagick@6 \
             gdal
@@ -31,4 +32,4 @@ jobs:
         if: matrix.r == '3.6'
         run: |
           Rscript -e 'remotes::install_github("r-lib/covr@gh-actions")'
-          Rscript -e 'covr::codecov(token = "${{secrets.CODECOV_TOKEN}}")'
+          Rscript -e 'covr::codecov(token = "${{secrets.CODECOV_SECRET}}")'
