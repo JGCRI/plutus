@@ -70,15 +70,22 @@ Zhao, M., Binsted, M., Wild, T.B., Khan, Z., Yarlagadda, B., Iyer, G., Vernon, C
 
     - R (https://www.r-project.org/)
     - R studio (https://www.rstudio.com/)
+
+2. For Linux users, install following libraries:
+
+```
+sudo apt install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev
+sudo apt-get install libxml2-dev
+```
     
-    
-2. Open R studio:
+3. Open R studio:
 
 ```
 install.packages('devtools')
 devtools::install_github('JGCRI/rgcam')
 devtools::install_github('JGCRI/plutus')
 ```
+
 
 [Back to Contents](#Contents)
 
