@@ -82,15 +82,17 @@ library(plutus)
 library(dplyr)
 
 # Set your working directory based on the example dataset location
-workdir <- setwd('E:/plutus_example/')
+workdir <- 'E:/plutus_example/'
 
 # provide path to the desired GCAM database folder.
-path_to_gcamdatabase <- 'E:/plutus_example/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'
+path_to_gcamdatabase <- file.path(workdir, 'IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5')
 # Specify the path to data file folder if any data files has been updated
 # path_to_gcamdataFile <- 'E:/plutus_example/gcamdataFile'
 
 # Use plutus::gcamInvest to calculate stranded assets and electricity investments
 invest <- plutus::gcamInvest(gcamdatabase = path_to_gcamdatabase,
+                             dataProjFile = file.path(workdir, 'outputs', 'dataProj.proj'),
+                             dirOutputs = file.path(workdir, 'outputs'),
                              reReadData = T,
                              # gcamdataFile = path_to_gcamdataFile, # Use this argument if any data files has been updated
                              scenOrigNames = c('Reference'),
