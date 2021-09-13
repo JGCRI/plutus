@@ -23,8 +23,12 @@ jobs:
       GITHUB_PAT: ${{ secrets.GH_PAT_PLUTUS}}
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-r@master       
+      - uses: actions/checkout@v1
+      - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.r }}
+      - uses: r-lib/actions/setup-pandoc@master
+      - uses: r-lib/actions/setup-tinytex@master     
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"), repos = "https://cloud.r-project.org")
