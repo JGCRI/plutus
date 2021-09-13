@@ -1,3 +1,4 @@
+name: docs
 on:
   push:
     branches:
@@ -10,6 +11,8 @@ jobs:
   pkgdown:
     runs-on: macOS-latest
     env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GH_PAT_PLUTUS }}
     steps:
       - uses: actions/checkout@v2
