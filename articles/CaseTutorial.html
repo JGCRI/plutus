@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -69,7 +69,7 @@
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fas fa-newspaper-o"></span>
+    <span class="fa fa-newspaper-o"></span>
      
     News
   </a>
@@ -229,15 +229,17 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
 <span class="co"># Set your working directory based on the example dataset location</span>
-<span class="va">workdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="st">'E:/plutus_example/'</span><span class="op">)</span>
+<span class="va">workdir</span> <span class="op">&lt;-</span> <span class="st">'E:/plutus_example/'</span>
 
 <span class="co"># provide path to the desired GCAM database folder.</span>
-<span class="va">path_to_gcamdatabase</span> <span class="op">&lt;-</span> <span class="st">'E:/plutus_example/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'</span>
+<span class="va">path_to_gcamdatabase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">workdir</span>, <span class="st">'IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'</span><span class="op">)</span>
 <span class="co"># Specify the path to data file folder if any data files has been updated</span>
 <span class="co"># path_to_gcamdataFile &lt;- 'E:/plutus_example/gcamdataFile'</span>
 
 <span class="co"># Use plutus::gcamInvest to calculate stranded assets and electricity investments</span>
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>gcamdatabase <span class="op">=</span> <span class="va">path_to_gcamdatabase</span>,
+                             dataProjFile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">workdir</span>, <span class="st">'outputs'</span>, <span class="st">'dataProj.proj'</span><span class="op">)</span>,
+                             dirOutputs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">workdir</span>, <span class="st">'outputs'</span><span class="op">)</span>,
                              reReadData <span class="op">=</span> <span class="cn">T</span>,
                              <span class="co"># gcamdataFile = path_to_gcamdataFile, # Use this argument if any data files has been updated</span>
                              scenOrigNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Reference'</span><span class="op">)</span>,
@@ -299,15 +301,15 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>fuel <span class="op">=</span> <span class="va">class1</span>,
                 year <span class="op">=</span> <span class="va">x</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df_invest_sub</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 7
-##   scenario  region param        fuel      year units                       value
-##   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;                       &lt;dbl&gt;
-## 1 Reference China  elecNewCapC… Bioener…  2015 New Elec Cap Cost (Billion…  0   
-## 2 Reference China  elecNewCapC… Bioener…  2020 New Elec Cap Cost (Billion…  0   
-## 3 Reference China  elecNewCapC… Bioener…  2025 New Elec Cap Cost (Billion…  6.37
-## 4 Reference China  elecNewCapC… Bioener…  2030 New Elec Cap Cost (Billion…  9.54
-## 5 Reference China  elecNewCapC… Bioener…  2035 New Elec Cap Cost (Billion…  9.76
-## 6 Reference China  elecNewCapC… Bioener…  2040 New Elec Cap Cost (Billion…  9.18</code></pre>
+<pre><code>## # A tibble: 6 × 7
+##   scenario  region param          fuel       year units                    value
+##   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;                    &lt;dbl&gt;
+## 1 Reference China  elecNewCapCost Bioenergy  2015 New Elec Cap Cost (Bill…  0   
+## 2 Reference China  elecNewCapCost Bioenergy  2020 New Elec Cap Cost (Bill…  0   
+## 3 Reference China  elecNewCapCost Bioenergy  2025 New Elec Cap Cost (Bill…  6.37
+## 4 Reference China  elecNewCapCost Bioenergy  2030 New Elec Cap Cost (Bill…  9.54
+## 5 Reference China  elecNewCapCost Bioenergy  2035 New Elec Cap Cost (Bill…  9.76
+## 6 Reference China  elecNewCapCost Bioenergy  2040 New Elec Cap Cost (Bill…  9.18</code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check out 8 parameters</span>
 <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df_invest</span><span class="op">$</span><span class="va">param</span><span class="op">)</span></code></pre></div>
