@@ -122,7 +122,12 @@
 <li><p>R studio (<a href="https://www.rstudio.com/" class="uri">https://www.rstudio.com/</a>)</p></li>
 </ul>
 </li>
-<li><p>Open R studio:</p></li>
+<li><p>For Linux users, install following libraries:</p></li>
+</ol>
+<pre><code>sudo apt install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev
+sudo apt-get install libxml2-dev</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Open R studio:</li>
 </ol>
 <pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages('devtools')
 devtools::install_github('JGCRI/rgcam')
@@ -145,7 +150,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 <ul>
 <li>Download GCAM sample XML database at <a href="http://doi.org/10.5281/zenodo.4641500" class="uri">http://doi.org/10.5281/zenodo.4641500</a>
 </li>
-<li>Unzip dataset to your desired location. In this example, the path to the dataset is: E:/plutus_example/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5</li>
+<li>Unzip dataset to your desired location. Make sure the path is the one that holds the dataset (.basex files). In this example, the path to the dataset is: E:/plutus_example/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5</li>
 </ul>
 </div>
 <div id="prepare-your-own-input-data-and-assumptions" class="section level4">
@@ -223,15 +228,15 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 <li>
 <code>saveData</code>: If TRUE, <code>plutus</code> will save data by different aggregated classes.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load required packages</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
-<span class="co"># Set your working directory based on the example dataset location</span>
+<span class="co"># Set your directory based on the example dataset location</span>
 <span class="va">workdir</span> <span class="op">&lt;-</span> <span class="st">'E:/plutus_example/'</span>
 
-<span class="co"># provide path to the desired GCAM database folder.</span>
+<span class="co"># provide path to the desired GCAM database folder that holds .basex files.</span>
 <span class="va">path_to_gcamdatabase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">workdir</span>, <span class="st">'IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'</span><span class="op">)</span>
 <span class="co"># Specify the path to data file folder if any data files has been updated</span>
 <span class="co"># path_to_gcamdataFile &lt;- 'E:/plutus_example/gcamdataFile'</span>
@@ -266,7 +271,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 <code>queries</code>: A list of the queries used to extract the data</li>
 </ul>
 <p><code>data</code> contains the most detailed information. Check the structure and content of <code>data</code> and select the most relevant columns including scenario, region, param, class1 (= fuel types), x (= year), units, and value.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get dataframe with post-processed outputs for stranded assets and electricity investment</span>
 <span class="va">df_invest</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">data</span>
 <span class="co"># Check dataframe structure</span>
@@ -294,7 +299,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 ##  $ origX        : num [1:1152] 2015 2020 2025 2030 2035 ...
 ##  $ value        : num [1:1152] 0 0 6.37 9.54 9.76 ...
 ##  $ origValue    : num [1:1152] 0 0 6.37 9.54 9.76 ...</code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Select key variables</span>
 <span class="va">df_invest_sub</span> <span class="op">&lt;-</span> <span class="va">df_invest</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">region</span>, <span class="va">param</span>, <span class="va">class1</span>, <span class="va">x</span>, <span class="va">units</span>, <span class="va">value</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -310,7 +315,7 @@ devtools::install_github('JGCRI/plutus')</a></code></pre>
 ## 4 Reference China  elecNewCapCost Bioenergy  2030 New Elec Cap Cost (Bill…  9.54
 ## 5 Reference China  elecNewCapCost Bioenergy  2035 New Elec Cap Cost (Bill…  9.76
 ## 6 Reference China  elecNewCapCost Bioenergy  2040 New Elec Cap Cost (Bill…  9.18</code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check out 8 parameters</span>
 <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df_invest</span><span class="op">$</span><span class="va">param</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "elecNewCapCost"             "elecNewCapGW"              
