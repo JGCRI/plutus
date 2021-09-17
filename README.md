@@ -86,6 +86,9 @@ devtools::install_github('JGCRI/rgcam')
 devtools::install_github('JGCRI/plutus')
 ```
 
+4. `Metis` installation
+
+`Metis` provides functions to visualize the outputs from `plutus`. The installation guide for `Metis` can be accessed at [Metis Github Page](https://github.com/JGCRI/metis).
 
 [Back to Contents](#Contents)
 
