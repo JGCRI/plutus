@@ -1,7 +1,7 @@
 [![docs](https://github.com/JGCRI/plutus/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/JGCRI/plutus/actions/workflows/pkgdown.yaml)
 [![build](https://github.com/JGCRI/plutus/actions/workflows/rcmd.yml/badge.svg)](https://github.com/JGCRI/plutus/actions/workflows/rcmd.yml)
 [![codecov](https://codecov.io/gh/JGCRI/plutus/branch/main/graph/badge.svg?token=1PK34KIHKE)](https://codecov.io/gh/JGCRI/plutus)
-
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.03212/status.svg)](https://doi.org/10.21105/joss.03212)
 
 # plutus
 Plutus is designed for GCAM v5.3 (excluding GCAM-USA).
@@ -53,7 +53,8 @@ Plutus is designed for GCAM v5.3 (excluding GCAM-USA).
 <!-------------------------->
 <!-------------------------->
 
-Zhao, M., Binsted, M., Wild, T.B., Khan, Z., Yarlagadda, B., Iyer, G., Vernon, C., Patel, P., Santos da Silva, S.R., Calvin, K.V., (in preparation). plutus - An R package to calculate electricity investments and stranded assets from the Global Change Analysis Model. Journal of Open Source Software.
+Zhao, M., Binsted, M., Wild, T.B., Khan, Z., Yarlagadda, B., Iyer, G., Vernon, C., Patel, P., Santos da Silva, S.R., Calvin, K.V., (2021). plutus - An R package to calculate electricity investments and stranded assets from the Global Change Analysis Model (GCAM). Journal of Open Source Software, 6(65), 3212, https://doi.org/10.21105/joss.03212
+
 
 [Back to Contents](#Contents)
 
