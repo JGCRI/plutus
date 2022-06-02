@@ -21,8 +21,14 @@ vignette: >
     
     - R studio (https://www.rstudio.com/)
 
+2. For Linux users, install following libraries:
+
+```
+sudo apt install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev
+sudo apt-get install libxml2-dev
+```
     
-2. Open R studio:
+3. Open R studio:
 
 ```
 install.packages('devtools')
@@ -45,7 +51,7 @@ This example will give you a step-by-step instruction on using the core function
 #### 1. Download example dataset
 
   - Download GCAM sample XML database at http://doi.org/10.5281/zenodo.4641500
-  - Unzip dataset to your desired location. In this example, the path to the dataset is: E:/plutus_example/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5
+  - Unzip dataset to your desired location. Make sure the path is the one that holds the dataset (.basex files). In this example, the path to the dataset is: E:/plutus_example/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5
 
 #### 2. Prepare your own input data and assumptions
 
@@ -81,16 +87,18 @@ Here are the core arguments we used in this example:
 library(plutus)
 library(dplyr)
 
-# Set your working directory based on the example dataset location
-workdir <- setwd('E:/plutus_example/')
+# Set your directory based on the example dataset location
+workdir <- 'E:/plutus_example/'
 
-# provide path to the desired GCAM database folder.
-path_to_gcamdatabase <- 'E:/plutus_example/IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'
+# provide path to the desired GCAM database folder that holds .basex files.
+path_to_gcamdatabase <- file.path(workdir, 'IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5')
 # Specify the path to data file folder if any data files has been updated
 # path_to_gcamdataFile <- 'E:/plutus_example/gcamdataFile'
 
 # Use plutus::gcamInvest to calculate stranded assets and electricity investments
 invest <- plutus::gcamInvest(gcamdatabase = path_to_gcamdatabase,
+                             dataProjFile = file.path(workdir, 'outputs', 'dataProj.proj'),
+                             dirOutputs = file.path(workdir, 'outputs'),
                              reReadData = T,
                              # gcamdataFile = path_to_gcamdataFile, # Use this argument if any data files has been updated
                              scenOrigNames = c('Reference'),
