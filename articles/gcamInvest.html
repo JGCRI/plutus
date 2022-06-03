@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plutus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
@@ -44,7 +46,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fas fa-book"></span>
      
     Guides
@@ -77,7 +79,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/JGCRI/plutus/">
+  <a href="https://github.com/JGCRI/plutus/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +100,7 @@
       <h1 data-toc-skip>gcamInvest</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/JGCRI/plutus/blob/master/vignettes/gcamInvest.Rmd"><code>vignettes/gcamInvest.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/JGCRI/plutus/blob/HEAD/vignettes/gcamInvest.Rmd" class="external-link"><code>vignettes/gcamInvest.Rmd</code></a></small>
       <div class="hidden name"><code>gcamInvest.Rmd</code></div>
 
     </div>
@@ -107,9 +109,9 @@
     
 <!-------------------------->
 <!-------------------------->
-<div id="structure" class="section level1">
-<h1 class="hasAnchor">
-<a href="#structure" class="anchor"></a>Structure</h1>
+<div class="section level2">
+<h2 id="structure">Structure<a class="anchor" aria-label="anchor" href="#structure"></a>
+</h2>
 <!-------------------------->
 <!-------------------------->
 <p align="center">
@@ -179,18 +181,18 @@
 </tr>
 </tbody>
 </table>
-<p>The details of arguments and their default values in <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> can be found in the <a href="https://jgcri.github.io/plutus/reference/gcamInvest.html">gcamInvest reference page</a>. The following sections provide step-by-step instructions on using <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code>.</p>
+<p>The details of arguments and their default values in <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> can be found in the <a href="https://jgcri.github.io/plutus/reference/gcamInvest.html" class="external-link">gcamInvest reference page</a>. The following sections provide step-by-step instructions on using <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Default argument values</span>
 <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>gcamdatabase <span class="op">=</span> <span class="cn">NULL</span>,
                    queryFile <span class="op">=</span> <span class="cn">NULL</span>,
                    reReadData <span class="op">=</span> <span class="cn">T</span>,
-                   dataProjFile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/outputs/dataProj.proj"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,
+                   dataProjFile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/outputs/dataProj.proj"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,
                    gcamdataFile <span class="op">=</span> <span class="cn">NULL</span>,
                    scenOrigNames <span class="op">=</span> <span class="st">'All'</span>,
                    scenNewNames <span class="op">=</span> <span class="cn">NULL</span>,
                    regionsSelect <span class="op">=</span> <span class="cn">NULL</span>,
-                   dirOutputs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/outputs"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,
+                   dirOutputs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/outputs"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,
                    folderName <span class="op">=</span> <span class="cn">NULL</span>,
                    nameAppend <span class="op">=</span> <span class="st">""</span>,
                    saveData <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code></pre></div>
@@ -198,19 +200,19 @@
 <!-------------------------->
 <!-------------------------->
 </div>
-<div id="read-gcam-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#read-gcam-data" class="anchor"></a>Read GCAM Data</h1>
+<div class="section level2">
+<h2 id="read-gcam-data">Read GCAM Data<a class="anchor" aria-label="anchor" href="#read-gcam-data"></a>
+</h2>
 <!-------------------------->
 <!-------------------------->
 <p align="center">
 <img src="vignettesFigs/divider.png"></p>
-<div id="read--proj-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#read--proj-file" class="anchor"></a>Read .proj File</h2>
+<div class="section level3">
+<h3 id="read--proj-file">Read .proj File<a class="anchor" aria-label="anchor" href="#read--proj-file"></a>
+</h3>
 <p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> is able to read rgcam-based .proj file from GCAM output by providing the path to the .proj file. <code>plutus</code> also includes an example .proj dataset <code><a href="../reference/exampleGCAMproj.html">plutus::exampleGCAMproj</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span>
 
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span><span class="co"># dataProjFile = path_to_projfile,</span>
                              dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span><span class="op">)</span>
@@ -223,12 +225,12 @@
 <span class="va">dfQuery</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">queries</span>; <span class="va">dfQuery</span></code></pre></div>
 <p><br></p>
 </div>
-<div id="read-gcam-xml-database" class="section level2">
-<h2 class="hasAnchor">
-<a href="#read-gcam-xml-database" class="anchor"></a>Read GCAM XML Database</h2>
+<div class="section level3">
+<h3 id="read-gcam-xml-database">Read GCAM XML Database<a class="anchor" aria-label="anchor" href="#read-gcam-xml-database"></a>
+</h3>
 <p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> can directly read GCAM output XML database. Assign the path of GCAM database to <code>gcamdatabase</code> argument.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span>
 
 <span class="co"># provide path to the desired GCAM database folder.</span>
 <span class="va">path_to_gcamdatabase</span> <span class="op">&lt;-</span> <span class="st">'E:/gcam-core-gcam-v5.3/output/databse_basexdb'</span>
@@ -237,19 +239,19 @@
 <!-------------------------->
 <!-------------------------->
 </div>
-<div id="subset-gcam-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#subset-gcam-data" class="anchor"></a>Subset GCAM Data</h2>
+<div class="section level3">
+<h3 id="subset-gcam-data">Subset GCAM Data<a class="anchor" aria-label="anchor" href="#subset-gcam-data"></a>
+</h3>
 <!-------------------------->
 <!-------------------------->
 <p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> provides options to subset GCAM data by scenario and region.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span>
 
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span>,
-                             scenOrigNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Reference'</span>, <span class="st">'Impacts'</span>, <span class="st">'Policy'</span><span class="op">)</span>,
-                             scenNewNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Reference'</span>, <span class="st">'Climate Impacts'</span>, <span class="st">'Climate Policy'</span><span class="op">)</span>,
-                             regionsSelect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'USA'</span>, <span class="st">'Argentina'</span><span class="op">)</span><span class="op">)</span>
+                             scenOrigNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Reference'</span>, <span class="st">'Impacts'</span>, <span class="st">'Policy'</span><span class="op">)</span>,
+                             scenNewNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Reference'</span>, <span class="st">'Climate Impacts'</span>, <span class="st">'Climate Policy'</span><span class="op">)</span>,
+                             regionsSelect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'USA'</span>, <span class="st">'Argentina'</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">data</span>; <span class="va">df</span>
 <span class="va">dfParam</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">dataAggParam</span>; <span class="va">dfParam</span>
@@ -259,9 +261,9 @@
 <!-------------------------->
 </div>
 </div>
-<div id="input-data-and-assumptions" class="section level1">
-<h1 class="hasAnchor">
-<a href="#input-data-and-assumptions" class="anchor"></a>Input Data and Assumptions</h1>
+<div class="section level2">
+<h2 id="input-data-and-assumptions">Input Data and Assumptions<a class="anchor" aria-label="anchor" href="#input-data-and-assumptions"></a>
+</h2>
 <!-------------------------->
 <!-------------------------->
 <p align="center">
@@ -327,7 +329,7 @@
 </ul>
 <p>While updating the values in those CSV files, please keep the file name and the format of each updated file unchanged.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span>
 
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span>,
                              gcamdataFile <span class="op">=</span> <span class="st">'E:/gcam-core-gcam-v5.3/input/gcamdata'</span><span class="op">)</span></code></pre></div>
@@ -335,29 +337,29 @@
 <!-------------------------->
 <!-------------------------->
 </div>
-<div id="output-options" class="section level1">
-<h1 class="hasAnchor">
-<a href="#output-options" class="anchor"></a>Output Options</h1>
+<div class="section level2">
+<h2 id="output-options">Output Options<a class="anchor" aria-label="anchor" href="#output-options"></a>
+</h2>
 <!-------------------------->
 <!-------------------------->
 <p align="center">
 <img src="vignettesFigs/divider.png"></p>
 <p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> automatically saves outputs, such as .proj files, queries, and output data tables in default path based on the working directory. This section will introduce arguments in <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> that control different output options.</p>
-<div id="re-read-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#re-read-data" class="anchor"></a>Re-read Data</h2>
+<div class="section level3">
+<h3 id="re-read-data">Re-read Data<a class="anchor" aria-label="anchor" href="#re-read-data"></a>
+</h3>
 <p><code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> automatically save a copy of .proj file (default name: dataProj.proj) in the output directory after extracting GCAM output data if provided a GCAM database folder using <code>gcamdatabase</code> argument. Reload the same (subsetted) GCAM dataset can be much faster by using the automatically saved dataProj.proj file. Users can choose to turnoff auto save function by specifying argument to <code>reReadData = F</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span>
 
 <span class="va">path_to_gcamdatabase</span> <span class="op">&lt;-</span> <span class="st">'E:/gcam-core-gcam-v5.3/output/databse_basexdb'</span>
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>gcamdatabase <span class="op">=</span> <span class="va">path_to_gcamdatabase</span>,
                              reReadData <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># Default is reReadData = T</span></code></pre></div>
 <p><br></p>
 </div>
-<div id="output-directory" class="section level2">
-<h2 class="hasAnchor">
-<a href="#output-directory" class="anchor"></a>Output Directory</h2>
+<div class="section level3">
+<h3 id="output-directory">Output Directory<a class="anchor" aria-label="anchor" href="#output-directory"></a>
+</h3>
 <p>It is easy to change output folder names and names appended to the output data tables.</p>
 <ul>
 <li>
@@ -366,7 +368,7 @@
 <code>nameAppend</code> appends the specified string at the end of each output data table file</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span>
 
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span>,
                              <span class="co"># dirOutputs = Your-desired-output-path, # Default is paste(getwd(), "/outputs", sep = "")</span>
@@ -374,7 +376,7 @@
                              nameAppend <span class="op">=</span> <span class="st">'_Invest'</span><span class="op">)</span> <span class="co"># Default is nameAppend = ''</span></code></pre></div>
 <p>You can also choose not to save any output by setting argument to <code>saveData = F</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span>
 
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span>,
                              saveData <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># Default is saveData = T</span></code></pre></div>
@@ -383,41 +385,41 @@
 <!-------------------------->
 </div>
 </div>
-<div id="visualization" class="section level1">
-<h1 class="hasAnchor">
-<a href="#visualization" class="anchor"></a>Visualization</h1>
+<div class="section level2">
+<h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
+</h2>
 <!-------------------------->
 <!-------------------------->
 <p align="center">
 <img src="vignettesFigs/divider.png"></p>
-<p><code>plutus</code> is designed to integrate with <code>metis</code> (Khan et al., 2020), an R package to harmonize and analyze multi-sectoral data and linkages at variable spatial scales. <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> generates a data structure that can be directly used by <code>metis</code>. More details on metis can be accessed via metis repository at <a href="https://github.com/JGCRI/metis" class="uri">https://github.com/JGCRI/metis</a>.</p>
-<div id="charts" class="section level2">
-<h2 class="hasAnchor">
-<a href="#charts" class="anchor"></a>Charts</h2>
+<p><code>plutus</code> is designed to integrate with <code>metis</code> (Khan et al., 2020), an R package to harmonize and analyze multi-sectoral data and linkages at variable spatial scales. <code><a href="../reference/gcamInvest.html">plutus::gcamInvest</a></code> generates a data structure that can be directly used by <code>metis</code>. More details on metis can be accessed via metis repository at <a href="https://github.com/JGCRI/metis" class="external-link uri">https://github.com/JGCRI/metis</a>.</p>
+<div class="section level3">
+<h3 id="charts">Charts<a class="anchor" aria-label="anchor" href="#charts"></a>
+</h3>
 <p>Below is an example of using <code>metis.chartsProcess</code> to generate charts of stranded assets and electricity investments in the USA and Argentina.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">metis</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">metis</span><span class="op">)</span>
 
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span>,
-                             scenOrigNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Reference'</span>, <span class="st">'Impacts'</span>, <span class="st">'Policy'</span><span class="op">)</span>,
-                             scenNewNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Reference'</span>, <span class="st">'Climate Impacts'</span>, <span class="st">'Climate Policy'</span><span class="op">)</span>,
-                             regionsSelect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'USA'</span>, <span class="st">'Argentina'</span><span class="op">)</span><span class="op">)</span>
+                             scenOrigNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Reference'</span>, <span class="st">'Impacts'</span>, <span class="st">'Policy'</span><span class="op">)</span>,
+                             scenNewNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Reference'</span>, <span class="st">'Climate Impacts'</span>, <span class="st">'Climate Policy'</span><span class="op">)</span>,
+                             regionsSelect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'USA'</span>, <span class="st">'Argentina'</span><span class="op">)</span><span class="op">)</span>
 <span class="va">rTable_i</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">data</span>
 
 <span class="co"># Plot charts for each scenario and comparison between scenarios and regions across time series</span>
 <span class="fu">metis.chartsProcess</span><span class="op">(</span>rTable <span class="op">=</span> <span class="va">rTable_i</span>,
                     paramsSelect <span class="op">=</span> <span class="st">'All'</span>,
-                    regionsSelect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'USA'</span>, <span class="st">'Argentina'</span><span class="op">)</span>,
-                    xCompare <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2030"</span>, <span class="st">"2040"</span>, <span class="st">"2050"</span><span class="op">)</span>,
+                    regionsSelect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'USA'</span>, <span class="st">'Argentina'</span><span class="op">)</span>,
+                    xCompare <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2030"</span>, <span class="st">"2040"</span>, <span class="st">"2050"</span><span class="op">)</span>,
                     scenRef <span class="op">=</span> <span class="st">"Reference"</span>,
-                    dirOutputs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/outputs"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,
+                    dirOutputs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/outputs"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,
                     regionCompare <span class="op">=</span> <span class="fl">1</span>,
                     scenarioCompareOnly <span class="op">=</span> <span class="fl">1</span>,
                     multiPlotOn <span class="op">=</span> <span class="cn">T</span>,
                     multiPlotFigsOnly <span class="op">=</span> <span class="cn">T</span>,
                     folderName <span class="op">=</span> <span class="st">"Charts_USA_Argentina"</span>,
-                    xRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2025</span>, <span class="fl">2030</span>, <span class="fl">2035</span>, <span class="fl">2040</span>, <span class="fl">2045</span>, <span class="fl">2050</span><span class="op">)</span>,
+                    xRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2025</span>, <span class="fl">2030</span>, <span class="fl">2035</span>, <span class="fl">2040</span>, <span class="fl">2045</span>, <span class="fl">2050</span><span class="op">)</span>,
                     colOrderName1 <span class="op">=</span> <span class="st">"scenario"</span>,
                     pdfpng <span class="op">=</span> <span class="st">'pdf'</span><span class="op">)</span></code></pre></div>
 <p align="center" style="font-size:18px;">
@@ -427,13 +429,13 @@
 <img src="vignettesFigs/elecNewCapCost_figBar_USA_Argentina_Reference.png"></p>
 <p><br></p>
 </div>
-<div id="maps" class="section level2">
-<h2 class="hasAnchor">
-<a href="#maps" class="anchor"></a>Maps</h2>
+<div class="section level3">
+<h3 id="maps">Maps<a class="anchor" aria-label="anchor" href="#maps"></a>
+</h3>
 <p>Users can also use <code>metis.mapsProcess</code> to produce spatial maps by scenario, region, technology, and time period. Here is an example to map wind capacity installations for 32 geopolitical regions.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus">plutus</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">metis</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">metis</span><span class="op">)</span>
 
 <span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>dataProjFile <span class="op">=</span> <span class="fu">plutus</span><span class="fu">::</span><span class="va"><a href="../reference/exampleGCAMproj.html">exampleGCAMproj</a></span>,
                              scenOrigNames <span class="op">=</span> <span class="st">'Reference'</span>,
@@ -442,10 +444,10 @@
 
 <span class="va">rTable_i</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">data</span>
 <span class="co"># Filter data to only show new installations for wind</span>
-<span class="va">polygonTable_i</span> <span class="op">&lt;-</span> <span class="va">rTable_i</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">class1</span> <span class="op">%in%</span> <span class="st">'Wind'</span>, <span class="va">param</span> <span class="op">%in%</span> <span class="st">'elecNewCapGW'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subRegion</span>, <span class="va">value</span>, <span class="va">x</span>, <span class="va">class1</span>, <span class="va">scenario</span>, <span class="va">param</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>class <span class="op">=</span> <span class="va">class1</span><span class="op">)</span>
+<span class="va">polygonTable_i</span> <span class="op">&lt;-</span> <span class="va">rTable_i</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">class1</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">'Wind'</span>, <span class="va">param</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">'elecNewCapGW'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">subRegion</span>, <span class="va">value</span>, <span class="va">x</span>, <span class="va">class1</span>, <span class="va">scenario</span>, <span class="va">param</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>class <span class="op">=</span> <span class="va">class1</span><span class="op">)</span>
 
 <span class="co"># Plot wind new installation maps for all 32 geopolitical regions across time</span>
 <span class="fu">metis.mapsProcess</span><span class="op">(</span>polygonTable <span class="op">=</span> <span class="va">polygonTable_i</span>,
@@ -474,11 +476,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mengqi Zhao, Zarrar Khan, Tom Wild.</p>
+  <p></p>
+<p>Developed by Mengqi Zhao, Zarrar Khan, Tom Wild.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
@@ -486,6 +490,8 @@
 
   
 
+
+  
 
   </body>
 </html>

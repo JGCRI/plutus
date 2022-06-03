@@ -1,8 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   CaseTutorial: CaseTutorial.html
   gcamInvest: gcamInvest.html
-last_built: 2021-09-21T20:07Z
+last_built: 2022-06-03T22:49Z
 
