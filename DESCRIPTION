@@ -1,7 +1,7 @@
 Package: plutus
 Title: A comprehensive mapping package
 Version: 0.1.0
-Authors@R: c(person("Mengqi", "Zhao", email = "mengqiz@umd.edu", role = c("aut", "cre"),
+Authors@R: c(person("Mengqi", "Zhao", email = "mengqiz@pnnl.gov", role = c("aut", "cre"),
 		   comment = c(ORCID ="0000-0001-5385-2758")),
 		   person("Zarrar", "Khan", email = "zarrar.khan@pnnl.gov", role = c("aut"),
 		   comment = c(ORCID ="0000-0002-8147-8553")),

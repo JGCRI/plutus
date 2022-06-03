@@ -26,7 +26,8 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     ret_adj -> ret_adj_OG -> natural_retire -> input.capital -> fixed.charge.rate ->
     add_GW -> capital.overnight -> early_ret -> early_ret_GW -> agg_tech ->
     cap_invest -> unrec_Cap -> dep_factor -> unrec_cap -> stub.technology ->
-    capacity.factor.global -> capacity.factor.global_int
+    capacity.factor.global -> capacity.factor.global_int -> capital.overnight.cool ->
+    capital.overnight.elec -> subsector.name.elec -> old.technology
 
   if(is.null(world_regions)){
     world_regions <- unique(elec_gen_vintage$region)
@@ -132,8 +133,8 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::left_join(capac_fac_int,
                      by = c('sector.name', 'subsector.name', 'technology' = 'intermittent.technology', 'year'),
                      suffix = c('.global', '.global_int')) %>%
-    dplyr::mutate(capacity.factor = ifelse(!is.na(capacity.factor.global), capacity.factor.global, capacity.factor.global_int)) %>%
-    dplyr::mutate(capacity.factor = ifelse(technology == 'wind_offshore' & is.na(capacity.factor),
+    dplyr::mutate(capacity.factor = dplyr::if_else(!is.na(capacity.factor.global), capacity.factor.global, capacity.factor.global_int)) %>%
+    dplyr::mutate(capacity.factor = dplyr::if_else(technology == 'wind_offshore' & is.na(capacity.factor),
                                            plutus::assumptions('wind_offshore_cap_fact'), capacity.factor)) %>%
     dplyr::select(-capacity.factor.global, -capacity.factor.global_int)
 
@@ -150,7 +151,7 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     dplyr::left_join(capac_fac_int_new, by = c('region', 'technology', 'year'))
 
   elec_gen_tech_cost <- elec_gen_tech_cost %>%
-    dplyr::mutate(capacity.factor=ifelse(is.na(capacity.factor.region), capacity.factor, capacity.factor.region)) %>%
+    dplyr::mutate(capacity.factor = dplyr::if_else(is.na(capacity.factor.region), capacity.factor, capacity.factor.region)) %>%
     dplyr::select(-capacity.factor.region) %>%
     dplyr::relocate(region, sector.name, subsector.name, technology, year, input.capital, capital.overnight, fixed.charge.rate, capacity.factor)
 
@@ -163,35 +164,18 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
                            year = rep(x = cool_tech_cost_temp$year, times = length(world_regions)))
   cool_tech_cost <- df_cooling %>%
     dplyr::left_join(cool_tech_cost_temp, by = c('technology', 'year'))
-  cool_tech_cost[,'capacity.factor'] <- NA  # New column for cap fac
-  cool_tech_cost[,'old.technology'] <- NA  # New column for cap fac
-  # Make list of years and technologies (by cooling)
-  elec_tech_names_by_cooling_tech <- unique(cool_tech_cost$technology)  # Elec gen by cool tech to loop through
-  years <- unique(cool_tech_cost$year)  # Years to loop through
-  # Loop to replace costs with addition of capital costs and cooling technology costs.
-  for (tech_name in elec_tech_names_by_cooling_tech){
-    for (yr in years) {
-      old_tech_name <- paste0(cool_tech_cost$subsector.name[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)][1])
-      cool_tech_cost$capital.overnight[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
-        dplyr::filter(
-          elec_gen_tech_cost,
-          year == yr,
-          technology == paste0(cool_tech_cost$subsector.name[(cool_tech_cost$year == yr) &
-                                                               (cool_tech_cost$technology == tech_name)][1])
-        )$capital.overnight +
-        cool_tech_cost$capital.overnight[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)]
 
-      cool_tech_cost$subsector.name[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
-        paste0(dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$subsector.name[1])
-
-      cool_tech_cost$old.technology[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
-        paste0(dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$technology[1])
-
-      cool_tech_cost$capacity.factor[(cool_tech_cost$year==yr) & (cool_tech_cost$technology==tech_name)] <-
-        dplyr::filter(elec_gen_tech_cost, year==yr, technology==old_tech_name)$capacity.factor
-
-    }
-  }
+  # Add capital overnight cost from cooling technology to electricity generation technology
+  cool_tech_cost <- cool_tech_cost %>%
+    dplyr::left_join(elec_gen_tech_cost %>%
+                       dplyr::select(region, subsector.name, technology, year, capital.overnight, capacity.factor),
+                     by = c('region', 'subsector.name'='technology', 'year'),
+                     suffix = c('.cool', '.elec')) %>%
+    dplyr::mutate(capital.overnight = capital.overnight.cool + capital.overnight.elec) %>%
+    dplyr::rename(old.technology = subsector.name,
+                  subsector.name = subsector.name.elec) %>%
+    dplyr::select(region, technology, year, sector.name, subsector.name, input.capital,
+                  capital.overnight, fixed.charge.rate, capacity.factor, old.technology)
 
   cap_cost <- cool_tech_cost
   A <- unique(cool_tech_cost$old.technology)
@@ -217,7 +201,8 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
     tidyr::separate(temp, c("temp", "vintage"), sep = "=") %>%
     dplyr::select(-temp) %>%
     dplyr::mutate(vintage = as.numeric(vintage)) %>%
-    dplyr::filter(region %in% world_regions, Year <= end_year, vintage >= plutus::assumptions("GCAMbaseYear"), vintage <= end_year, Year >= vintage) -> elec_vintage
+    dplyr::filter(region %in% world_regions, Year <= end_year, vintage >= plutus::assumptions("GCAMbaseYear"),
+                  vintage <= end_year, Year >= vintage) -> elec_vintage
 
   # ============================================================================
   # Calculate s-curve output fraction
