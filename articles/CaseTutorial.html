@@ -131,9 +131,9 @@ sudo apt-get install libxml2-dev</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Open R studio:</li>
 </ol>
-<pre><code><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'devtools'</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'JGCRI/rgcam'</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'JGCRI/plutus'</span><span class="op">)</span></code></pre>
+<pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'devtools'</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'JGCRI/rgcam'</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'JGCRI/plutus'</span><span class="op">)</span></span></code></pre>
 <p><br></p>
 <!-------------------------->
 <!-------------------------->
@@ -231,27 +231,27 @@ sudo apt-get install libxml2-dev</code></pre>
 <code>saveData</code>: If TRUE, <code>plutus</code> will save data by different aggregated classes.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Load required packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-
-<span class="co"># Set your directory based on the example dataset location</span>
-<span class="va">workdir</span> <span class="op">&lt;-</span> <span class="st">'E:/plutus_example/'</span>
-
-<span class="co"># provide path to the desired GCAM database folder that holds .basex files.</span>
-<span class="va">path_to_gcamdatabase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">workdir</span>, <span class="st">'IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'</span><span class="op">)</span>
-<span class="co"># Specify the path to data file folder if any data files has been updated</span>
-<span class="co"># path_to_gcamdataFile &lt;- 'E:/plutus_example/gcamdataFile'</span>
-
-<span class="co"># Use plutus::gcamInvest to calculate stranded assets and electricity investments</span>
-<span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>gcamdatabase <span class="op">=</span> <span class="va">path_to_gcamdatabase</span>,
-                             dataProjFile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">workdir</span>, <span class="st">'outputs'</span>, <span class="st">'dataProj.proj'</span><span class="op">)</span>,
-                             dirOutputs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">workdir</span>, <span class="st">'outputs'</span><span class="op">)</span>,
-                             reReadData <span class="op">=</span> <span class="cn">T</span>,
-                             <span class="co"># gcamdataFile = path_to_gcamdataFile, # Use this argument if any data files has been updated</span>
-                             scenOrigNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Reference'</span><span class="op">)</span>,
-                             regionsSelect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'USA'</span>, <span class="st">'China'</span><span class="op">)</span>,
-                             saveData <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Load required packages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JGCRI/plutus" class="external-link">plutus</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set your directory based on the example dataset location</span></span>
+<span><span class="va">workdir</span> <span class="op">&lt;-</span> <span class="st">'E:/plutus_example/'</span></span>
+<span></span>
+<span><span class="co"># provide path to the desired GCAM database folder that holds .basex files.</span></span>
+<span><span class="va">path_to_gcamdatabase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">workdir</span>, <span class="st">'IDBNexus_gcam5p3_HadGEM2-ES_rcp8p5'</span><span class="op">)</span></span>
+<span><span class="co"># Specify the path to data file folder if any data files has been updated</span></span>
+<span><span class="co"># path_to_gcamdataFile &lt;- 'E:/plutus_example/gcamdataFile'</span></span>
+<span></span>
+<span><span class="co"># Use plutus::gcamInvest to calculate stranded assets and electricity investments</span></span>
+<span><span class="va">invest</span> <span class="op">&lt;-</span> <span class="fu">plutus</span><span class="fu">::</span><span class="fu"><a href="../reference/gcamInvest.html">gcamInvest</a></span><span class="op">(</span>gcamdatabase <span class="op">=</span> <span class="va">path_to_gcamdatabase</span>,</span>
+<span>                             dataProjFile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">workdir</span>, <span class="st">'outputs'</span>, <span class="st">'dataProj.proj'</span><span class="op">)</span>,</span>
+<span>                             dirOutputs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">workdir</span>, <span class="st">'outputs'</span><span class="op">)</span>,</span>
+<span>                             reReadData <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>                             <span class="co"># gcamdataFile = path_to_gcamdataFile, # Use this argument if any data files has been updated</span></span>
+<span>                             scenOrigNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Reference'</span><span class="op">)</span>,</span>
+<span>                             regionsSelect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'USA'</span>, <span class="st">'China'</span><span class="op">)</span>,</span>
+<span>                             saveData <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level4">
@@ -274,56 +274,56 @@ sudo apt-get install libxml2-dev</code></pre>
 </ul>
 <p><code>data</code> contains the most detailed information. Check the structure and content of <code>data</code> and select the most relevant columns including scenario, region, param, class1 (= fuel types), x (= year), units, and value.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Get dataframe with post-processed outputs for stranded assets and electricity investment</span>
-<span class="va">df_invest</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">data</span>
-<span class="co"># Check dataframe structure</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df_invest</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## tibble [1,152 × 22] (S3: tbl_df/tbl/data.frame)</span>
-<span class="co">##  $ scenario     : chr [1:1152] "Reference" "Reference" "Reference" "Reference" ...</span>
-<span class="co">##  $ region       : chr [1:1152] "China" "China" "China" "China" ...</span>
-<span class="co">##  $ subRegion    : chr [1:1152] "China" "China" "China" "China" ...</span>
-<span class="co">##  $ param        : chr [1:1152] "elecNewCapCost" "elecNewCapCost" "elecNewCapCost" "elecNewCapCost" ...</span>
-<span class="co">##  $ sources      : chr [1:1152] "Sources" "Sources" "Sources" "Sources" ...</span>
-<span class="co">##  $ class1       : chr [1:1152] "Bioenergy" "Bioenergy" "Bioenergy" "Bioenergy" ...</span>
-<span class="co">##  $ class2       : chr [1:1152] "class2" "class2" "class2" "class2" ...</span>
-<span class="co">##  $ x            : num [1:1152] 2015 2020 2025 2030 2035 ...</span>
-<span class="co">##  $ xLabel       : chr [1:1152] "Year" "Year" "Year" "Year" ...</span>
-<span class="co">##  $ vintage      : chr [1:1152] "Vint_2015" "Vint_2020" "Vint_2025" "Vint_2030" ...</span>
-<span class="co">##  $ units        : chr [1:1152] "New Elec Cap Cost (Billion 2015 USD)" "New Elec Cap Cost (Billion 2015 USD)" "New Elec Cap Cost (Billion 2015 USD)" "New Elec Cap Cost (Billion 2015 USD)" ...</span>
-<span class="co">##  $ aggregate    : chr [1:1152] "sum" "sum" "sum" "sum" ...</span>
-<span class="co">##  $ classLabel1  : chr [1:1152] "Fuel" "Fuel" "Fuel" "Fuel" ...</span>
-<span class="co">##  $ classPalette1: chr [1:1152] "pal_metis" "pal_metis" "pal_metis" "pal_metis" ...</span>
-<span class="co">##  $ classLabel2  : chr [1:1152] "classLabel2" "classLabel2" "classLabel2" "classLabel2" ...</span>
-<span class="co">##  $ classPalette2: chr [1:1152] "classPalette2" "classPalette2" "classPalette2" "classPalette2" ...</span>
-<span class="co">##  $ origScen     : chr [1:1152] "Reference" "Reference" "Reference" "Reference" ...</span>
-<span class="co">##  $ origQuery    : chr [1:1152] "elec gen by gen tech and cooling tech and vintage" "elec gen by gen tech and cooling tech and vintage" "elec gen by gen tech and cooling tech and vintage" "elec gen by gen tech and cooling tech and vintage" ...</span>
-<span class="co">##  $ origUnits    : chr [1:1152] "billion 2015 USD" "billion 2015 USD" "billion 2015 USD" "billion 2015 USD" ...</span>
-<span class="co">##  $ origX        : num [1:1152] 2015 2020 2025 2030 2035 ...</span>
-<span class="co">##  $ value        : num [1:1152] 0 0 6.37 9.54 9.76 ...</span>
-<span class="co">##  $ origValue    : num [1:1152] 0 0 6.37 9.54 9.76 ...</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># Get dataframe with post-processed outputs for stranded assets and electricity investment</span></span>
+<span><span class="va">df_invest</span> <span class="op">&lt;-</span> <span class="va">invest</span><span class="op">$</span><span class="va">data</span></span>
+<span><span class="co"># Check dataframe structure</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df_invest</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## tibble [1,152 × 22] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">##  $ scenario     : chr [1:1152] "Reference" "Reference" "Reference" "Reference" ...</span></span>
+<span><span class="co">##  $ region       : chr [1:1152] "China" "China" "China" "China" ...</span></span>
+<span><span class="co">##  $ subRegion    : chr [1:1152] "China" "China" "China" "China" ...</span></span>
+<span><span class="co">##  $ param        : chr [1:1152] "elecNewCapCost" "elecNewCapCost" "elecNewCapCost" "elecNewCapCost" ...</span></span>
+<span><span class="co">##  $ sources      : chr [1:1152] "Sources" "Sources" "Sources" "Sources" ...</span></span>
+<span><span class="co">##  $ class1       : chr [1:1152] "Bioenergy" "Bioenergy" "Bioenergy" "Bioenergy" ...</span></span>
+<span><span class="co">##  $ class2       : chr [1:1152] "class2" "class2" "class2" "class2" ...</span></span>
+<span><span class="co">##  $ x            : num [1:1152] 2015 2020 2025 2030 2035 ...</span></span>
+<span><span class="co">##  $ xLabel       : chr [1:1152] "Year" "Year" "Year" "Year" ...</span></span>
+<span><span class="co">##  $ vintage      : chr [1:1152] "Vint_2015" "Vint_2020" "Vint_2025" "Vint_2030" ...</span></span>
+<span><span class="co">##  $ units        : chr [1:1152] "New Elec Cap Cost (Billion 2015 USD)" "New Elec Cap Cost (Billion 2015 USD)" "New Elec Cap Cost (Billion 2015 USD)" "New Elec Cap Cost (Billion 2015 USD)" ...</span></span>
+<span><span class="co">##  $ aggregate    : chr [1:1152] "sum" "sum" "sum" "sum" ...</span></span>
+<span><span class="co">##  $ classLabel1  : chr [1:1152] "Fuel" "Fuel" "Fuel" "Fuel" ...</span></span>
+<span><span class="co">##  $ classPalette1: chr [1:1152] "pal_metis" "pal_metis" "pal_metis" "pal_metis" ...</span></span>
+<span><span class="co">##  $ classLabel2  : chr [1:1152] "classLabel2" "classLabel2" "classLabel2" "classLabel2" ...</span></span>
+<span><span class="co">##  $ classPalette2: chr [1:1152] "classPalette2" "classPalette2" "classPalette2" "classPalette2" ...</span></span>
+<span><span class="co">##  $ origScen     : chr [1:1152] "Reference" "Reference" "Reference" "Reference" ...</span></span>
+<span><span class="co">##  $ origQuery    : chr [1:1152] "elec gen by gen tech and cooling tech and vintage" "elec gen by gen tech and cooling tech and vintage" "elec gen by gen tech and cooling tech and vintage" "elec gen by gen tech and cooling tech and vintage" ...</span></span>
+<span><span class="co">##  $ origUnits    : chr [1:1152] "billion 2015 USD" "billion 2015 USD" "billion 2015 USD" "billion 2015 USD" ...</span></span>
+<span><span class="co">##  $ origX        : num [1:1152] 2015 2020 2025 2030 2035 ...</span></span>
+<span><span class="co">##  $ value        : num [1:1152] 0 0 6.37 9.54 9.76 ...</span></span>
+<span><span class="co">##  $ origValue    : num [1:1152] 0 0 6.37 9.54 9.76 ...</span></span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Select key variables</span>
-<span class="va">df_invest_sub</span> <span class="op">&lt;-</span> <span class="va">df_invest</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">region</span>, <span class="va">param</span>, <span class="va">class1</span>, <span class="va">x</span>, <span class="va">units</span>, <span class="va">value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>fuel <span class="op">=</span> <span class="va">class1</span>,
-                year <span class="op">=</span> <span class="va">x</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df_invest_sub</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 7</span></span>
-<span class="co">##   scenario  region param          fuel       year units                    value</span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>015 New Elec Cap Cost (Bill…  0   </span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>020 New Elec Cap Cost (Bill…  0   </span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>025 New Elec Cap Cost (Bill…  6.37</span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>030 New Elec Cap Cost (Bill…  9.54</span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>035 New Elec Cap Cost (Bill…  9.76</span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>040 New Elec Cap Cost (Bill…  9.18</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># Select key variables</span></span>
+<span><span class="va">df_invest_sub</span> <span class="op">&lt;-</span> <span class="va">df_invest</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">region</span>, <span class="va">param</span>, <span class="va">class1</span>, <span class="va">x</span>, <span class="va">units</span>, <span class="va">value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>fuel <span class="op">=</span> <span class="va">class1</span>,</span>
+<span>                year <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df_invest_sub</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 7</span></span></span>
+<span><span class="co">##   scenario  region param          fuel       year units                    value</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>015 New Elec Cap Cost (Bill…  0   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>020 New Elec Cap Cost (Bill…  0   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>025 New Elec Cap Cost (Bill…  6.37</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>030 New Elec Cap Cost (Bill…  9.54</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>035 New Elec Cap Cost (Bill…  9.76</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Reference China  elecNewCapCost Bioenergy  <span style="text-decoration: underline;">2</span>040 New Elec Cap Cost (Bill…  9.18</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Check out 8 parameters</span>
-<span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">df_invest</span><span class="op">$</span><span class="va">param</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] "elecNewCapCost"             "elecNewCapGW"              </span>
-<span class="co">## [3] "elecAnnualRetPrematureCost" "elecAnnualRetPrematureGW"  </span>
-<span class="co">## [5] "elecCumCapCost"             "elecCumCapGW"              </span>
-<span class="co">## [7] "elecCumRetPrematureCost"    "elecCumRetPrematureGW"</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># Check out 8 parameters</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">df_invest</span><span class="op">$</span><span class="va">param</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "elecNewCapCost"             "elecNewCapGW"              </span></span>
+<span><span class="co">## [3] "elecAnnualRetPrematureCost" "elecAnnualRetPrematureGW"  </span></span>
+<span><span class="co">## [5] "elecCumCapCost"             "elecCumCapGW"              </span></span>
+<span><span class="co">## [7] "elecCumRetPrematureCost"    "elecCumRetPrematureGW"</span></span></code></pre>
 <p>There are <strong>eight</strong> different parameters in the output showing stranded assets or electricity investments in terms of monetary value (Billion 2010 USD) or installed capacity (GW). The detailed descriptions are in <a href="#table2">Table 2</a>. GCAM v5.3 is operated in five-years time step with 2015 as the final calibration year (base year). Annual value is the value calculated at each time step. Cumulative value represents the cumulative total over five-year time step.</p>
 <p><a name="table2"></a> <strong>Table 2:</strong> Descriptions of output parameters for stranded assets and electricity investments.</p>
 <table class="table">
@@ -402,7 +402,7 @@ sudo apt-get install libxml2-dev</code></pre>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

@@ -84,35 +84,43 @@ electricity and hydropower investments.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">gcamInvest</span><span class="op">(</span>
-  gcamdatabase <span class="op">=</span> <span class="cn">NULL</span>,
-  queryFile <span class="op">=</span> <span class="cn">NULL</span>,
-  reReadData <span class="op">=</span> <span class="cn">T</span>,
-  dataProjFile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/outputs/dataProj.proj"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,
-  gcamdataFile <span class="op">=</span> <span class="cn">NULL</span>,
-  scenOrigNames <span class="op">=</span> <span class="st">"All"</span>,
-  scenNewNames <span class="op">=</span> <span class="cn">NULL</span>,
-  regionsSelect <span class="op">=</span> <span class="cn">NULL</span>,
-  dirOutputs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/outputs"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,
-  folderName <span class="op">=</span> <span class="cn">NULL</span>,
-  nameAppend <span class="op">=</span> <span class="st">""</span>,
-  saveData <span class="op">=</span> <span class="cn">T</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gcamInvest</span><span class="op">(</span></span>
+<span>  gcamdatabase <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  queryFile <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  reReadData <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  dataProjFile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/outputs/dataProj.proj"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,</span>
+<span>  gcamdataFile <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  scenOrigNames <span class="op">=</span> <span class="st">"All"</span>,</span>
+<span>  scenNewNames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  regionsSelect <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  dirOutputs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/outputs"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,</span>
+<span>  folderName <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  nameAppend <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  saveData <span class="op">=</span> <span class="cn">T</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gcamdatabase</dt>
 <dd><p>Default = NULL. Full path to GCAM database folder.</p></dd>
+
+
 <dt>queryFile</dt>
 <dd><p>Defualt = NULL. When NULL plutus loads pre-saved xml file plutus::xmlElecQueries</p></dd>
+
+
 <dt>reReadData</dt>
 <dd><p>Default = TRUE. If TRUE will read the GCAM data base and create a queryData.proj file
 under the output directory. If FALSE will load a '.proj' file if a file
 with full path is provided otherwise it will search for a dataProj.proj file in the existing
 folder which may have been created from an old run.</p></dd>
+
+
 <dt>dataProjFile</dt>
 <dd><p>Default = paste(getwd(), "/outputs/dataProj.proj", sep = ""). Optional. A default 'dataProj.proj' is produced if no .Proj file is specified.</p></dd>
+
+
 <dt>gcamdataFile</dt>
 <dd><p>Default = NULL. Optional. For example, gcamdataFile = "~/gcam-core-gcam-v5.3/input/gcamdata".
 Use full path to GCAM 'gcamdata' folder that contains costs and capacity data. Data files including:</p>
@@ -123,12 +131,18 @@ Use full path to GCAM 'gcamdata' folder that contains costs and capacity data. D
 (5) L2233.GlobalIntTechCapital_elec_cool.csv;
 (6) L2233.GlobalTechCapital_elec_cool.csv;
 (7) L2233.GlobalTechCapital_elecPassthru.csv</p></dd>
+
+
 <dt>scenOrigNames</dt>
 <dd><p>Default = "All". Original Scenarios names in GCAM database in a string vector.
 For example c('scenario1','scenario2).</p></dd>
+
+
 <dt>scenNewNames</dt>
 <dd><p>Default = NULL. New Names which may be shorter and more useful for figures etc.
 Default will use Original Names. For example c('scenario1','scenario2)</p></dd>
+
+
 <dt>regionsSelect</dt>
 <dd><p>Default = NULL. The regions to analyze in a vector. Example c('Colombia','Argentina'). Full list:</p>
 <p>USA, Africa_Eastern, Africa_Northern, Africa_Southern, Africa_Western, Australia_NZ, Brazil, Canada
@@ -136,18 +150,29 @@ Central America and Caribbean, Central Asia, China, EU-12, EU-15, Europe_Eastern
 European Free Trade Association, India, Indonesia, Japan, Mexico, Middle East, Pakistan, Russia,
 South Africa, South America_Northern, South America_Southern, South Asia, South Korea, Southeast Asia,
 Taiwan, Argentina, Colombia, Uruguay</p></dd>
+
+
 <dt>dirOutputs</dt>
 <dd><p>Default = paste(getwd(), "/outputs", sep = ""). Full path to directory for outputs</p></dd>
+
+
 <dt>folderName</dt>
 <dd><p>Default = NULL</p></dd>
+
+
 <dt>nameAppend</dt>
 <dd><p>Default = "". Name to append to saved files.</p></dd>
+
+
 <dt>saveData</dt>
 <dd><p>Default = TRUE. Set to F if do not want to save any data to file.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns (1) annual and cumulative costs and power generation of
+    
+
+<p>Returns (1) annual and cumulative costs and power generation of
 premature retired electricity infrustructure (including hydropower);
 (2) annual and cumulative costs and power generation of new capacity from new electricity infrustructures (including hydropower).</p>
     </div>
@@ -164,7 +189,7 @@ premature retired electricity infrustructure (including hydropower);
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>
