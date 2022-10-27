@@ -42,7 +42,6 @@ Plutus is designed for GCAM v5.3 (excluding GCAM-USA).
 
 `plutus` post-processes outputs from the Global Change Analysis Model (GCAM) to calculate the electricity investment costs and stranded asset costs associated with GCAM projections of future power sector energy generation by technology.
 
-
 [Back to Contents](#Contents)
 
 <br />
@@ -109,3 +108,15 @@ devtools::install_github('JGCRI/plutus')
 [Back to Contents](#Contents)
 
 <br />
+
+<!-------------------------->
+<!-------------------------->
+# <a name="UserNotice"></a>User Notice
+<!-------------------------->
+<!-------------------------->
+
+1. `plutus` is limited to GCAM v6 or earlier versions. `plutus` currently is not applicable to GCAM-USA.
+
+2. `plutus` currently does not adjust the investment of rooftop PV from GCAM outputs, which assumes 100% replacement of rooftop PV in each model time period. This may result in investment overcounting. We are currently working on updating `plutus` to address this issue.
+
+3. The new investment and capacity installation output for each time period from `plutus` are not on an annual basis. They are the total values during each 5-year GCAM time period.
