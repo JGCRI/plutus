@@ -1,5 +1,5 @@
-[![docs](https://github.com/JGCRI/plutus/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/JGCRI/plutus/actions/workflows/pkgdown.yaml)
-[![build](https://github.com/JGCRI/plutus/actions/workflows/rcmd.yml/badge.svg)](https://github.com/JGCRI/plutus/actions/workflows/rcmd.yml)
+[![docs](https://github.com/JGCRI/plutus/actions/workflows/docs.yaml/badge.svg)](https://github.com/JGCRI/plutus/actions/workflows/docs.yaml)
+[![build](https://github.com/JGCRI/plutus/actions/workflows/build.yml/badge.svg)](https://github.com/JGCRI/plutus/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/JGCRI/plutus/branch/main/graph/badge.svg?token=1PK34KIHKE)](https://codecov.io/gh/JGCRI/plutus)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.03212/status.svg)](https://doi.org/10.21105/joss.03212)
 
@@ -17,7 +17,8 @@ Plutus is designed for GCAM v5.3 (excluding GCAM-USA).
 - [Introduction](#Introduction)
 - [Citation](#Citation)
 - [Installation Guide](#InstallGuides)
-- [How-to Guides](#How-toGuides) 
+- [How-to Guides](#How-toGuides)
+- [User Notice](#UserNotice)
 
 <br />
 
@@ -41,7 +42,6 @@ Plutus is designed for GCAM v5.3 (excluding GCAM-USA).
 <!-------------------------->
 
 `plutus` post-processes outputs from the Global Change Analysis Model (GCAM) to calculate the electricity investment costs and stranded asset costs associated with GCAM projections of future power sector energy generation by technology.
-
 
 [Back to Contents](#Contents)
 
@@ -105,6 +105,22 @@ devtools::install_github('JGCRI/plutus')
 
 - [Instruction on `plutus::gcamInvest`](https://jgcri.github.io/plutus/articles/gcamInvest.html)
 - [Case tutorial](https://jgcri.github.io/plutus/articles/CaseTutorial.html)
+
+[Back to Contents](#Contents)
+
+<br />
+
+<!-------------------------->
+<!-------------------------->
+# <a name="UserNotice"></a>User Notice
+<!-------------------------->
+<!-------------------------->
+
+1. `plutus` is limited to GCAM v6 or earlier versions. `plutus` currently is not applicable to GCAM-USA.
+
+2. `plutus` currently does not adjust the investment of rooftop PV from GCAM outputs, which assumes 100% replacement of rooftop PV in each model time period. This may result in investment overcounting. We are currently working on updating `plutus` to address this issue.
+
+3. The new investment and capacity installation output for each time period from `plutus` are not on an annual basis. They are the total values during each 5-year GCAM time period.
 
 [Back to Contents](#Contents)
 

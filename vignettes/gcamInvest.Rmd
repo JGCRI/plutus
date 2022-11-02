@@ -31,10 +31,10 @@ vignette: >
 
 | Parameter | Description | Unit |
 |---|---|---|
-| elecNewCapCost | Annual electricity capacity installations | Billion 2010 USD |
-| elecNewCapGW | Annual electricity capacity installations | Gigawatts |
-| elecAnnualRetPrematureCost | Annual premature retirements | Billion 2010 USD |
-| elecAnnualRetPrematureGW | Annual premature retirements | Gigawatts |
+| elecNewCapCost | 5-year electricity capacity installations | Billion 2010 USD |
+| elecNewCapGW | 5-year electricity capacity installations | Gigawatts |
+| elecAnnualRetPrematureCost | 5-year premature retirements | Billion 2010 USD |
+| elecAnnualRetPrematureGW | 5-year premature retirements | Gigawatts |
 | elecCumCapCost | Cumulative electricity capacity installations | Billion 2010 USD |
 | elecCumCapGW | Cumulative electricity capacity installations | Gigawatts |
 | elecCumRetPrematureCost | Cumulative premature retirements | Billion 2010 USD |
