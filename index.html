@@ -197,7 +197,7 @@ sudo apt-get install libxml2-dev</code></pre>
 </h1>
 <!--------------------------><!--------------------------><ol style="list-style-type: decimal">
 <li><p><code>plutus</code> is limited to GCAM v6 or earlier versions. <code>plutus</code> currently is not applicable to GCAM-USA.</p></li>
-<li><p><code>plutus</code> currently does not adjust the investment of rooftop PV from GCAM outputs, which assumes 100% replacement of rooftop PV in each model time period. This may result in investment overcounting. We are currently working on updating <code>plutus</code> to address this issue.</p></li>
+<li><p><code>plutus</code> currently does not include rooftop PV in the output because GCAM does not track rooftop PV carryover in each model time period. We are working on updating <code>plutus</code> to correctly represent new capacity installation and investment for rooftop PV.</p></li>
 <li><p>The new investment and capacity installation output for each time period from <code>plutus</code> are not on an annual basis. They are the total values during each 5-year GCAM time period.</p></li>
 </ol>
 <p><a href="#Contents">Back to Contents</a></p>
