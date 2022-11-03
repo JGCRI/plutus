@@ -34,6 +34,11 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
   }
 
   # ============================================================================
+  # Exclude rooftop PV
+  elec_gen_vintage <- elec_gen_vintage %>%
+    dplyr::filter(!subsector %in% 'rooftop_pv')
+
+  # ============================================================================
   # Mapping files
 
   years_mapping <- data.frame(year = c(rep("final-calibration-year", 1),

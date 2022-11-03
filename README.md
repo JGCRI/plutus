@@ -118,7 +118,7 @@ devtools::install_github('JGCRI/plutus')
 
 1. `plutus` is limited to GCAM v6 or earlier versions. `plutus` currently is not applicable to GCAM-USA.
 
-2. `plutus` currently does not adjust the investment of rooftop PV from GCAM outputs, which assumes 100% replacement of rooftop PV in each model time period. This may result in investment overcounting. We are currently working on updating `plutus` to address this issue.
+2. `plutus` currently does not include rooftop PV in the output because GCAM does not track rooftop PV carryover in each model time period. We are working on updating `plutus` to correctly represent new capacity installation and investment for rooftop PV.
 
 3. The new investment and capacity installation output for each time period from `plutus` are not on an annual basis. They are the total values during each 5-year GCAM time period.
 
