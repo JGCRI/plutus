@@ -459,8 +459,8 @@ gcamInvest <- function(gcamdatabase = NULL,
     }
 
     # newCap_GW
-    if(nrow(addition_costs[["newCap_GW"]])>0){
-      tbl2 <- addition_costs[["newCap_GW"]] %>%
+    if(nrow(addition_costsWhydro[["newCap_GW"]])>0){
+      tbl2 <- addition_costsWhydro[["newCap_GW"]] %>%
         tidyr::gather(key="year",value=value,-Units,-scenario,-region, -subRegion, -agg_tech)%>%
         dplyr::filter(scenario %in% scenOrigNames)%>%
         dplyr::left_join(tibble::tibble(scenOrigNames, scenNewNames), by = c(scenario = "scenOrigNames")) %>%
@@ -581,7 +581,7 @@ gcamInvest <- function(gcamdatabase = NULL,
         dplyr::filter(!is.na(value))
     }
 
-    # newCap_cost
+    # cumCap_cost
     if(nrow(addition_costsWhydro[["cumCap_cost"]])>0){
       tbl5 <- addition_costsWhydro[["cumCap_cost"]] %>%
         tidyr::gather(key="year",value=value,-Units,-scenario,-region, -subRegion, -agg_tech)%>%
@@ -622,9 +622,9 @@ gcamInvest <- function(gcamdatabase = NULL,
         dplyr::filter(!is.na(value))
     }
 
-    # newCap_GW
-    if(nrow(addition_costs[["cumCap_GW"]])>0){
-      tbl6 <- addition_costs[["cumCap_GW"]] %>%
+    # cumCap_GW
+    if(nrow(addition_costsWhydro[["cumCap_GW"]])>0){
+      tbl6 <- addition_costsWhydro[["cumCap_GW"]] %>%
         tidyr::gather(key="year",value=value,-Units,-scenario,-region, -subRegion, -agg_tech)%>%
         dplyr::filter(scenario %in% scenOrigNames)%>%
         dplyr::left_join(tibble::tibble(scenOrigNames, scenNewNames), by = c(scenario = "scenOrigNames")) %>%
@@ -664,7 +664,7 @@ gcamInvest <- function(gcamdatabase = NULL,
     }
 
 
-    # retPremature_cost
+    # cumPrematureRet_cost
     if(nrow(addition_costs[["cumPrematureRet_cost"]])>0){
       tbl7 <- addition_costs[["cumPrematureRet_cost"]] %>%
         tidyr::gather(key="year",value=value,-Units,-scenario,-region, -subRegion, -agg_tech)%>%
@@ -705,7 +705,7 @@ gcamInvest <- function(gcamdatabase = NULL,
         dplyr::filter(!is.na(value))
     }
 
-    # retPremature_GW
+    # cumPrematureRet_GW
     if(nrow(addition_costs[["cumPrematureRet_GW"]])>0){
       tbl8 <- addition_costs[["cumPrematureRet_GW"]] %>%
         tidyr::gather(key="year",value=value,-Units,-scenario,-region, -subRegion, -agg_tech)%>%
