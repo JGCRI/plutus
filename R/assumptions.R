@@ -17,6 +17,7 @@
 #' \item hydro_cost_GW,
 #' \item convUSD_1975_2010,
 #' \item convUSD_1975_2015,
+#' \item convUSD_2010_2015,
 #' \item conv1975USDperGJ22017USDperMWh,
 #' \item conv1975USDperGJ22017USDperMBTU}
 #' @keywords assumptions
@@ -42,6 +43,7 @@ assumptions <- function(name=NULL) {
   conv1975USDperGJ22017USDperMBTU<- (103.015/28.485)/0.947 # (3.82) Deflators 1975 (28.485) to 2017 (103.015) from World Bank https://data.worldbank.org/indicator/NY.GDP.DEFL.ZS?locations=US&view=chart
   convUSD_1975_2010	<- 91.718/28.485 # (3.22) Deflators 1975 (28.485) to 2010 (91.718) from World Bank https://data.worldbank.org/indicator/NY.GDP.DEFL.ZS?locations=US&view=chart
   convUSD_1975_2015	<- 100/28.485 # (3.51) Deflators 1975 (28.485) to 2015 (100) from World Bank https://data.worldbank.org/indicator/NY.GDP.DEFL.ZS?locations=US&view=chart
+  convUSD_2010_2015 <- 100/91.9 # (3.51) Deflators 2010 (91.9) to 2015 (100) from World Bank https://data.worldbank.org/indicator/NY.GDP.DEFL.ZS?locations=US&view=chart
   conv_C_CO2 <- 44/12
   conv_MT_GT <- 1e-3
 
@@ -76,6 +78,7 @@ assumptions <- function(name=NULL) {
     wind_offshore_cap_fact=wind_offshore_cap_fact,
     convUSD_1975_2010=convUSD_1975_2010,
     convUSD_1975_2015=convUSD_1975_2015,
+    convUSD_2010_2015=convUSD_2010_2015,
     conv1975USDperGJ22017USDperMWh=conv1975USDperGJ22017USDperMWh,
     conv1975USDperGJ22017USDperMBTU=conv1975USDperGJ22017USDperMBTU)
 
