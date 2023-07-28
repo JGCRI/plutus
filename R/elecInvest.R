@@ -402,55 +402,55 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
   elec_add_cap_invest %>%
     dplyr::left_join(tech_mapping, by = c("technology")) %>%
     dplyr::group_by(scenario, region, Year, Units, agg_tech) %>%
-    dplyr::summarise(cap_invest = sum(cap_invest,na.rm=T)) %>%
+    dplyr::summarise(cap_invest = sum(cap_invest, na.rm = T)) %>%
     dplyr::ungroup() %>%
     dplyr::filter(Year >= start_year) %>%
-    dplyr::mutate(cap_invest=dplyr::if_else(Year==plutus::assumptions("GCAMbaseYear"),0,cap_invest))%>%
+    dplyr::mutate(cap_invest = dplyr::if_else(Year == plutus::assumptions("GCAMbaseYear"), 0, cap_invest)) %>%
     tidyr::spread(Year, cap_invest) %>%
-    dplyr::mutate_all(~replace(., is.na(.), 0))%>%
+    dplyr::mutate_all( ~ replace(., is.na(.), 0)) %>%
     dplyr::mutate(agg_tech = factor(agg_tech, levels = tech_order)) %>%
-    dplyr::arrange(region, agg_tech)-> newCap_cost
+    dplyr::arrange(region, agg_tech) -> newCap_cost
 
   # Cum Cap Costs
   elec_add_cap_invest %>%
     dplyr::left_join(tech_mapping, by = c("technology")) %>%
     dplyr::group_by(scenario, region, Year, Units, agg_tech) %>%
-    dplyr::summarise(cap_invest = sum(cap_invest,na.rm=T)) %>%
+    dplyr::summarise(cap_invest = sum(cap_invest, na.rm = T)) %>%
     dplyr::ungroup() %>%
-    dplyr::group_by(scenario, region,Units, agg_tech) %>%
-    dplyr::mutate(cap_invest = cumsum(cap_invest)) %>%
-    dplyr::ungroup()%>%
     dplyr::filter(Year >= start_year) %>%
-    dplyr::mutate(cap_invest=dplyr::if_else(Year==plutus::assumptions("GCAMbaseYear"),0,cap_invest))%>%
+    dplyr::mutate(cap_invest = dplyr::if_else(Year == plutus::assumptions("GCAMbaseYear"), 0, cap_invest)) %>%
+    dplyr::group_by(scenario, region, Units, agg_tech) %>%
+    dplyr::mutate(cap_invest = cumsum(cap_invest)) %>%
+    dplyr::ungroup() %>%
     tidyr::spread(Year, cap_invest) %>%
-    dplyr::mutate_all(~replace(., is.na(.), 0))%>%
+    dplyr::mutate_all( ~ replace(., is.na(.), 0)) %>%
     dplyr::mutate(agg_tech = factor(agg_tech, levels = tech_order)) %>%
-    dplyr::arrange(region, agg_tech)-> cumCap_cost
+    dplyr::arrange(region, agg_tech) -> cumCap_cost
 
   # New Capacity
   elec_add_GW %>%
     dplyr::left_join(tech_mapping, by = c("technology")) %>%
     dplyr::group_by(scenario, region, Year, Units, agg_tech) %>%
-    dplyr::summarise(add_GW = sum(add_GW,na.rm=T)) %>%
+    dplyr::summarise(add_GW = sum(add_GW, na.rm = T)) %>%
     dplyr::ungroup() %>%
     dplyr::filter(Year >= start_year) %>%
     tidyr::spread(Year, add_GW) %>%
-    dplyr::mutate_all(~replace(., is.na(.), 0)) %>%
+    dplyr::mutate_all( ~ replace(., is.na(.), 0)) %>%
     dplyr::mutate(agg_tech = factor(agg_tech, levels = tech_order)) %>%
     dplyr::arrange(region, agg_tech) -> newCap_GW
 
-  # Cummulative Capacity
+  # Cumulative Capacity
   elec_add_GW %>%
     dplyr::left_join(tech_mapping, by = c("technology")) %>%
     dplyr::group_by(scenario, region, Year, Units, agg_tech) %>%
-    dplyr::summarise(add_GW = sum(add_GW,na.rm=T)) %>%
+    dplyr::summarise(add_GW = sum(add_GW, na.rm = T)) %>%
     dplyr::ungroup() %>%
-    dplyr::group_by(scenario, region,Units, agg_tech) %>%
-    dplyr::mutate(add_GW = cumsum(add_GW)) %>%
-    dplyr::ungroup()%>%
     dplyr::filter(Year >= start_year) %>%
+    dplyr::group_by(scenario, region, Units, agg_tech) %>%
+    dplyr::mutate(add_GW = cumsum(add_GW)) %>%
+    dplyr::ungroup() %>%
     tidyr::spread(Year, add_GW) %>%
-    dplyr::mutate_all(~replace(., is.na(.), 0)) %>%
+    dplyr::mutate_all( ~ replace(., is.na(.), 0)) %>%
     dplyr::mutate(agg_tech = factor(agg_tech, levels = tech_order)) %>%
     dplyr::arrange(region, agg_tech) -> cumCap_GW
 
@@ -458,13 +458,13 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
   elec_ret_cap_cost %>%
     dplyr::left_join(tech_mapping, by = c("technology")) %>%
     dplyr::group_by(scenario, region, Year, Units, agg_tech) %>%
-    dplyr::summarise(unrec_cap = sum(unrec_cap,na.rm=T)) %>%
+    dplyr::summarise(unrec_cap = sum(unrec_cap, na.rm = T)) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(unrec_cap = unrec_cap * -1) %>%
     dplyr::filter(Year >= start_year) %>%
-    dplyr::mutate(unrec_cap=dplyr::if_else(Year==plutus::assumptions("GCAMbaseYear"),0,unrec_cap))%>%
+    dplyr::mutate(unrec_cap = dplyr::if_else(Year == plutus::assumptions("GCAMbaseYear"), 0, unrec_cap)) %>%
     tidyr::spread(Year, unrec_cap) %>%
-    dplyr::mutate_all(~replace(., is.na(.), 0)) %>%
+    dplyr::mutate_all( ~ replace(., is.na(.), 0)) %>%
     dplyr::mutate(agg_tech = factor(agg_tech, levels = tech_order)) %>%
     dplyr::arrange(region, agg_tech) -> annualPrematureRet_cost
 
@@ -472,16 +472,16 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
   elec_ret_cap_cost %>%
     dplyr::left_join(tech_mapping, by = c("technology")) %>%
     dplyr::group_by(scenario, region, Year, Units, agg_tech) %>%
-    dplyr::summarise(unrec_cap = sum(unrec_cap,na.rm=T)) %>%
+    dplyr::summarise(unrec_cap = sum(unrec_cap, na.rm = T)) %>%
     dplyr::ungroup() %>%
-    dplyr::group_by(scenario, region,Units, agg_tech) %>%
-    dplyr::mutate(unrec_cap = cumsum(unrec_cap)) %>%
-    dplyr::ungroup()%>%
     dplyr::mutate(unrec_cap = unrec_cap * -1) %>%
     dplyr::filter(Year >= start_year) %>%
-    dplyr::mutate(unrec_cap=dplyr::if_else(Year==plutus::assumptions("GCAMbaseYear"),0,unrec_cap))%>%
+    dplyr::mutate(unrec_cap = dplyr::if_else(Year == plutus::assumptions("GCAMbaseYear"), 0, unrec_cap)) %>%
+    dplyr::group_by(scenario, region, Units, agg_tech) %>%
+    dplyr::mutate(unrec_cap = cumsum(unrec_cap)) %>%
+    dplyr::ungroup() %>%
     tidyr::spread(Year, unrec_cap) %>%
-    dplyr::mutate_all(~replace(., is.na(.), 0)) %>%
+    dplyr::mutate_all( ~ replace(., is.na(.), 0)) %>%
     dplyr::mutate(agg_tech = factor(agg_tech, levels = tech_order)) %>%
     dplyr::arrange(region, agg_tech) -> cumPrematureRet_cost
 
@@ -503,15 +503,15 @@ elecInvest <- function(elec_gen_vintage, gcamdataFile, world_regions, start_year
   elec_ret_GW %>%
     dplyr::left_join(tech_mapping, by = c("technology")) %>%
     dplyr::group_by(scenario, region, Year, Units, agg_tech) %>%
-    dplyr::summarise(early_ret_GW = sum(early_ret_GW,na.rm=T)) %>%
+    dplyr::summarise(early_ret_GW = sum(early_ret_GW, na.rm = T)) %>%
     dplyr::ungroup() %>%
-    dplyr::group_by(scenario, region,Units, agg_tech) %>%
-    dplyr::mutate(early_ret_GW = cumsum(early_ret_GW)) %>%
-    dplyr::ungroup()%>%
-    dplyr::mutate(early_ret_GW = early_ret_GW * -1) %>%
     dplyr::filter(Year >= start_year) %>%
+    dplyr::group_by(scenario, region, Units, agg_tech) %>%
+    dplyr::mutate(early_ret_GW = cumsum(early_ret_GW)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(early_ret_GW = early_ret_GW * -1) %>%
     tidyr::spread(Year, early_ret_GW) %>%
-    dplyr::mutate_all(~replace(., is.na(.), 0)) %>%
+    dplyr::mutate_all( ~ replace(., is.na(.), 0)) %>%
     dplyr::mutate(agg_tech = factor(agg_tech, levels = tech_order)) %>%
     dplyr::arrange(region, agg_tech) -> cumPrematureRet_GW
 
