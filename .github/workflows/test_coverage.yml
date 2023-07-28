@@ -17,19 +17,22 @@ jobs:
       GITHUB_PAT: ${{ secrets.PAT}}
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - uses: r-lib/actions/setup-r@v2-branch
         with:
           r-version: ${{ matrix.r }}
       - uses: r-lib/actions/setup-pandoc@v2-branch
       - uses: r-lib/actions/setup-tinytex@v2-branch
+
       - name: Install dependencies
         env:
           R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
           GITHUB_PAT: ${{ secrets.PAT }}
         run: Rscript -e "install.packages(c('remotes', 'rcmdcheck', 'covr'))" -e "remotes::install_deps(dependencies = TRUE)"
+
       - name: Check
         run: Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error')"
+
       - name: Test coverage
         if: matrix.r == '3.6'
         run: |
