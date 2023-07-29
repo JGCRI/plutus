@@ -10,7 +10,7 @@ jobs:
   pkgdown:
     runs-on: macOS-latest
     env:
-      GITHUB_PAT: ${{ secrets.PAT }}
+      GITHUB_PAT: ${{ secrets.PLUTUS_ACTION }}
     steps:
 
       - uses: actions/checkout@v3
